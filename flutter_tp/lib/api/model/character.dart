@@ -1,3 +1,8 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'character.g.dart';
+
+@JsonSerializable(explicitToJson: true)
 class Character {
   final String? aliases; // Alias du personnage (séparés par \n)
   final String? apiDetailUrl; // URL vers les détails du personnage
@@ -60,4 +65,9 @@ class Character {
     this.teams,
     this.volumeCredits,
   });
+
+  //Méthode pour la sérialisation JSON
+  factory Character.fromJson(Map<String, dynamic> json) => _$CharacterFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CharacterToJson(this);
 }
