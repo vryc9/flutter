@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'character.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class OFFServerResponse {
+class OFFServerResponseCharacter {
   final Character results;
   final String error;
   final int limit;
@@ -12,12 +12,30 @@ class OFFServerResponse {
   final int number_of_total_results;
   final int status_code;
 
-  OFFServerResponse(this.results, this.error, this.limit, this.number_of_page_results, this.number_of_total_results, this.offset, this.status_code);
+  OFFServerResponseCharacter(this.results, this.error, this.limit, this.number_of_page_results, this.number_of_total_results, this.offset, this.status_code);
 
-  factory OFFServerResponse.fromJson(Map<String, dynamic> json) =>
-      _$OFFServerResponseFromJson(json);
+  factory OFFServerResponseCharacter.fromJson(Map<String, dynamic> json) =>
+      _$OFFServerResponseCharacterFromJson(json);
 
-  Map<String, dynamic> toJson() => _$OFFServerResponseToJson(this);
+  Map<String, dynamic> toJson() => _$OFFServerResponseCharacterToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class OFFServerResponseSearchCharacter {
+  final List<Character> results;
+  final String error;
+  final int limit;
+  final int offset;
+  final int number_of_page_results;
+  final int number_of_total_results;
+  final int status_code;
+
+  OFFServerResponseSearchCharacter(this.results, this.error, this.limit, this.number_of_page_results, this.number_of_total_results, this.offset, this.status_code);
+
+  factory OFFServerResponseSearchCharacter.fromJson(Map<String, dynamic> json) =>
+      _$OFFServerResponseSearchCharacterFromJson(json);
+
+  Map<String, dynamic> toJson() => _$OFFServerResponseSearchCharacterToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)

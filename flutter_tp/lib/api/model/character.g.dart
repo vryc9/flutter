@@ -6,8 +6,9 @@ part of 'character.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-OFFServerResponse _$OFFServerResponseFromJson(Map<String, dynamic> json) =>
-    OFFServerResponse(
+OFFServerResponseCharacter _$OFFServerResponseCharacterFromJson(
+        Map<String, dynamic> json) =>
+    OFFServerResponseCharacter(
       Character.fromJson(json['results'] as Map<String, dynamic>),
       json['error'] as String,
       (json['limit'] as num).toInt(),
@@ -17,9 +18,36 @@ OFFServerResponse _$OFFServerResponseFromJson(Map<String, dynamic> json) =>
       (json['status_code'] as num).toInt(),
     );
 
-Map<String, dynamic> _$OFFServerResponseToJson(OFFServerResponse instance) =>
+Map<String, dynamic> _$OFFServerResponseCharacterToJson(
+        OFFServerResponseCharacter instance) =>
     <String, dynamic>{
       'results': instance.results.toJson(),
+      'error': instance.error,
+      'limit': instance.limit,
+      'offset': instance.offset,
+      'number_of_page_results': instance.number_of_page_results,
+      'number_of_total_results': instance.number_of_total_results,
+      'status_code': instance.status_code,
+    };
+
+OFFServerResponseSearchCharacter _$OFFServerResponseSearchCharacterFromJson(
+        Map<String, dynamic> json) =>
+    OFFServerResponseSearchCharacter(
+      (json['results'] as List<dynamic>)
+          .map((e) => Character.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      json['error'] as String,
+      (json['limit'] as num).toInt(),
+      (json['number_of_page_results'] as num).toInt(),
+      (json['number_of_total_results'] as num).toInt(),
+      (json['offset'] as num).toInt(),
+      (json['status_code'] as num).toInt(),
+    );
+
+Map<String, dynamic> _$OFFServerResponseSearchCharacterToJson(
+        OFFServerResponseSearchCharacter instance) =>
+    <String, dynamic>{
+      'results': instance.results.map((e) => e.toJson()).toList(),
       'error': instance.error,
       'limit': instance.limit,
       'offset': instance.offset,

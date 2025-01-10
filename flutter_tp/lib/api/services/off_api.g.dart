@@ -24,7 +24,7 @@ class _OFFAPI implements OFFAPI {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<OFFServerResponse?> getCharacterById(
+  Future<OFFServerResponseCharacter?> getCharacterById(
     String characterId,
     String apiKey,
     String format,
@@ -36,7 +36,7 @@ class _OFFAPI implements OFFAPI {
     };
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<OFFServerResponse>(Options(
+    final _options = _setStreamType<OFFServerResponseCharacter>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -53,11 +53,11 @@ class _OFFAPI implements OFFAPI {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>?>(_options);
-    late OFFServerResponse? _value;
+    late OFFServerResponseCharacter? _value;
     try {
       _value = _result.data == null
           ? null
-          : OFFServerResponse.fromJson(_result.data!);
+          : OFFServerResponseCharacter.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -66,29 +66,31 @@ class _OFFAPI implements OFFAPI {
   }
 
   @override
-  Future<List<Character>> getCharacters(
+  Future<OFFServerResponseSearchCharacter?> searchCharacter(
     String apiKey,
     String format,
-    int limit,
-    int offset,
+    String limit,
+    String query,
+    String resources,
   ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'api_key': apiKey,
       r'format': format,
       r'limit': limit,
-      r'offset': offset,
+      r'query': query,
+      r'resources': resources,
     };
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<List<Character>>(Options(
+    final _options = _setStreamType<OFFServerResponseSearchCharacter>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
         .compose(
           _dio.options,
-          '/characters/',
+          '/search/',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -97,12 +99,12 @@ class _OFFAPI implements OFFAPI {
           _dio.options.baseUrl,
           baseUrl,
         )));
-    final _result = await _dio.fetch<List<dynamic>>(_options);
-    late List<Character> _value;
+    final _result = await _dio.fetch<Map<String, dynamic>?>(_options);
+    late OFFServerResponseSearchCharacter? _value;
     try {
-      _value = _result.data!
-          .map((dynamic i) => Character.fromJson(i as Map<String, dynamic>))
-          .toList();
+      _value = _result.data == null
+          ? null
+          : OFFServerResponseSearchCharacter.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
