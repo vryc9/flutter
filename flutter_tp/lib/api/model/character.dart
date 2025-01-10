@@ -3,71 +3,124 @@ import 'package:json_annotation/json_annotation.dart';
 part 'character.g.dart';
 
 @JsonSerializable(explicitToJson: true)
+class OFFServerResponse {
+  final Character results;
+  final String error;
+  final int limit;
+  final int offset;
+  final int number_of_page_results;
+  final int number_of_total_results;
+  final int status_code;
+
+  OFFServerResponse(this.results, this.error, this.limit, this.number_of_page_results, this.number_of_total_results, this.offset, this.status_code);
+
+  factory OFFServerResponse.fromJson(Map<String, dynamic> json) =>
+      _$OFFServerResponseFromJson(json);
+
+  Map<String, dynamic> toJson() => _$OFFServerResponseToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
 class Character {
   final String? aliases; // Alias du personnage (séparés par \n)
   final String? apiDetailUrl; // URL vers les détails du personnage
   final DateTime? birth; // Date de naissance (si disponible, sinon null)
-  final List<String>? characterEnemies; // Liste des ennemis du personnage
-  final List<String>? characterFriends; // Liste des amis du personnage
-  final int? countOfIssueAppearances; // Nombre d'apparitions dans les numéros de comics
-  final List<String>? creators; // Liste des créateurs du personnage
-  final DateTime? dateAdded; // Date d'ajout du personnage
-  final DateTime? dateLastUpdated; // Date de dernière mise à jour
+  final List<Creator>? creators; // Liste des créateurs du personnage
   final String? deck; // Résumé bref du personnage
   final String? description; // Description complète du personnage
-  final String? firstAppearedInIssue; // Premier numéro où le personnage apparaît
-  final String? gender; // Sexe (Male, Female, Other)
-  final String id; // ID unique du personnage
-  final String? image; // Image principale du personnage
-  final List<String>? issueCredits; // Liste des numéros où le personnage apparaît
-  final List<String>? issuesDiedIn; // Liste des numéros où le personnage meurt
-  final List<String>? movies; // Films où apparaît le personnage
+  final int? gender; // Sexe (Male, Female, Other)
+  final int id; // ID unique du personnage
+  final Image? image; // Image principale du personnage
+  final List<Issue>? issuesDiedIn; // Liste des numéros où le personnage meurt
   final String? name; // Nom du personnage
-  final String? origin; // Origine (ex: Humain, Alien, Robot, etc.)
-  final List<String>? powers; // Liste des pouvoirs du personnage
-  final String? publisher; // Éditeur principal du personnage
+  final Publisher? publisher; // Éditeur principal du personnage
   final String? realName; // Nom réel du personnage
   final String? siteDetailUrl; // URL vers les détails sur Giant Bomb
-  final List<String>? storyArcCredits; // Arcs narratifs où le personnage apparaît
-  final List<String>? teamEnemies; // Équipes ennemies du personnage
-  final List<String>? teamFriends; // Équipes alliées du personnage
-  final List<String>? teams; // Équipes dont le personnage fait partie
-  final List<String>? volumeCredits; // Volumes où le personnage apparaît
 
   Character({
     this.aliases,
     this.apiDetailUrl,
     this.birth,
-    this.characterEnemies,
-    this.characterFriends,
-    this.countOfIssueAppearances,
     this.creators,
-    this.dateAdded,
-    this.dateLastUpdated,
     this.deck,
     this.description,
-    this.firstAppearedInIssue,
     this.gender,
     required this.id,
     this.image,
-    this.issueCredits,
     this.issuesDiedIn,
-    this.movies,
     this.name,
-    this.origin,
-    this.powers,
     this.publisher,
     this.realName,
-    this.siteDetailUrl,
-    this.storyArcCredits,
-    this.teamEnemies,
-    this.teamFriends,
-    this.teams,
-    this.volumeCredits,
+    this.siteDetailUrl
   });
 
   //Méthode pour la sérialisation JSON
   factory Character.fromJson(Map<String, dynamic> json) => _$CharacterFromJson(json);
 
   Map<String, dynamic> toJson() => _$CharacterToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Creator {
+  final String api_detail_url;
+  final int id;
+  final String name;
+  final String site_detail_url;
+
+  Creator(this.api_detail_url, this.id, this.name, this.site_detail_url);
+
+  factory Creator.fromJson(Map<String, dynamic> json) =>
+      _$CreatorFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CreatorToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Image {
+  final String icon_url;
+  final String medium_url;
+  final String screen_url;
+  final String screen_large_url;
+  final String small_url;
+  final String super_url;
+  final String thumb_url;
+  final String tiny_url;
+  final String original_url;
+  final String image_tags;
+
+  Image(this.icon_url, this.medium_url, this.screen_url, this.screen_large_url, this.image_tags, this.original_url, this.small_url, this.super_url, this.thumb_url, this.tiny_url);
+
+  factory Image.fromJson(Map<String, dynamic> json) =>
+      _$ImageFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ImageToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Issue {
+  final String api_detail_url;
+  final int id;
+  final String name;
+  final String site_detail_url;
+
+  Issue(this.api_detail_url, this.id, this.name, this.site_detail_url);
+
+  factory Issue.fromJson(Map<String, dynamic> json) =>
+      _$IssueFromJson(json);
+
+  Map<String, dynamic> toJson() => _$IssueToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Publisher {
+  final String api_detail_url;
+  final int id;
+  final String name;
+
+  Publisher(this.api_detail_url, this.id, this.name);
+
+  factory Publisher.fromJson(Map<String, dynamic> json) =>
+      _$PublisherFromJson(json);
+
+  Map<String, dynamic> toJson() => _$PublisherToJson(this);
 }

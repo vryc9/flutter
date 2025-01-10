@@ -9,18 +9,10 @@ abstract class OFFAPI {
   factory OFFAPI(Dio dio, {required String baseUrl}) = _OFFAPI;
 
   @GET("/character/4005-{characterId}/")
-  Future<Character?> getCharacterById(
+  Future<OFFServerResponse?> getCharacterById(
     @Path("characterId") String characterId, 
     @Query("api_key") String apiKey,
     @Query("format") String format,
-  );
-
-  @GET("/characters/")
-  Future<List<Character>> getCharacters(
-    @Query("api_key") String apiKey,
-    @Query("format") String format,
-    @Query("limit") int limit,
-    @Query("offset") int offset,
   );
 }
 
@@ -47,22 +39,12 @@ class OFFAPIManager {
         );
 
   //Méthode pour récupérer un personnage par ID
-  Future<Character?> fetchCharacterById(String characterId) async {
+  Future<OFFServerResponse?> fetchCharacterById(String characterId) async {
     try {
       return await api.getCharacterById(characterId, _apiKey, "json");
     } catch (e) {
       print("Erreur lors de la récupération du personnage : $e");
       return null;
-    }
-  }
-
-  //Méthode pour récupérer une liste de personnages
-  Future<List<Character>> fetchCharacters({int limit = 10, int offset = 0}) async {
-    try {
-      return await api.getCharacters(_apiKey, "json", limit, offset);
-    } catch (e) {
-      print("Erreur lors de la récupération des personnages : $e");
-      return [];
     }
   }
 }

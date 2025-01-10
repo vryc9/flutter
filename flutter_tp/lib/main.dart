@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tp/pages/character_detail_screen.dart';
-import 'package:flutter_tp/pages/character_list_screen.dart';
 import 'package:flutter_tp/pages/search.dart';
 import 'package:go_router/go_router.dart';
 
@@ -14,7 +13,7 @@ class MyApp extends StatelessWidget {
   final GoRouter _router = GoRouter(routes: [
     GoRoute(
       path: '/',
-      builder: (BuildContext context, GoRouterState state) => const CharacterListScreen(),
+      builder: (BuildContext context, GoRouterState state) => const CharacterDetailScreen(characterId: "40553"),
       routes: [
         GoRoute(
           path: '/character',

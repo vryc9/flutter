@@ -15,9 +15,9 @@ class CharacterDetailScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Détails du Personnage"),
       ),
-      body: FutureBuilder<Character?>(
+      body: FutureBuilder<OFFServerResponse?>(
         future: characterId.isNotEmpty ? api.fetchCharacterById(characterId) : null,
-        builder: (context, AsyncSnapshot<Character?> snapshot) {
+        builder: (context, AsyncSnapshot<OFFServerResponse?> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
@@ -41,17 +41,9 @@ class CharacterDetailScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (character.image != null)
-                    Center(
-                      child: Image.network(
-                        character.image!,
-                        height: 200,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
                   const SizedBox(height: 16),
                   Text(
-                    character.name ?? "Nom inconnu",
+                    character.results.name ?? "Nom inconnu",
                     style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -59,47 +51,26 @@ class CharacterDetailScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    "Alias : ${character.aliases ?? "Non spécifié"}",
+                    "Alias : ${character.results.aliases ?? "Non spécifié"}",
                     style: const TextStyle(fontSize: 16),
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    "Éditeur : ${character.publisher ?? "Inconnu"}",
+                    "Éditeur : ${character.results.publisher ?? "Inconnu"}",
                     style: const TextStyle(fontSize: 16),
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    "Description :\n${character.description ?? "Pas de description disponible."}",
+                    "Description :\n${character.results.description ?? "Pas de description disponible."}",
                     style: const TextStyle(fontSize: 16),
                   ),
                   const SizedBox(height: 16),
-                  if (character.birth != null)
+                  if (character.results.birth != null)
                     Text(
-                      "Date de naissance : ${character.birth}",
+                      "Date de naissance : ${character.results.birth}",
                       style: const TextStyle(fontSize: 16),
                     ),
                   const SizedBox(height: 8),
-                  if (character.firstAppearedInIssue != null)
-                    Text(
-                      "Première apparition : ${character.firstAppearedInIssue}",
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                  const SizedBox(height: 8),
-                  if (character.powers != null && character.powers!.isNotEmpty)
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          "Pouvoirs :",
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        ...character.powers!.map((power) => Text("• $power")),
-                      ],
-                    ),
                 ],
               ),
             );

@@ -24,7 +24,7 @@ class _OFFAPI implements OFFAPI {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<Character?> getCharacterById(
+  Future<OFFServerResponse?> getCharacterById(
     String characterId,
     String apiKey,
     String format,
@@ -36,7 +36,7 @@ class _OFFAPI implements OFFAPI {
     };
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<Character>(Options(
+    final _options = _setStreamType<OFFServerResponse>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -53,9 +53,11 @@ class _OFFAPI implements OFFAPI {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>?>(_options);
-    late Character? _value;
+    late OFFServerResponse? _value;
     try {
-      _value = _result.data == null ? null : Character.fromJson(_result.data!);
+      _value = _result.data == null
+          ? null
+          : OFFServerResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
