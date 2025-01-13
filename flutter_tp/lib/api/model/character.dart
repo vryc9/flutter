@@ -12,7 +12,14 @@ class OFFServerResponseCharacter {
   final int number_of_total_results;
   final int status_code;
 
-  OFFServerResponseCharacter(this.results, this.error, this.limit, this.number_of_page_results, this.number_of_total_results, this.offset, this.status_code);
+  OFFServerResponseCharacter(
+      this.results,
+      this.error,
+      this.limit,
+      this.number_of_page_results,
+      this.number_of_total_results,
+      this.offset,
+      this.status_code);
 
   factory OFFServerResponseCharacter.fromJson(Map<String, dynamic> json) =>
       _$OFFServerResponseCharacterFromJson(json);
@@ -30,12 +37,21 @@ class OFFServerResponseSearchCharacter {
   final int number_of_total_results;
   final int status_code;
 
-  OFFServerResponseSearchCharacter(this.results, this.error, this.limit, this.number_of_page_results, this.number_of_total_results, this.offset, this.status_code);
+  OFFServerResponseSearchCharacter(
+      this.results,
+      this.error,
+      this.limit,
+      this.number_of_page_results,
+      this.number_of_total_results,
+      this.offset,
+      this.status_code);
 
-  factory OFFServerResponseSearchCharacter.fromJson(Map<String, dynamic> json) =>
+  factory OFFServerResponseSearchCharacter.fromJson(
+          Map<String, dynamic> json) =>
       _$OFFServerResponseSearchCharacterFromJson(json);
 
-  Map<String, dynamic> toJson() => _$OFFServerResponseSearchCharacterToJson(this);
+  Map<String, dynamic> toJson() =>
+      _$OFFServerResponseSearchCharacterToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -48,32 +64,32 @@ class Character {
   final String? description; // Description complète du personnage
   final int? gender; // Sexe (Male, Female, Other)
   final int id; // ID unique du personnage
-  final Image? image; // Image principale du personnage
+  final ImageAPI? image; // Image principale du personnage
   final List<Issue>? issuesDiedIn; // Liste des numéros où le personnage meurt
   final String? name; // Nom du personnage
   final Publisher? publisher; // Éditeur principal du personnage
   final String? realName; // Nom réel du personnage
   final String? siteDetailUrl; // URL vers les détails sur Giant Bomb
 
-  Character({
-    this.aliases,
-    this.apiDetailUrl,
-    this.birth,
-    this.creators,
-    this.deck,
-    this.description,
-    this.gender,
-    required this.id,
-    this.image,
-    this.issuesDiedIn,
-    this.name,
-    this.publisher,
-    this.realName,
-    this.siteDetailUrl
-  });
+  Character(
+      {this.aliases,
+      this.apiDetailUrl,
+      this.birth,
+      this.creators,
+      this.deck,
+      this.description,
+      this.gender,
+      required this.id,
+      this.image,
+      this.issuesDiedIn,
+      this.name,
+      this.publisher,
+      this.realName,
+      this.siteDetailUrl});
 
   //Méthode pour la sérialisation JSON
-  factory Character.fromJson(Map<String, dynamic> json) => _$CharacterFromJson(json);
+  factory Character.fromJson(Map<String, dynamic> json) =>
+      _$CharacterFromJson(json);
 
   Map<String, dynamic> toJson() => _$CharacterToJson(this);
 }
@@ -94,7 +110,7 @@ class Creator {
 }
 
 @JsonSerializable(explicitToJson: true)
-class Image {
+class ImageAPI {
   final String icon_url;
   final String medium_url;
   final String screen_url;
@@ -106,12 +122,22 @@ class Image {
   final String original_url;
   final String image_tags;
 
-  Image(this.icon_url, this.medium_url, this.screen_url, this.screen_large_url, this.image_tags, this.original_url, this.small_url, this.super_url, this.thumb_url, this.tiny_url);
+  ImageAPI(
+      this.icon_url,
+      this.medium_url,
+      this.screen_url,
+      this.screen_large_url,
+      this.image_tags,
+      this.original_url,
+      this.small_url,
+      this.super_url,
+      this.thumb_url,
+      this.tiny_url);
 
-  factory Image.fromJson(Map<String, dynamic> json) =>
-      _$ImageFromJson(json);
+  factory ImageAPI.fromJson(Map<String, dynamic> json) =>
+      _$ImageAPIFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ImageToJson(this);
+  Map<String, dynamic> toJson() => _$ImageAPIToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -123,8 +149,7 @@ class Issue {
 
   Issue(this.api_detail_url, this.id, this.name, this.site_detail_url);
 
-  factory Issue.fromJson(Map<String, dynamic> json) =>
-      _$IssueFromJson(json);
+  factory Issue.fromJson(Map<String, dynamic> json) => _$IssueFromJson(json);
 
   Map<String, dynamic> toJson() => _$IssueToJson(this);
 }

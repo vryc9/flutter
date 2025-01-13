@@ -71,7 +71,7 @@ Character _$CharacterFromJson(Map<String, dynamic> json) => Character(
       id: (json['id'] as num).toInt(),
       image: json['image'] == null
           ? null
-          : Image.fromJson(json['image'] as Map<String, dynamic>),
+          : ImageAPI.fromJson(json['image'] as Map<String, dynamic>),
       issuesDiedIn: (json['issuesDiedIn'] as List<dynamic>?)
           ?.map((e) => Issue.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -114,7 +114,7 @@ Map<String, dynamic> _$CreatorToJson(Creator instance) => <String, dynamic>{
       'site_detail_url': instance.site_detail_url,
     };
 
-Image _$ImageFromJson(Map<String, dynamic> json) => Image(
+ImageAPI _$ImageAPIFromJson(Map<String, dynamic> json) => ImageAPI(
       json['icon_url'] as String,
       json['medium_url'] as String,
       json['screen_url'] as String,
@@ -127,7 +127,7 @@ Image _$ImageFromJson(Map<String, dynamic> json) => Image(
       json['tiny_url'] as String,
     );
 
-Map<String, dynamic> _$ImageToJson(Image instance) => <String, dynamic>{
+Map<String, dynamic> _$ImageAPIToJson(ImageAPI instance) => <String, dynamic>{
       'icon_url': instance.icon_url,
       'medium_url': instance.medium_url,
       'screen_url': instance.screen_url,
