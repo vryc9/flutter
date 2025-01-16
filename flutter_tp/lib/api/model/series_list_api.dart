@@ -1,4 +1,4 @@
-import 'package:flutter_tp/api/model/character.dart';
+import 'package:flutter_tp/api/model/character_api.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'series_list_api.g.dart';

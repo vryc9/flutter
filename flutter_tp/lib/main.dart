@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tp/pages/character_detail_screen.dart';
-import 'package:flutter_tp/pages/character_detail_screen_copy.dart';
 import 'package:flutter_tp/pages/search.dart';
 import 'package:go_router/go_router.dart';
 

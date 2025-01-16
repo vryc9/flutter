@@ -1,4 +1,6 @@
-import 'package:flutter_tp/api/model/character.dart';
+import 'package:flutter_tp/api/model/character_api.dart';
+import 'package:flutter_tp/api/model/episodes_api.dart';
+import 'package:flutter_tp/api/model/series_list_api.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart';
 
@@ -22,6 +24,15 @@ abstract class OFFAPI {
     @Query("limit") String limit,
     @Query("query") String query,
     @Query("resources") String resources,
+  );
+
+  @GET('/series_list?api_key=c6eabeb68c2dd781df0fc65806e8ed5ab839334c&format=json')
+  Future<SerieListResponseServer> loadSeriesList();
+
+  @GET("episodes?api_key=c6eabeb68c2dd781df0fc65806e8ed5ab839334c&format=json")
+  Future<EpisodesResponseServer> loadEpisodeList(
+    @Query('api_key') String apiKey,
+    @Query('format') String format,
   );
 }
 
@@ -65,5 +76,16 @@ class OFFAPIManager {
       print("Erreur lors de la récupération de la recherche du personnage : $e");
       return null;
     }
+  }
+
+  //Méthode pour récupérer une liste de série
+  Future<SerieListResponseServer> loadSeriesList() async {
+    return api.loadSeriesList();
+  }
+
+  //Méthode pour récupérer une liste d'épisode
+  Future<EpisodesResponseServer> loadEpisodeList() async {
+    return api.loadEpisodeList(
+        'c6eabeb68c2dd781df0fc65806e8ed5ab839334c', 'json');
   }
 }

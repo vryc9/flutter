@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tp/api/model/character.dart';
+import 'package:flutter_tp/api/model/character_api.dart';
 import 'package:flutter_tp/api/services/off_api.dart';
 
 class CharacterDetailScreen extends StatelessWidget {
@@ -41,7 +41,32 @@ class CharacterDetailScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // Affichage de l'image si elle est disponible
+                  if (character.results.image != null)
+                    Center(
+                      child: Image.network(
+                        character.results.image!.screen_large_url,
+                        height: 200, // Hauteur personnalisée
+                        fit: BoxFit.cover,
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) {
+                            return child;
+                          }
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        },
+                        errorBuilder: (context, error, stackTrace) {
+                          return const Icon(
+                            Icons.broken_image,
+                            size: 100,
+                            color: Colors.grey,
+                          );
+                        },
+                      ),
+                    ),
                   const SizedBox(height: 16),
+                  // Nom du personnage
                   Text(
                     character.results.name ?? "Nom inconnu",
                     style: const TextStyle(
@@ -50,21 +75,25 @@ class CharacterDetailScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
+                  // Alias
                   Text(
                     "Alias : ${character.results.aliases ?? "Non spécifié"}",
                     style: const TextStyle(fontSize: 16),
                   ),
                   const SizedBox(height: 8),
+                  // Éditeur
                   Text(
                     "Éditeur : ${character.results.publisher ?? "Inconnu"}",
                     style: const TextStyle(fontSize: 16),
                   ),
                   const SizedBox(height: 8),
+                  // Description
                   Text(
                     "Description :\n${character.results.description ?? "Pas de description disponible."}",
                     style: const TextStyle(fontSize: 16),
                   ),
                   const SizedBox(height: 16),
+                  // Date de naissance
                   if (character.results.birth != null)
                     Text(
                       "Date de naissance : ${character.results.birth}",
@@ -77,7 +106,6 @@ class CharacterDetailScreen extends StatelessWidget {
           }
         },
       ),
-
     );
   }
 }

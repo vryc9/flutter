@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_tp/api/api_main.dart';
 import 'package:flutter_tp/api/model/series_list_api.dart';
+import 'package:flutter_tp/api/services/off_api.dart';
 
 abstract class SeriesListEvent {}
 
