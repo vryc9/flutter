@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'episodes_api.g.dart';
+part 'episode_api.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class EpisodesResponse {
@@ -20,19 +20,3 @@ class EpisodesResponse {
   Map<String, dynamic> toJson() => _$EpisodesResponseToJson(this);
 }
 
-@JsonSerializable(explicitToJson: true)
-class EpisodesResponseServer {
-  final List<EpisodesResponseServer> episodesListResponse;
-
-  final dynamic error;
-
-  EpisodesResponseServer({
-    required this.episodesListResponse,
-    required this.error,
-  });
-
-  factory EpisodesResponseServer.fromJson(Map<String, dynamic> json) =>
-      _$EpisodesResponseServerFromJson(json);
-
-  Map<String, dynamic> toJson() => _$EpisodesResponseServerToJson(this);
-}

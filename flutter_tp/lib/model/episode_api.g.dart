@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'episodes_api.dart';
+part of 'episode_api.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
@@ -18,22 +18,4 @@ Map<String, dynamic> _$EpisodesResponseToJson(EpisodesResponse instance) =>
       'episode_number': instance.episode_number,
       'name': instance.name,
       'air_date': instance.air_date,
-    };
-
-EpisodesResponseServer _$EpisodesResponseServerFromJson(
-        Map<String, dynamic> json) =>
-    EpisodesResponseServer(
-      episodesListResponse: (json['episodesListResponse'] as List<dynamic>)
-          .map(
-              (e) => EpisodesResponseServer.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      error: json['error'],
-    );
-
-Map<String, dynamic> _$EpisodesResponseServerToJson(
-        EpisodesResponseServer instance) =>
-    <String, dynamic>{
-      'episodesListResponse':
-          instance.episodesListResponse.map((e) => e.toJson()).toList(),
-      'error': instance.error,
     };

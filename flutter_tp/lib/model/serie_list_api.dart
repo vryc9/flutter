@@ -1,7 +1,8 @@
-import 'package:flutter_tp/api/model/character_api.dart';
+import 'package:flutter_tp/model/image_api.dart';
+import 'package:flutter_tp/model/publisher_api.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'series_list_api.g.dart';
+part 'serie_list_api.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class SerieListResponse {
@@ -24,18 +25,3 @@ class SerieListResponse {
   Map<String, dynamic> toJson() => _$SerieListResponseToJson(this);
 }
 
-@JsonSerializable(explicitToJson: true)
-class SerieListResponseServer {
-  final List<SerieListResponse>? results;
-  final dynamic error;
-
-  SerieListResponseServer({
-    this.results,
-    this.error,
-  });
-
-  factory SerieListResponseServer.fromJson(Map<String, dynamic> json) =>
-      _$SerieListResponseServerFromJson(json);
-
-  Map<String, dynamic> toJson() => _$SerieListResponseServerToJson(this);
-}

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tp/api/model/character_api.dart';
+import 'package:flutter_tp/api/model/response_api.dart';
 import 'package:flutter_tp/api/services/off_api.dart';
 
 class CharacterDetailScreen extends StatelessWidget {
