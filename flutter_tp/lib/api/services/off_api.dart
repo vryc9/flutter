@@ -1,5 +1,5 @@
 import 'package:flutter_tp/api/model/character_api.dart';
-import 'package:flutter_tp/api/model/comic.dart';
+import 'package:flutter_tp/api/model/comic_api.dart';
 import 'package:flutter_tp/api/model/episodes_api.dart';
 import 'package:flutter_tp/api/model/series_list_api.dart';
 import 'package:retrofit/retrofit.dart';
