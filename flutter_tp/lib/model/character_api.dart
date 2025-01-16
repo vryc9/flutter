@@ -17,7 +17,7 @@ class Character {
   final int? gender; // Sexe (Male, Female, Other)
   final int id; // ID unique du personnage
   final ImageAPI? image; // Image principale du personnage
-  final List<Issue>? issuesDiedIn; // Liste des numéros où le personnage meurt
+  final List<SmallIssue>? issuesDiedIn; // Liste des numéros où le personnage meurt
   final String? name; // Nom du personnage
   final Publisher? publisher; // Éditeur principal du personnage
   final String? realName; // Nom réel du personnage

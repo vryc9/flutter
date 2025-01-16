@@ -23,7 +23,7 @@ Character _$CharacterFromJson(Map<String, dynamic> json) => Character(
           ? null
           : ImageAPI.fromJson(json['image'] as Map<String, dynamic>),
       issuesDiedIn: (json['issuesDiedIn'] as List<dynamic>?)
-          ?.map((e) => Issue.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => SmallIssue.fromJson(e as Map<String, dynamic>))
           .toList(),
       name: json['name'] as String?,
       publisher: json['publisher'] == null
