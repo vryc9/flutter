@@ -50,7 +50,6 @@ abstract class OFFAPI {
   Future<OFFServerResponseSearchComic?> searchComic(
     @Query("api_key") String apiKey,
     @Query("format") String format,
-    @Query("limit") String limit,
     @Query("query") String query,
     @Query("resources") String resources,
   );
@@ -93,6 +92,18 @@ class OFFAPIManager {
       String query) async {
     try {
       return await api.searchCharacter(_apiKey, "json", query, "character");
+    } catch (e) {
+      print(
+          "Erreur lors de la récupération de la recherche du personnage : $e");
+      return null;
+    }
+  }
+
+  //Méthode pour rechercher un personnage
+  Future<OFFServerResponseSearchComic?> searchComics(
+      String query) async {
+    try {
+      return await api.searchComic(_apiKey, "json", query, "issue");
     } catch (e) {
       print(
           "Erreur lors de la récupération de la recherche du personnage : $e");

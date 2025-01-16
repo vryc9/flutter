@@ -69,7 +69,6 @@ class _OFFAPI implements OFFAPI {
   Future<OFFServerResponseSearchCharacter?> searchCharacter(
     String apiKey,
     String format,
-    String limit,
     String query,
     String resources,
   ) async {
@@ -77,7 +76,6 @@ class _OFFAPI implements OFFAPI {
     final queryParameters = <String, dynamic>{
       r'api_key': apiKey,
       r'format': format,
-      r'limit': limit,
       r'query': query,
       r'resources': resources,
     };
@@ -274,7 +272,6 @@ class _OFFAPI implements OFFAPI {
   Future<OFFServerResponseSearchComic?> searchComic(
     String apiKey,
     String format,
-    String limit,
     String query,
     String resources,
   ) async {
@@ -282,7 +279,6 @@ class _OFFAPI implements OFFAPI {
     final queryParameters = <String, dynamic>{
       r'api_key': apiKey,
       r'format': format,
-      r'limit': limit,
       r'query': query,
       r'resources': resources,
     };
