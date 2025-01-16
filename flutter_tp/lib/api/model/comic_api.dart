@@ -70,5 +70,5 @@ class Person {
   factory Person.fromJson(Map<String, dynamic> json) => _$PersonFromJson(json);
 
   // Généré automatiquement par json_serializable
-  Map<String, dynamic> toJson() => _$PersonFromJson(this);
+  Map<String, dynamic> toJson() => _$PersonToJson(this);
 }
