@@ -5,7 +5,7 @@ part 'person_api.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class Person {
-  final String id; // ID unique de l'issue
+  final int id; // ID unique de l'issue
   final ImageAPI? image; // Image principale de l'issue
   final String name; // Nom de l'issue
 

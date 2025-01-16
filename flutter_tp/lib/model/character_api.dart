@@ -1,6 +1,5 @@
-import 'package:flutter_tp/model/creator_api.dart';
 import 'package:flutter_tp/model/image_api.dart';
-import 'package:flutter_tp/model/publisher_api.dart';
+import 'package:flutter_tp/model/person_api.dart';
 import 'package:flutter_tp/model/small_issue_api.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -11,7 +10,7 @@ class Character {
   final String? aliases; // Alias du personnage (séparés par \n)
   final String? apiDetailUrl; // URL vers les détails du personnage
   final DateTime? birth; // Date de naissance (si disponible, sinon null)
-  final List<Creator>? creators; // Liste des créateurs du personnage
+  final List<Person>? creators; // Liste des créateurs du personnage
   final String? deck; // Résumé bref du personnage
   final String? description; // Description complète du personnage
   final int? gender; // Sexe (Male, Female, Other)
@@ -19,7 +18,7 @@ class Character {
   final ImageAPI? image; // Image principale du personnage
   final List<SmallIssue>? issuesDiedIn; // Liste des numéros où le personnage meurt
   final String? name; // Nom du personnage
-  final Publisher? publisher; // Éditeur principal du personnage
+  final Person? publisher; // Éditeur principal du personnage
   final String? realName; // Nom réel du personnage
   final String? siteDetailUrl; // URL vers les détails sur Giant Bomb
 

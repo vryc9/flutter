@@ -13,7 +13,7 @@ Character _$CharacterFromJson(Map<String, dynamic> json) => Character(
           ? null
           : DateTime.parse(json['birth'] as String),
       creators: (json['creators'] as List<dynamic>?)
-          ?.map((e) => Creator.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => Person.fromJson(e as Map<String, dynamic>))
           .toList(),
       deck: json['deck'] as String?,
       description: json['description'] as String?,
@@ -28,7 +28,7 @@ Character _$CharacterFromJson(Map<String, dynamic> json) => Character(
       name: json['name'] as String?,
       publisher: json['publisher'] == null
           ? null
-          : Publisher.fromJson(json['publisher'] as Map<String, dynamic>),
+          : Person.fromJson(json['publisher'] as Map<String, dynamic>),
       realName: json['realName'] as String?,
       siteDetailUrl: json['siteDetailUrl'] as String?,
     );

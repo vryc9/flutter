@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     GoRoute(
       path: '/',
       builder: (BuildContext context, GoRouterState state) =>
-          const Searchpage(),
+          const CharacterDetailScreen(characterId: "40553"),
       routes: [
         GoRoute(
           path: '/character',

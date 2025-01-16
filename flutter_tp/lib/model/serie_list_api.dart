@@ -1,5 +1,5 @@
 import 'package:flutter_tp/model/image_api.dart';
-import 'package:flutter_tp/model/publisher_api.dart';
+import 'package:flutter_tp/model/person_api.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'serie_list_api.g.dart';
@@ -10,7 +10,7 @@ class SerieListResponse {
   final ImageAPI image;
   final int? count_of_episodes;
   final String? start_year;
-  final Publisher? publisher;
+  final Person? publisher;
   SerieListResponse({
     required this.name,
     required this.image,

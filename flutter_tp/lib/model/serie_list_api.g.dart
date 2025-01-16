@@ -14,7 +14,7 @@ SerieListResponse _$SerieListResponseFromJson(Map<String, dynamic> json) =>
       start_year: json['start_year'] as String?,
       publisher: json['publisher'] == null
           ? null
-          : Publisher.fromJson(json['publisher'] as Map<String, dynamic>),
+          : Person.fromJson(json['publisher'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$SerieListResponseToJson(SerieListResponse instance) =>
