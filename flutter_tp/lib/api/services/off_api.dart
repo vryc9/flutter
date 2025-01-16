@@ -1,6 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_tp/api/model/response_api.dart';
 import 'package:retrofit/retrofit.dart';
-import 'package:dio/dio.dart';
 
 part 'off_api.g.dart';
 
@@ -10,13 +10,13 @@ abstract class OFFAPI {
 
   @GET("/character/4005-{characterId}/")
   Future<OFFServerResponseCharacter?> getCharacterById(
-    @Path("characterId") String characterId, 
+    @Path("characterId") String characterId,
     @Query("api_key") String apiKey,
     @Query("format") String format,
   );
 
   @GET("/search/")
-  Future<OFFServerResponseSearchCharacter?> searchCharacter( 
+  Future<OFFServerResponseSearchCharacter?> searchCharacter(
     @Query("api_key") String apiKey,
     @Query("format") String format,
     @Query("limit") String limit,
@@ -24,7 +24,8 @@ abstract class OFFAPI {
     @Query("resources") String resources,
   );
 
-  @GET('/series_list?api_key=c6eabeb68c2dd781df0fc65806e8ed5ab839334c&format=json')
+  @GET(
+      '/series_list?api_key=c6eabeb68c2dd781df0fc65806e8ed5ab839334c&format=json')
   Future<SerieListResponseServer> loadSeriesList();
 
   @GET("episodes?api_key=c6eabeb68c2dd781df0fc65806e8ed5ab839334c&format=json")
@@ -32,7 +33,7 @@ abstract class OFFAPI {
     @Query('api_key') String apiKey,
     @Query('format') String format,
   );
-  
+
   @GET("/issues/")
   Future<List<OFFServerResponseComic?>> getAllComics(
     @Query("api_key") String apiKey,
@@ -44,6 +45,15 @@ abstract class OFFAPI {
     @Query("api_key") String apiKey,
     @Query("format") String format,
     @Query("id") String id,
+  );
+
+  @GET("/search/")
+  Future<OFFServerResponseSearchComic?> searchComic(
+    @Query("api_key") String apiKey,
+    @Query("format") String format,
+    @Query("limit") String limit,
+    @Query("query") String query,
+    @Query("resources") String resources,
   );
 }
 
@@ -58,19 +68,19 @@ class OFFAPIManager {
 
   final OFFAPI api;
   final String _apiKey = "8d2e74d3727e2c7edc9f8d43e96ba96a0ab6afaa";
-  
+
   OFFAPIManager._()
       : api = OFFAPI(
-          Dio(BaseOptions(
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          )),
-          baseUrl: "https://comicvine.gamespot.com/api"
-        );
+            Dio(BaseOptions(
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            )),
+            baseUrl: "https://comicvine.gamespot.com/api");
 
   //Méthode pour récupérer un personnage par ID
-  Future<OFFServerResponseCharacter?> fetchCharacterById(String characterId) async {
+  Future<OFFServerResponseCharacter?> fetchCharacterById(
+      String characterId) async {
     try {
       return await api.getCharacterById(characterId, _apiKey, "json");
     } catch (e) {
@@ -80,11 +90,14 @@ class OFFAPIManager {
   }
 
   //Méthode pour rechercher un personnage
-  Future<OFFServerResponseSearchCharacter?> searchCharacter(String query) async {
+  Future<OFFServerResponseSearchCharacter?> searchCharacter(
+      String query) async {
     try {
-      return await api.searchCharacter(_apiKey, "json", "10", query, "character");
+      return await api.searchCharacter(
+          _apiKey, "json", "10", query, "character");
     } catch (e) {
-      print("Erreur lors de la récupération de la recherche du personnage : $e");
+      print(
+          "Erreur lors de la récupération de la recherche du personnage : $e");
       return null;
     }
   }

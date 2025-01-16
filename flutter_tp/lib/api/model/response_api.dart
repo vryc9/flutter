@@ -13,13 +13,19 @@ class OFFServerResponseComic {
   final int offset;
   final int number_of_page_results;
   final int number_of_total_results;
-  final int status_code;// Volume auquel appartient l'issue
+  final int status_code; // Volume auquel appartient l'issue
 
-  OFFServerResponseComic(this.results, this.error, this.limit, this.number_of_page_results, this.number_of_total_results, this.offset, this.status_code);
-
+  OFFServerResponseComic(
+      this.results,
+      this.error,
+      this.limit,
+      this.number_of_page_results,
+      this.number_of_total_results,
+      this.offset,
+      this.status_code);
 
   factory OFFServerResponseComic.fromJson(Map<String, dynamic> json) =>
-        _$OFFServerResponseComicFromJson(json);
+      _$OFFServerResponseComicFromJson(json);
 
   Map<String, dynamic> toJson() => _$OFFServerResponseComicToJson(this);
 }
@@ -49,7 +55,6 @@ class OFFServerResponseCharacter {
   Map<String, dynamic> toJson() => _$OFFServerResponseCharacterToJson(this);
 }
 
-
 @JsonSerializable(explicitToJson: true)
 class OFFServerResponseSearchCharacter {
   final List<Character> results;
@@ -77,6 +82,30 @@ class OFFServerResponseSearchCharacter {
       _$OFFServerResponseSearchCharacterToJson(this);
 }
 
+@JsonSerializable(explicitToJson: true)
+class OFFServerResponseSearchComic {
+  final List<Comic> results;
+  final String error;
+  final int limit;
+  final int offset;
+  final int number_of_page_results;
+  final int number_of_total_results;
+  final int status_code;
+
+  OFFServerResponseSearchComic(
+      this.results,
+      this.error,
+      this.limit,
+      this.number_of_page_results,
+      this.number_of_total_results,
+      this.offset,
+      this.status_code);
+
+  factory OFFServerResponseSearchComic.fromJson(Map<String, dynamic> json) =>
+      _$OFFServerResponseSearchComicFromJson(json);
+
+  Map<String, dynamic> toJson() => _$OFFServerResponseSearchComicToJson(this);
+}
 
 @JsonSerializable(explicitToJson: true)
 class EpisodesResponseServer {
