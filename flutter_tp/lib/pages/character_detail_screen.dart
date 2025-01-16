@@ -75,6 +75,14 @@ class CharacterDetailScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 8),
+                  Text(
+                    character.results.issues_died_in!.firstOrNull!.name,
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
                   // Alias
                   Text(
                     "Alias : ${character.results.aliases ?? "Non spécifié"}",
@@ -83,7 +91,7 @@ class CharacterDetailScreen extends StatelessWidget {
                   const SizedBox(height: 8),
                   // Éditeur
                   Text(
-                    "Éditeur : ${character.results.publisher ?? "Inconnu"}",
+                    "Éditeur : ${character.results.publisher!.name ?? "Inconnu"}",
                     style: const TextStyle(fontSize: 16),
                   ),
                   const SizedBox(height: 8),

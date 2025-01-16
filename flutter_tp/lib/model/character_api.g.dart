@@ -22,8 +22,8 @@ Character _$CharacterFromJson(Map<String, dynamic> json) => Character(
       image: json['image'] == null
           ? null
           : ImageAPI.fromJson(json['image'] as Map<String, dynamic>),
-      issuesDiedIn: (json['issuesDiedIn'] as List<dynamic>?)
-          ?.map((e) => SmallIssue.fromJson(e as Map<String, dynamic>))
+      issues_died_in: (json['issues_died_in'] as List<dynamic>?)
+          ?.map((e) => Comic.fromJson(e as Map<String, dynamic>))
           .toList(),
       name: json['name'] as String?,
       publisher: json['publisher'] == null
@@ -43,7 +43,8 @@ Map<String, dynamic> _$CharacterToJson(Character instance) => <String, dynamic>{
       'gender': instance.gender,
       'id': instance.id,
       'image': instance.image?.toJson(),
-      'issuesDiedIn': instance.issuesDiedIn?.map((e) => e.toJson()).toList(),
+      'issues_died_in':
+          instance.issues_died_in?.map((e) => e.toJson()).toList(),
       'name': instance.name,
       'publisher': instance.publisher?.toJson(),
       'realName': instance.realName,

@@ -8,8 +8,8 @@ part 'comic_api.g.dart';
 class Comic {
   final List<String>? characterCredits; // Liste des personnages présents
   final DateTime? coverDate; // Date de publication sur la couverture
-  final String description; // Description détaillée
-  final String id; // ID unique de l'issue
+  final String? description; // Description détaillée
+  final int id; // ID unique de l'issue
   final ImageAPI? image; // Image principale de l'issue
   final String? issueNumber; // Numéro de l'issue
   final String name; // Nom de l'issue

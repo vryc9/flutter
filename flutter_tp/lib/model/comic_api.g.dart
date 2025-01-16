@@ -10,8 +10,8 @@ Comic _$ComicFromJson(Map<String, dynamic> json) => Comic(
       coverDate: json['coverDate'] == null
           ? null
           : DateTime.parse(json['coverDate'] as String),
-      description: json['description'] as String,
-      id: json['id'] as String,
+      description: json['description'] as String?,
+      id: (json['id'] as num).toInt(),
       image: json['image'] == null
           ? null
           : ImageAPI.fromJson(json['image'] as Map<String, dynamic>),

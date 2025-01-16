@@ -1,6 +1,6 @@
+import 'package:flutter_tp/model/comic_api.dart';
 import 'package:flutter_tp/model/image_api.dart';
 import 'package:flutter_tp/model/person_api.dart';
-import 'package:flutter_tp/model/small_issue_api.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'character_api.g.dart';
@@ -16,7 +16,7 @@ class Character {
   final int? gender; // Sexe (Male, Female, Other)
   final int id; // ID unique du personnage
   final ImageAPI? image; // Image principale du personnage
-  final List<SmallIssue>? issuesDiedIn; // Liste des numéros où le personnage meurt
+  final List<Comic>? issues_died_in; // Liste des numéros où le personnage meurt
   final String? name; // Nom du personnage
   final Person? publisher; // Éditeur principal du personnage
   final String? realName; // Nom réel du personnage
@@ -32,7 +32,7 @@ class Character {
       this.gender,
       required this.id,
       this.image,
-      this.issuesDiedIn,
+      this.issues_died_in,
       this.name,
       this.publisher,
       this.realName,
