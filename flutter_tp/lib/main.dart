@@ -14,7 +14,8 @@ class MyApp extends StatelessWidget {
   final GoRouter _router = GoRouter(routes: [
     GoRoute(
       path: '/',
-      builder: (BuildContext context, GoRouterState state) => const CharacterDetailScreenCopy(characterId: "40553"),
+      builder: (BuildContext context, GoRouterState state) =>
+          const Searchpage(),
       routes: [
         GoRoute(
           path: '/character',
@@ -31,7 +32,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      
       routerConfig: _router,
     );
   }
