@@ -19,7 +19,6 @@ abstract class OFFAPI {
   Future<OFFServerResponseSearchCharacter?> searchCharacter( 
     @Query("api_key") String apiKey,
     @Query("format") String format,
-    @Query("limit") String limit,
     @Query("query") String query,
     @Query("resources") String resources,
   );
@@ -82,7 +81,7 @@ class OFFAPIManager {
   //Méthode pour rechercher un personnage
   Future<OFFServerResponseSearchCharacter?> searchCharacter(String query) async {
     try {
-      return await api.searchCharacter(_apiKey, "json", "10", query, "character");
+      return await api.searchCharacter(_apiKey, "json", query, "character");
     } catch (e) {
       print("Erreur lors de la récupération de la recherche du personnage : $e");
       return null;
