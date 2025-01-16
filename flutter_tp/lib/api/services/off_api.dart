@@ -23,6 +23,19 @@ abstract class OFFAPI {
     @Query("query") String query,
     @Query("resources") String resources,
   );
+
+  @GET("/issues/")
+  Future<List<OFFServerResponseComic?>> getAllComics(
+    @Query("api_key") String apiKey,
+    @Query("format") String format,
+  );
+
+  @GET("/issue/")
+  Future<OFFServerResponseComic?> getComicById(
+    @Query("api_key") String apiKey,
+    @Query("format") String format,
+    @Query("id") String id,
+  );
 }
 
 class OFFAPIManager {
