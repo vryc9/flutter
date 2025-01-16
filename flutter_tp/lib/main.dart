@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tp/pages/character_detail_screen.dart';
 import 'package:flutter_tp/pages/search.dart';
+import 'package:flutter_tp/pages/searchcharactertest.dart';
 import 'package:go_router/go_router.dart';
 
 void main() {
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
     GoRoute(
       path: '/',
       builder: (BuildContext context, GoRouterState state) =>
-          const CharacterDetailScreen(characterId: "40553"),
+          const SearchpageTest(),
       routes: [
         GoRoute(
           path: '/character',

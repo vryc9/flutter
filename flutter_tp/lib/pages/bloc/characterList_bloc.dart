@@ -6,8 +6,8 @@ abstract class CharacterListEvent {}
 
 class LoadCharacterListEvent extends CharacterListEvent {}
 
-class CharacterlistBloc extends Bloc<CharacterListEvent, CharacterListState> {
-  CharacterlistBloc() : super(CharacterListNotifierLoadingState()) {
+class CharacterListBloc extends Bloc<CharacterListEvent, CharacterListState> {
+  CharacterListBloc() : super(CharacterListNotifierLoadingState()) {
     on<LoadCharacterListEvent>(_loadCharacterList);
     add(LoadCharacterListEvent());
   }
