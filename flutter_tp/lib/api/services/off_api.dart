@@ -1,4 +1,5 @@
 import 'package:flutter_tp/api/model/character_api.dart';
+import 'package:flutter_tp/api/model/comic.dart';
 import 'package:flutter_tp/api/model/episodes_api.dart';
 import 'package:flutter_tp/api/model/series_list_api.dart';
 import 'package:retrofit/retrofit.dart';
@@ -33,6 +34,19 @@ abstract class OFFAPI {
   Future<EpisodesResponseServer> loadEpisodeList(
     @Query('api_key') String apiKey,
     @Query('format') String format,
+  );
+  
+  @GET("/issues/")
+  Future<List<OFFServerResponseComic?>> getAllComics(
+    @Query("api_key") String apiKey,
+    @Query("format") String format,
+  );
+
+  @GET("/issue/")
+  Future<OFFServerResponseComic?> getComicById(
+    @Query("api_key") String apiKey,
+    @Query("format") String format,
+    @Query("id") String id,
   );
 }
 
