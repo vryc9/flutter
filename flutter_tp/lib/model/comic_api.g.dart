@@ -7,37 +7,38 @@ part of 'comic_api.dart';
 // **************************************************************************
 
 Comic _$ComicFromJson(Map<String, dynamic> json) => Comic(
-      coverDate: json['coverDate'] == null
+      cover_date: json['cover_date'] == null
           ? null
-          : DateTime.parse(json['coverDate'] as String),
+          : DateTime.parse(json['cover_date'] as String),
       description: json['description'] as String?,
       id: (json['id'] as num).toInt(),
       image: json['image'] == null
           ? null
           : ImageAPI.fromJson(json['image'] as Map<String, dynamic>),
-      issueNumber: json['issueNumber'] as String?,
+      issue_number: json['issue_number'] as String?,
       name: json['name'] as String,
-      characterCredits: (json['characterCredits'] as List<dynamic>?)
+      character_credits: (json['character_credits'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
-      personCredits: (json['personCredits'] as List<dynamic>?)
+      person_credits: (json['person_credits'] as List<dynamic>?)
           ?.map((e) => Person.fromJson(e as Map<String, dynamic>))
           .toList(),
-      storeDate: json['storeDate'] == null
+      store_date: json['store_date'] == null
           ? null
-          : DateTime.parse(json['storeDate'] as String),
+          : DateTime.parse(json['store_date'] as String),
       volume: json['volume'] as String?,
     );
 
 Map<String, dynamic> _$ComicToJson(Comic instance) => <String, dynamic>{
-      'characterCredits': instance.characterCredits,
-      'coverDate': instance.coverDate?.toIso8601String(),
+      'character_credits': instance.character_credits,
+      'cover_date': instance.cover_date?.toIso8601String(),
       'description': instance.description,
       'id': instance.id,
       'image': instance.image?.toJson(),
-      'issueNumber': instance.issueNumber,
+      'issue_number': instance.issue_number,
       'name': instance.name,
-      'personCredits': instance.personCredits?.map((e) => e.toJson()).toList(),
-      'storeDate': instance.storeDate?.toIso8601String(),
+      'person_credits':
+          instance.person_credits?.map((e) => e.toJson()).toList(),
+      'store_date': instance.store_date?.toIso8601String(),
       'volume': instance.volume,
     };

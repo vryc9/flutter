@@ -8,7 +8,7 @@ part of 'character_api.dart';
 
 Character _$CharacterFromJson(Map<String, dynamic> json) => Character(
       aliases: json['aliases'] as String?,
-      apiDetailUrl: json['apiDetailUrl'] as String?,
+      api_detail_url: json['api_detail_url'] as String?,
       birth: json['birth'] == null
           ? null
           : DateTime.parse(json['birth'] as String),
@@ -29,13 +29,13 @@ Character _$CharacterFromJson(Map<String, dynamic> json) => Character(
       publisher: json['publisher'] == null
           ? null
           : Person.fromJson(json['publisher'] as Map<String, dynamic>),
-      realName: json['realName'] as String?,
-      siteDetailUrl: json['siteDetailUrl'] as String?,
+      real_name: json['real_name'] as String?,
+      site_detail_url: json['site_detail_url'] as String?,
     );
 
 Map<String, dynamic> _$CharacterToJson(Character instance) => <String, dynamic>{
       'aliases': instance.aliases,
-      'apiDetailUrl': instance.apiDetailUrl,
+      'api_detail_url': instance.api_detail_url,
       'birth': instance.birth?.toIso8601String(),
       'creators': instance.creators?.map((e) => e.toJson()).toList(),
       'deck': instance.deck,
@@ -47,6 +47,6 @@ Map<String, dynamic> _$CharacterToJson(Character instance) => <String, dynamic>{
           instance.issues_died_in?.map((e) => e.toJson()).toList(),
       'name': instance.name,
       'publisher': instance.publisher?.toJson(),
-      'realName': instance.realName,
-      'siteDetailUrl': instance.siteDetailUrl,
+      'real_name': instance.real_name,
+      'site_detail_url': instance.site_detail_url,
     };

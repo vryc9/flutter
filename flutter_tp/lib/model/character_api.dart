@@ -8,7 +8,7 @@ part 'character_api.g.dart';
 @JsonSerializable(explicitToJson: true)
 class Character {
   final String? aliases; // Alias du personnage (séparés par \n)
-  final String? apiDetailUrl; // URL vers les détails du personnage
+  final String? api_detail_url; // URL vers les détails du personnage
   final DateTime? birth; // Date de naissance (si disponible, sinon null)
   final List<Person>? creators; // Liste des créateurs du personnage
   final String? deck; // Résumé bref du personnage
@@ -19,12 +19,12 @@ class Character {
   final List<Comic>? issues_died_in; // Liste des numéros où le personnage meurt
   final String? name; // Nom du personnage
   final Person? publisher; // Éditeur principal du personnage
-  final String? realName; // Nom réel du personnage
-  final String? siteDetailUrl; // URL vers les détails sur Giant Bomb
+  final String? real_name; // Nom réel du personnage
+  final String? site_detail_url; // URL vers les détails sur Giant Bomb
 
   Character(
       {this.aliases,
-      this.apiDetailUrl,
+      this.api_detail_url,
       this.birth,
       this.creators,
       this.deck,
@@ -35,8 +35,8 @@ class Character {
       this.issues_died_in,
       this.name,
       this.publisher,
-      this.realName,
-      this.siteDetailUrl});
+      this.real_name,
+      this.site_detail_url});
 
   //Méthode pour la sérialisation JSON
   factory Character.fromJson(Map<String, dynamic> json) =>
