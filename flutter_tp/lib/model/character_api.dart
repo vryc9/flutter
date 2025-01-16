@@ -1,4 +1,4 @@
-import 'package:flutter_tp/model/creator_api';
+import 'package:flutter_tp/model/creator_api.dart';
 import 'package:flutter_tp/model/image_api.dart';
 import 'package:flutter_tp/model/publisher_api.dart';
 import 'package:flutter_tp/model/small_issue_api.dart';
