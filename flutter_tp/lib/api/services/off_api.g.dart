@@ -183,7 +183,7 @@ class _OFFAPI implements OFFAPI {
   }
 
   @override
-  Future<List<OFFServerResponseComic?>> getAllComics(
+  Future<OFFServerResponseComicList> getAllComics(
     String apiKey,
     String format,
   ) async {
@@ -194,7 +194,7 @@ class _OFFAPI implements OFFAPI {
     };
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<List<OFFServerResponseComic?>>(Options(
+    final _options = _setStreamType<OFFServerResponseComicList>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -210,14 +210,10 @@ class _OFFAPI implements OFFAPI {
           _dio.options.baseUrl,
           baseUrl,
         )));
-    final _result = await _dio.fetch<List<dynamic>>(_options);
-    late List<OFFServerResponseComic?> _value;
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late OFFServerResponseComicList _value;
     try {
-      _value = _result.data!
-          .map((dynamic i) => i == null
-              ? null
-              : OFFServerResponseComic.fromJson(i as Map<String, dynamic>))
-          .toList();
+      _value = OFFServerResponseComicList.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -269,7 +265,7 @@ class _OFFAPI implements OFFAPI {
   }
 
   @override
-  Future<OFFServerResponseSearchComic?> searchComic(
+  Future<OFFServerResponseComicList?> searchComic(
     String apiKey,
     String format,
     String query,
@@ -284,7 +280,7 @@ class _OFFAPI implements OFFAPI {
     };
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<OFFServerResponseSearchComic>(Options(
+    final _options = _setStreamType<OFFServerResponseComicList>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -301,11 +297,11 @@ class _OFFAPI implements OFFAPI {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>?>(_options);
-    late OFFServerResponseSearchComic? _value;
+    late OFFServerResponseComicList? _value;
     try {
       _value = _result.data == null
           ? null
-          : OFFServerResponseSearchComic.fromJson(_result.data!);
+          : OFFServerResponseComicList.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

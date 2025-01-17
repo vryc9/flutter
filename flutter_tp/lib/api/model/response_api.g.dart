@@ -6,6 +6,32 @@ part of 'response_api.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+OFFServerResponseComicList _$OFFServerResponseComicListFromJson(
+        Map<String, dynamic> json) =>
+    OFFServerResponseComicList(
+      (json['results'] as List<dynamic>)
+          .map((e) => Comic.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      json['error'] as String,
+      (json['limit'] as num).toInt(),
+      (json['number_of_page_results'] as num).toInt(),
+      (json['number_of_total_results'] as num).toInt(),
+      (json['offset'] as num).toInt(),
+      (json['status_code'] as num).toInt(),
+    );
+
+Map<String, dynamic> _$OFFServerResponseComicListToJson(
+        OFFServerResponseComicList instance) =>
+    <String, dynamic>{
+      'results': instance.results.map((e) => e.toJson()).toList(),
+      'error': instance.error,
+      'limit': instance.limit,
+      'offset': instance.offset,
+      'number_of_page_results': instance.number_of_page_results,
+      'number_of_total_results': instance.number_of_total_results,
+      'status_code': instance.status_code,
+    };
+
 OFFServerResponseComic _$OFFServerResponseComicFromJson(
         Map<String, dynamic> json) =>
     OFFServerResponseComic(
@@ -70,32 +96,6 @@ OFFServerResponseSearchCharacter _$OFFServerResponseSearchCharacterFromJson(
 
 Map<String, dynamic> _$OFFServerResponseSearchCharacterToJson(
         OFFServerResponseSearchCharacter instance) =>
-    <String, dynamic>{
-      'results': instance.results.map((e) => e.toJson()).toList(),
-      'error': instance.error,
-      'limit': instance.limit,
-      'offset': instance.offset,
-      'number_of_page_results': instance.number_of_page_results,
-      'number_of_total_results': instance.number_of_total_results,
-      'status_code': instance.status_code,
-    };
-
-OFFServerResponseSearchComic _$OFFServerResponseSearchComicFromJson(
-        Map<String, dynamic> json) =>
-    OFFServerResponseSearchComic(
-      (json['results'] as List<dynamic>)
-          .map((e) => Comic.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      json['error'] as String,
-      (json['limit'] as num).toInt(),
-      (json['number_of_page_results'] as num).toInt(),
-      (json['number_of_total_results'] as num).toInt(),
-      (json['offset'] as num).toInt(),
-      (json['status_code'] as num).toInt(),
-    );
-
-Map<String, dynamic> _$OFFServerResponseSearchComicToJson(
-        OFFServerResponseSearchComic instance) =>
     <String, dynamic>{
       'results': instance.results.map((e) => e.toJson()).toList(),
       'error': instance.error,

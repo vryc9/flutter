@@ -6,6 +6,31 @@ import 'package:json_annotation/json_annotation.dart';
 part 'response_api.g.dart';
 
 @JsonSerializable(explicitToJson: true)
+class OFFServerResponseComicList {
+  final List<Comic> results;
+  final String error;
+  final int limit;
+  final int offset;
+  final int number_of_page_results;
+  final int number_of_total_results;
+  final int status_code; // Volume auquel appartient l'issue
+
+  OFFServerResponseComicList(
+      this.results,
+      this.error,
+      this.limit,
+      this.number_of_page_results,
+      this.number_of_total_results,
+      this.offset,
+      this.status_code);
+
+  factory OFFServerResponseComicList.fromJson(Map<String, dynamic> json) =>
+      _$OFFServerResponseComicListFromJson(json);
+
+  Map<String, dynamic> toJson() => _$OFFServerResponseComicListToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
 class OFFServerResponseComic {
   final Comic results;
   final String error;
@@ -80,31 +105,6 @@ class OFFServerResponseSearchCharacter {
 
   Map<String, dynamic> toJson() =>
       _$OFFServerResponseSearchCharacterToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class OFFServerResponseSearchComic {
-  final List<Comic> results;
-  final String error;
-  final int limit;
-  final int offset;
-  final int number_of_page_results;
-  final int number_of_total_results;
-  final int status_code;
-
-  OFFServerResponseSearchComic(
-      this.results,
-      this.error,
-      this.limit,
-      this.number_of_page_results,
-      this.number_of_total_results,
-      this.offset,
-      this.status_code);
-
-  factory OFFServerResponseSearchComic.fromJson(Map<String, dynamic> json) =>
-      _$OFFServerResponseSearchComicFromJson(json);
-
-  Map<String, dynamic> toJson() => _$OFFServerResponseSearchComicToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)

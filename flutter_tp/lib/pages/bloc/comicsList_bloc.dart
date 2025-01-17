@@ -17,7 +17,7 @@ class ComicsListBloc extends Bloc<ComicsListEvent, ComicsListState> {
     Emitter<ComicsListState> emit,
   ) async {
     try {
-      final OFFServerResponseSearchComic? response =
+      final OFFServerResponseComicList? response =
           await OFFAPIManager().searchComics("Butcher");
       emit(ComicsListNotifierLSuccessState(response!));
     } catch (e) {
@@ -31,7 +31,7 @@ sealed class ComicsListState {}
 class ComicsListNotifierLoadingState extends ComicsListState {}
 
 class ComicsListNotifierLSuccessState extends ComicsListState {
-  final OFFServerResponseSearchComic response;
+  final OFFServerResponseComicList response;
 
   ComicsListNotifierLSuccessState(this.response);
 }

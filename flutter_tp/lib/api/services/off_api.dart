@@ -34,7 +34,7 @@ abstract class OFFAPI {
   );
 
   @GET("/issues/")
-  Future<List<OFFServerResponseComic?>> getAllComics(
+  Future<OFFServerResponseComicList> getAllComics(
     @Query("api_key") String apiKey,
     @Query("format") String format,
   );
@@ -47,7 +47,7 @@ abstract class OFFAPI {
   );
 
   @GET("/search/")
-  Future<OFFServerResponseSearchComic?> searchComic(
+  Future<OFFServerResponseComicList?> searchComic(
     @Query("api_key") String apiKey,
     @Query("format") String format,
     @Query("query") String query,
@@ -100,13 +100,11 @@ class OFFAPIManager {
   }
 
   //Méthode pour rechercher un personnage
-  Future<OFFServerResponseSearchComic?> searchComics(
-      String query) async {
+  Future<OFFServerResponseComicList?> searchComics(String query) async {
     try {
       return await api.searchComic(_apiKey, "json", query, "issue");
     } catch (e) {
-      print(
-          "Erreur lors de la récupération de la recherche du personnage : $e");
+      print("Erreur lors de la récupération de la recherche du comic : $e");
       return null;
     }
   }
@@ -120,5 +118,20 @@ class OFFAPIManager {
   Future<EpisodesResponseServer> loadEpisodeList() async {
     return api.loadEpisodeList(
         'c6eabeb68c2dd781df0fc65806e8ed5ab839334c', 'json');
+  }
+
+  //Méthode pour rechercher un comic
+  Future<OFFServerResponseComicList?> searchComic(String query) async {
+    try {
+      return await api.searchComic(_apiKey, "json", query, "issue");
+    } catch (e) {
+      print("Erreur lors de la récupération de la recherche du comic : $e");
+      return null;
+    }
+  }
+
+  //Méthode pour récupérer une liste de comics
+  Future<OFFServerResponseComicList> loadComicsList() async {
+    return api.getAllComics(_apiKey, "json");
   }
 }

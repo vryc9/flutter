@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -15,7 +13,7 @@ class SearchpageTest extends StatelessWidget {
   Widget build(BuildContext context) {
     final double height = MediaQuery.sizeOf(context).height;
 
-     return MultiBlocProvider(
+    return MultiBlocProvider(
       providers: [
         BlocProvider(
           create: (context) => CharacterListBloc(),
@@ -160,7 +158,7 @@ class SearchpageTest extends StatelessWidget {
             const SizedBox(height: 16),
             // Liste horizontale
             SizedBox(
-              height: 202, // Hauteur des cartes
+              height: 230, // Hauteur des cartes
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: items.length,
@@ -213,7 +211,7 @@ class SearchpageTest extends StatelessWidget {
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 8.0),
                             child: Text(
-                              item.name!,
+                              item.name ?? "Pas de nom",
                               style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
