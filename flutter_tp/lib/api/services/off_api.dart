@@ -15,6 +15,10 @@ abstract class OFFAPI {
     @Query("format") String format,
   );
 
+  @GET("/series/4075-{seriesId}/")
+  Future<SerieResponseServer> getSerieById(@Path("seriesId") String seriesId,
+      @Query("api_key") String apiKey, @Query("format") String format);
+
   @GET("/search/")
   Future<OFFServerResponseSearchCharacter?> searchCharacter(
     @Query("api_key") String apiKey,
@@ -25,10 +29,14 @@ abstract class OFFAPI {
 
   @GET(
       '/series_list?api_key=c6eabeb68c2dd781df0fc65806e8ed5ab839334c&format=json')
+  @GET(
+      '/series_list?api_key=c6eabeb68c2dd781df0fc65806e8ed5ab839334c&format=json')
   Future<SerieListResponseServer> loadSeriesList();
 
-  @GET("episodes?api_key=c6eabeb68c2dd781df0fc65806e8ed5ab839334c&format=json")
+  @GET(
+      "/episodes?api_key=c6eabeb68c2dd781df0fc65806e8ed5ab839334c&format=json&filter=series:{seriesId}")
   Future<EpisodesResponseServer> loadEpisodeList(
+    @Path('seriesId') String seriesId,
     @Query('api_key') String apiKey,
     @Query('format') String format,
   );
@@ -114,10 +122,15 @@ class OFFAPIManager {
     return api.loadSeriesList();
   }
 
+  //Méthode pour récupérer une série par ID
+  Future<SerieResponseServer> getSerieById(String id) async {
+    return api.getSerieById(id, _apiKey, "json");
+  }
+
   //Méthode pour récupérer une liste d'épisode
-  Future<EpisodesResponseServer> loadEpisodeList() async {
+  Future<EpisodesResponseServer> loadEpisodeList(String id) async {
     return api.loadEpisodeList(
-        'c6eabeb68c2dd781df0fc65806e8ed5ab839334c', 'json');
+        id, 'c6eabeb68c2dd781df0fc65806e8ed5ab839334c', 'json');
   }
 
   //Méthode pour rechercher un comic

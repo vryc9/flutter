@@ -109,9 +109,8 @@ Map<String, dynamic> _$OFFServerResponseSearchCharacterToJson(
 EpisodesResponseServer _$EpisodesResponseServerFromJson(
         Map<String, dynamic> json) =>
     EpisodesResponseServer(
-      episodesListResponse: (json['episodesListResponse'] as List<dynamic>)
-          .map(
-              (e) => EpisodesResponseServer.fromJson(e as Map<String, dynamic>))
+      results: (json['results'] as List<dynamic>)
+          .map((e) => EpisodesResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
       error: json['error'],
     );
@@ -119,8 +118,7 @@ EpisodesResponseServer _$EpisodesResponseServerFromJson(
 Map<String, dynamic> _$EpisodesResponseServerToJson(
         EpisodesResponseServer instance) =>
     <String, dynamic>{
-      'episodesListResponse':
-          instance.episodesListResponse.map((e) => e.toJson()).toList(),
+      'results': instance.results.map((e) => e.toJson()).toList(),
       'error': instance.error,
     };
 
@@ -137,5 +135,20 @@ Map<String, dynamic> _$SerieListResponseServerToJson(
         SerieListResponseServer instance) =>
     <String, dynamic>{
       'results': instance.results?.map((e) => e.toJson()).toList(),
+      'error': instance.error,
+    };
+
+SerieResponseServer _$SerieResponseServerFromJson(Map<String, dynamic> json) =>
+    SerieResponseServer(
+      results: json['results'] == null
+          ? null
+          : SerieResponse.fromJson(json['results'] as Map<String, dynamic>),
+      error: json['error'],
+    );
+
+Map<String, dynamic> _$SerieResponseServerToJson(
+        SerieResponseServer instance) =>
+    <String, dynamic>{
+      'results': instance.results?.toJson(),
       'error': instance.error,
     };
