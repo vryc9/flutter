@@ -66,6 +66,46 @@ class _OFFAPI implements OFFAPI {
   }
 
   @override
+  Future<SerieResponseServer> getSerieById(
+    String seriesId,
+    String apiKey,
+    String format,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'api_key': apiKey,
+      r'format': format,
+    };
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<SerieResponseServer>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/series/4075-${seriesId}/',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late SerieResponseServer _value;
+    try {
+      _value = SerieResponseServer.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
   Future<OFFServerResponseSearchCharacter?> searchCharacter(
     String apiKey,
     String format,
@@ -145,6 +185,7 @@ class _OFFAPI implements OFFAPI {
 
   @override
   Future<EpisodesResponseServer> loadEpisodeList(
+    String seriesId,
     String apiKey,
     String format,
   ) async {
@@ -162,7 +203,7 @@ class _OFFAPI implements OFFAPI {
     )
         .compose(
           _dio.options,
-          'episodes?api_key=c6eabeb68c2dd781df0fc65806e8ed5ab839334c&format=json',
+          '/episodes?api_key=c6eabeb68c2dd781df0fc65806e8ed5ab839334c&format=json&filter=series:${seriesId}',
           queryParameters: queryParameters,
           data: _data,
         )
