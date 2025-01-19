@@ -4,9 +4,9 @@ part 'episode_api.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class EpisodesResponse {
-  final int episode_number;
-  final String name;
-  final String air_date;
+  final int? episode_number;
+  final String? name;
+  final String? air_date;
 
   EpisodesResponse({
     required this.episode_number,

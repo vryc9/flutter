@@ -1,25 +1,32 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tp/api/model/response_api.dart';
 import 'package:flutter_tp/api/services/off_api.dart';
+import 'package:flutter_tp/model/character_api.dart';
 
 abstract class CharacterListEvent {}
 
-class LoadCharacterListEvent extends CharacterListEvent {}
+class LoadCharacterListEvent extends CharacterListEvent {
+  LoadCharacterListEvent();
+}
 
 class CharacterListBloc extends Bloc<CharacterListEvent, CharacterListState> {
-  CharacterListBloc() : super(CharacterListNotifierLoadingState()) {
-    on<LoadCharacterListEvent>(_loadCharacterList);
+  CharacterListBloc(this.query)
+      : assert(query.isNotEmpty),
+        super(CharacterListNotifierLoadingState()) {
+    on<LoadCharacterListEvent>(_loadCharacter);
     add(LoadCharacterListEvent());
   }
 
-  Future<void> _loadCharacterList(
+  final String query;
+
+  Future<void> _loadCharacter(
     CharacterListEvent event,
     Emitter<CharacterListState> emit,
   ) async {
     try {
       final OFFServerResponseSearchCharacter? response =
-          await OFFAPIManager().searchCharacter("Butcher");
-      emit(CharacterListNotifierLSuccessState(response!));
+          await OFFAPIManager().searchCharacter(query);
+      emit(CharacterListNotifierSuccessState(response!.results));
     } catch (e) {
       emit(CharacterListNotifierErrorState(e));
     }
@@ -30,14 +37,16 @@ sealed class CharacterListState {}
 
 class CharacterListNotifierLoadingState extends CharacterListState {}
 
-class CharacterListNotifierLSuccessState extends CharacterListState {
-  final OFFServerResponseSearchCharacter response;
+class CharacterListNotifierSuccessState extends CharacterListState {
+  final List<Character?> characters;
 
-  CharacterListNotifierLSuccessState(this.response);
+  CharacterListNotifierSuccessState(this.characters);
+
 }
 
 class CharacterListNotifierErrorState extends CharacterListState {
-  final dynamic message;
+  final dynamic error;
 
-  CharacterListNotifierErrorState(this.message);
+  CharacterListNotifierErrorState(this.error);
+
 }

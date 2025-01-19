@@ -9,12 +9,12 @@ part 'character_api.g.dart';
 class Character {
   final String? aliases; // Alias du personnage (séparés par \n)
   final String? api_detail_url; // URL vers les détails du personnage
-  final DateTime? birth; // Date de naissance (si disponible, sinon null)
+  final String? birth; // Date de naissance (si disponible, sinon null)
   final List<Person>? creators; // Liste des créateurs du personnage
   final String? deck; // Résumé bref du personnage
   final String? description; // Description complète du personnage
   final int? gender; // Sexe (Male, Female, Other)
-  final int id; // ID unique du personnage
+  final int? id; // ID unique du personnage
   final ImageAPI? image; // Image principale du personnage
   final List<Comic>? issues_died_in; // Liste des numéros où le personnage meurt
   final String? name; // Nom du personnage

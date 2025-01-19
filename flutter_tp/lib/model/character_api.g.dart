@@ -9,16 +9,14 @@ part of 'character_api.dart';
 Character _$CharacterFromJson(Map<String, dynamic> json) => Character(
       aliases: json['aliases'] as String?,
       api_detail_url: json['api_detail_url'] as String?,
-      birth: json['birth'] == null
-          ? null
-          : DateTime.parse(json['birth'] as String),
+      birth: json['birth'] as String?,
       creators: (json['creators'] as List<dynamic>?)
           ?.map((e) => Person.fromJson(e as Map<String, dynamic>))
           .toList(),
       deck: json['deck'] as String?,
       description: json['description'] as String?,
       gender: (json['gender'] as num?)?.toInt(),
-      id: (json['id'] as num).toInt(),
+      id: (json['id'] as num?)?.toInt(),
       image: json['image'] == null
           ? null
           : ImageAPI.fromJson(json['image'] as Map<String, dynamic>),
@@ -36,7 +34,7 @@ Character _$CharacterFromJson(Map<String, dynamic> json) => Character(
 Map<String, dynamic> _$CharacterToJson(Character instance) => <String, dynamic>{
       'aliases': instance.aliases,
       'api_detail_url': instance.api_detail_url,
-      'birth': instance.birth?.toIso8601String(),
+      'birth': instance.birth,
       'creators': instance.creators?.map((e) => e.toJson()).toList(),
       'deck': instance.deck,
       'description': instance.description,

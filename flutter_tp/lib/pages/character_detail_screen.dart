@@ -42,29 +42,7 @@ class CharacterDetailScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Affichage de l'image si elle est disponible
-                  if (character.results.image != null)
-                    Center(
-                      child: Image.network(
-                        character.results.image!.screen_large_url,
-                        height: 200, // Hauteur personnalisée
-                        fit: BoxFit.cover,
-                        loadingBuilder: (context, child, loadingProgress) {
-                          if (loadingProgress == null) {
-                            return child;
-                          }
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        },
-                        errorBuilder: (context, error, stackTrace) {
-                          return const Icon(
-                            Icons.broken_image,
-                            size: 100,
-                            color: Colors.grey,
-                          );
-                        },
-                      ),
-                    ),
+              
                   const SizedBox(height: 16),
                   // Nom du personnage
                   Text(

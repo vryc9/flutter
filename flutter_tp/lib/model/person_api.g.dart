@@ -7,11 +7,11 @@ part of 'person_api.dart';
 // **************************************************************************
 
 Person _$PersonFromJson(Map<String, dynamic> json) => Person(
-      id: (json['id'] as num).toInt(),
+      id: (json['id'] as num?)?.toInt(),
       image: json['image'] == null
           ? null
           : ImageAPI.fromJson(json['image'] as Map<String, dynamic>),
-      name: json['name'] as String,
+      name: json['name'] as String?,
     );
 
 Map<String, dynamic> _$PersonToJson(Person instance) => <String, dynamic>{

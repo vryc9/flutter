@@ -1,38 +1,64 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tp/pages/character_detail_screen.dart';
-import 'package:flutter_tp/pages/search.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_tp/pages/bloc/charactersList_bloc.dart';
+import 'package:flutter_tp/pages/bloc/comicsList_bloc.dart';
 import 'package:flutter_tp/pages/searchcharactertest.dart';
-import 'package:go_router/go_router.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => CharacterListBloc(""),
+        ),
+        BlocProvider(
+          create: (_) => ComicsListBloc(""),
+        ),
+        // Ajoutez d'autres blocs si nécessaire
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
+  const MyApp({super.key});
 
-  final GoRouter _router = GoRouter(routes: [
-    GoRoute(
-      path: '/',
-      builder: (BuildContext context, GoRouterState state) =>
-          const SearchpageTest(),
-      routes: [
-        GoRoute(
-          path: '/character',
-          builder: (BuildContext context, GoRouterState state) =>
-              const CharacterDetailScreen(characterId: "40553"),
-        ),
-      ],
-    ),
-  ]);
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      routerConfig: _router,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const HomePage(),
+        '/search': (context) => SearchpageTest(),
+      },
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Accueil'),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            // Naviguer vers SearchpageTest
+            Navigator.pushNamed(context, '/search');
+          },
+          child: const Text('Aller à la recherche'),
+        ),
+      ),
     );
   }
 }

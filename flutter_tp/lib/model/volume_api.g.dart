@@ -7,11 +7,11 @@ part of 'volume_api.dart';
 // **************************************************************************
 
 Volume _$VolumeFromJson(Map<String, dynamic> json) => Volume(
-      id: (json['id'] as num).toInt(),
+      id: (json['id'] as num?)?.toInt(),
       image: json['image'] == null
           ? null
           : ImageAPI.fromJson(json['image'] as Map<String, dynamic>),
-      name: json['name'] as String,
+      name: json['name'] as String?,
     );
 
 Map<String, dynamic> _$VolumeToJson(Volume instance) => <String, dynamic>{

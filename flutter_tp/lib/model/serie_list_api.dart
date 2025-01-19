@@ -6,8 +6,8 @@ part 'serie_list_api.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class SerieListResponse {
-  final String name;
-  final ImageAPI image;
+  final String? name;
+  final ImageAPI? image;
   final int? count_of_episodes;
   final String? start_year;
   final Person? publisher;

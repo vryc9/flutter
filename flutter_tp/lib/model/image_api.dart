@@ -4,16 +4,16 @@ part 'image_api.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class ImageAPI {
-  final String icon_url;
-  final String medium_url;
-  final String screen_url;
-  final String screen_large_url;
-  final String small_url;
-  final String super_url;
-  final String thumb_url;
-  final String tiny_url;
-  final String original_url;
-  final String image_tags;
+  final String? icon_url;
+  final String? medium_url;
+  final String? screen_url;
+  final String? screen_large_url;
+  final String? small_url;
+  final String? super_url;
+  final String? thumb_url;
+  final String? tiny_url;
+  final String? original_url;
+  final String? image_tags;
 
   ImageAPI(
       this.icon_url,

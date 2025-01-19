@@ -6,111 +6,214 @@ import 'package:flutter_tp/pages/bloc/comicsList_bloc.dart';
 import 'package:flutter_tp/res/app_colors.dart';
 import 'package:flutter_tp/res/app_svg.dart';
 
-class SearchpageTest extends StatelessWidget {
+class SearchpageTest extends StatefulWidget {
   const SearchpageTest({super.key});
+
+  @override
+  _SearchpageTestState createState() => _SearchpageTestState();
+}
+
+class _SearchpageTestState extends State<SearchpageTest> {
+  final TextEditingController _searchController = TextEditingController();
+  bool _isSearching = false;
+  String _query = "";
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.sizeOf(context).height;
 
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => CharacterListBloc(),
-        ),
-        BlocProvider(
-          create: (context) => ComicsListBloc(),
-        ),
-      ],
-      child: Scaffold(
-        backgroundColor: AppColors.screenBackground,
-        appBar: AppBar(
-          title: const Text('Recherche'),
-          centerTitle: false,
-          backgroundColor: AppColors.screenBackground,
-        ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0),
-            child: Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SvgPicture.asset(AppVectorialImages.astronaut),
-                  SizedBox(height: height * 0.1),
-                  // BlocBuilder pour le premier bloc : Characters
-                  BlocBuilder<CharacterListBloc, CharacterListState>(
-                    builder: (context, state) {
-                      if (state is CharacterListNotifierLoadingState) {
-                        return const CircularProgressIndicator();
-                      } else if (state is CharacterListNotifierLSuccessState) {
-                        final characters = state.response.results;
-                        if (characters == null || characters.isEmpty) {
-                          return const Text(
-                            'Aucun personnage trouvé.',
-                            textAlign: TextAlign.center,
-                          );
-                        }
-                        return _buildSection(
-                          title: "Personnages",
-                          items: characters,
-                          context: context,
-                        );
-                      } else if (state is CharacterListNotifierErrorState) {
-                        return Text(
-                          'Erreur : ${state.message}',
-                          style: const TextStyle(color: Colors.red),
-                        );
-                      }
-
-                      return const Text(
-                        'Saisissez une recherche pour trouver des personnages.',
-                        textAlign: TextAlign.center,
-                      );
-                    },
+    return Scaffold(
+      backgroundColor: AppColors.screenBackground,
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Partie barre de recherche
+              Container(
+                decoration: const BoxDecoration(
+                  color: AppColors.cardBackground,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(16),
+                    bottomRight: Radius.circular(16),
                   ),
-                  const SizedBox(height: 32), // Espacement entre les sections
-                  // BlocBuilder pour le second bloc : Comics
-                  BlocBuilder<ComicsListBloc, ComicsListState>(
-                    builder: (context, state) {
-                      if (state is ComicsListNotifierLoadingState) {
-                        return const CircularProgressIndicator();
-                      } else if (state is ComicsListNotifierLSuccessState) {
-                        final comics = state.response.results;
-                        if (comics == null || comics.isEmpty) {
-                          return const Text(
-                            'Aucun comic trouvé.',
-                            textAlign: TextAlign.center,
-                          );
+                ),
+                margin: const EdgeInsets.symmetric(horizontal: 0),
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    const Text(
+                      'Recherche',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    TextField(
+                      controller: _searchController,
+                      decoration: InputDecoration(
+                        labelText: "Rechercher un personnage",
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      onSubmitted: (query) {
+                        if (query.isNotEmpty) {
+                          setState(() {
+                            _isSearching = true;
+                            _query = query;
+                          });
                         }
-                        return _buildSection(
-                          title: "Comics",
-                          items: comics,
-                          context: context,
-                        );
-                      } else if (state is ComicsListNotifierErrorState) {
-                        return Text(
-                          'Erreur : ${state.message}',
-                          style: const TextStyle(color: Colors.red),
-                        );
-                      }
-
-                      return const Text(
-                        'Saisissez une recherche pour trouver des comics.',
-                        textAlign: TextAlign.center,
-                      );
-                    },
-                  ),
-                  SizedBox(height: height * 0.08),
-                ],
+                      },
+                    ),
+                  ],
+                ),
               ),
-            ),
+              const SizedBox(height: 32),
+
+              // Partie centrale en attendant la recherche (avant que la recherche commence)
+              if (!_isSearching)
+                Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.cardBackground,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  padding: const EdgeInsets.all(16.0),
+                  margin: const EdgeInsets.symmetric(horizontal: 40),
+                  child: Row(
+                    children: [
+                      const Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Saisissez une recherche pour trouver un comic ou un personnage',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      SvgPicture.asset(AppVectorialImages.astronaut),
+                    ],
+                  ),
+                ),
+
+              // Partie quand la recherche est lancée (durant la recherche)
+              if (_isSearching)
+                Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.cardBackground,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  padding: const EdgeInsets.all(16.0),
+                  margin: const EdgeInsets.symmetric(horizontal: 40),
+                  child: Column(
+                    children: [
+                      SvgPicture.asset(AppVectorialImages.astronaut),
+                      const SizedBox(width: 32),
+                      const Text(
+                        'Recherche en cours, merci de patienter...',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                        ),
+                      ),  
+                    ],
+                  ),
+                ),
+
+              // Partie après réception des résultats de l'API
+              if (_isSearching) 
+                MultiBlocProvider(
+                  providers: [
+                    BlocProvider(
+                      create: (context) => CharacterListBloc(_query),
+                    ),
+                    BlocProvider(
+                      create: (context) => ComicsListBloc(_query),
+                    ),
+                  ],
+                  child: Column(
+                    children: [
+                      // BlocBuilder pour les personnages
+                      BlocBuilder<CharacterListBloc, CharacterListState>(
+                        builder: (context, state) {
+                          if (state is CharacterListNotifierSuccessState) {
+                            final characters = state.characters;
+                            if (characters != null && characters.isEmpty) {
+                              return const Text(
+                                'Aucun personnage trouvé.',
+                                textAlign: TextAlign.center,
+                              );
+                            }
+                            return _buildSection(
+                              title: "Personnages",
+                              items: characters,
+                              context: context,
+                            );
+                          } else if (state is CharacterListNotifierErrorState) {
+                            return Text(
+                              'Erreur : ${state.error}',
+                              style: const TextStyle(color: Colors.red),
+                            );
+                          }
+                          return const SizedBox.shrink();
+                        },
+                      ),
+                      const SizedBox(height: 32),
+
+                      // BlocBuilder pour les comics
+                      BlocBuilder<ComicsListBloc, ComicsListState>(
+                        builder: (context, state) {
+                          if (state is ComicsListNotifierSuccessState) {
+                            final Comics = state.Comics;
+                            if (Comics != null && Comics.isEmpty) {
+                              return const Text(
+                                'Aucun comic trouvé.',
+                                textAlign: TextAlign.center,
+                              );
+                            }
+                            return _buildSection(
+                              title: "Comics",
+                              items: Comics,
+                              context: context,
+                            );
+                          } else if (state is ComicsListNotifierErrorState) {
+                            return Text(
+                              'Erreur : ${state.error}',
+                              style: const TextStyle(color: Colors.red),
+                            );
+                          }
+                          return const SizedBox.shrink();
+                        },
+                      ),
+
+                      SizedBox(height: height * 0.08),
+                    ],
+                  ),
+                ),
+            ],
           ),
         ),
       ),
     );
   }
 
+  // Widget des listes (Personnages ou Comics)
   Widget _buildSection({
     required String title,
     required List<dynamic> items,
@@ -133,7 +236,6 @@ class SearchpageTest extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Titre avec un cercle orange
             Row(
               children: [
                 Container(
@@ -156,16 +258,15 @@ class SearchpageTest extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 16),
-            // Liste horizontale
             SizedBox(
-              height: 230, // Hauteur des cartes
+              height: 230,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: items.length,
                 itemBuilder: (context, index) {
                   final item = items[index];
                   return Container(
-                    width: 150, // Largeur de chaque carte
+                    width: 150,
                     margin: const EdgeInsets.symmetric(horizontal: 8),
                     child: Card(
                       color: AppColors.cardElementBackground,
@@ -176,7 +277,6 @@ class SearchpageTest extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // Image
                           ClipRRect(
                             borderRadius: const BorderRadius.only(
                               topLeft: Radius.circular(16),
@@ -206,12 +306,11 @@ class SearchpageTest extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 8),
-                          // Nom
                           Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 8.0),
                             child: Text(
-                              item.name ?? "Pas de nom",
+                              item.name ?? "Nom inconnu",
                               style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,

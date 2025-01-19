@@ -47,9 +47,6 @@ class Searchpage extends StatelessWidget {
                           itemBuilder: (context, index) {
                             final serie = series[index];
                             return ListTile(
-                              leading: serie.image.icon_url != null
-                                  ? Image.network(serie.image.icon_url)
-                                  : const Icon(Icons.image_not_supported),
                               title: Text(serie.name ?? 'Nom non disponible'),
                               subtitle: Text(
                                 serie.publisher?.name ?? 'Éditeur inconnu',

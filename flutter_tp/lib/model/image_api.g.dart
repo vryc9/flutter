@@ -7,16 +7,16 @@ part of 'image_api.dart';
 // **************************************************************************
 
 ImageAPI _$ImageAPIFromJson(Map<String, dynamic> json) => ImageAPI(
-      json['icon_url'] as String,
-      json['medium_url'] as String,
-      json['screen_url'] as String,
-      json['screen_large_url'] as String,
-      json['image_tags'] as String,
-      json['original_url'] as String,
-      json['small_url'] as String,
-      json['super_url'] as String,
-      json['thumb_url'] as String,
-      json['tiny_url'] as String,
+      json['icon_url'] as String?,
+      json['medium_url'] as String?,
+      json['screen_url'] as String?,
+      json['screen_large_url'] as String?,
+      json['image_tags'] as String?,
+      json['original_url'] as String?,
+      json['small_url'] as String?,
+      json['super_url'] as String?,
+      json['thumb_url'] as String?,
+      json['tiny_url'] as String?,
     );
 
 Map<String, dynamic> _$ImageAPIToJson(ImageAPI instance) => <String, dynamic>{
