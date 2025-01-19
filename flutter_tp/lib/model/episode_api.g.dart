@@ -19,3 +19,19 @@ Map<String, dynamic> _$EpisodesResponseToJson(EpisodesResponse instance) =>
       'name': instance.name,
       'air_date': instance.air_date,
     };
+
+EpisodesResponseServer _$EpisodesResponseServerFromJson(
+        Map<String, dynamic> json) =>
+    EpisodesResponseServer(
+      results: (json['results'] as List<dynamic>)
+          .map((e) => EpisodesResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      error: json['error'],
+    );
+
+Map<String, dynamic> _$EpisodesResponseServerToJson(
+        EpisodesResponseServer instance) =>
+    <String, dynamic>{
+      'results': instance.results.map((e) => e.toJson()).toList(),
+      'error': instance.error,
+    };

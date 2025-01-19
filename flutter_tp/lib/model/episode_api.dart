@@ -20,3 +20,19 @@ class EpisodesResponse {
   Map<String, dynamic> toJson() => _$EpisodesResponseToJson(this);
 }
 
+@JsonSerializable(explicitToJson: true)
+class EpisodesResponseServer {
+  final List<EpisodesResponse> results;
+
+  final dynamic error;
+
+  EpisodesResponseServer({
+    required this.results,
+    required this.error,
+  });
+
+  factory EpisodesResponseServer.fromJson(Map<String, dynamic> json) =>
+      _$EpisodesResponseServerFromJson(json);
+
+  Map<String, dynamic> toJson() => _$EpisodesResponseServerToJson(this);
+}
