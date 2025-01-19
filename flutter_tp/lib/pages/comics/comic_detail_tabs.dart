@@ -29,7 +29,7 @@ class ComicDetailTabs extends StatelessWidget {
               ListView(
                 children: comic.person_credits!.isNotEmpty
                     ? comic.person_credits!
-                        .map((author) => ListTile(title: Text(author!.name)))
+                        .map((author) => ListTile(title: Text(author!.name!)))
                         .toList()
                     : [Text('Aucun auteur trouvé.')],
               ),

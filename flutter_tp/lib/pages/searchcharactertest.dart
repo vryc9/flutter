@@ -16,6 +16,7 @@ class SearchpageTest extends StatefulWidget {
 class _SearchpageTestState extends State<SearchpageTest> {
   final TextEditingController _searchController = TextEditingController();
   bool _isSearching = false;
+  bool _isFounded = false;
   String _query = "";
 
   @override
@@ -67,10 +68,19 @@ class _SearchpageTestState extends State<SearchpageTest> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
+                      onChanged: (query) {
+                        // Cette fonction est appelée chaque fois que l'utilisateur tape quelque chose
+                        if (query.isEmpty) {
+                          setState(() {
+                            _isSearching = false;
+                          });
+                        }
+                      },
                       onSubmitted: (query) {
                         if (query.isNotEmpty) {
                           setState(() {
                             _isSearching = true;
+                            _isFounded = false;
                             _query = query;
                           });
                         }
@@ -112,30 +122,6 @@ class _SearchpageTestState extends State<SearchpageTest> {
                   ),
                 ),
 
-              // Partie quand la recherche est lancée (durant la recherche)
-              if (_isSearching)
-                Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.cardBackground,
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  padding: const EdgeInsets.all(16.0),
-                  margin: const EdgeInsets.symmetric(horizontal: 40),
-                  child: Column(
-                    children: [
-                      SvgPicture.asset(AppVectorialImages.astronaut),
-                      const SizedBox(width: 32),
-                      const Text(
-                        'Recherche en cours, merci de patienter...',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
-                        ),
-                      ),  
-                    ],
-                  ),
-                ),
-
               // Partie après réception des résultats de l'API
               if (_isSearching) 
                 MultiBlocProvider(
@@ -153,11 +139,27 @@ class _SearchpageTestState extends State<SearchpageTest> {
                       BlocBuilder<CharacterListBloc, CharacterListState>(
                         builder: (context, state) {
                           if (state is CharacterListNotifierSuccessState) {
+                            _isFounded = true;
                             final characters = state.characters;
                             if (characters != null && characters.isEmpty) {
-                              return const Text(
-                                'Aucun personnage trouvé.',
-                                textAlign: TextAlign.center,
+                              return Container(
+                                decoration: BoxDecoration(
+                                  color: AppColors.cardBackground,
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                                padding: const EdgeInsets.all(16.0),
+                                margin: const EdgeInsets.symmetric(horizontal: 40),
+                                child: const Column(
+                                  children: [
+                                    const Text(
+                                      'Aucun personnage trouvé.',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.white,
+                                      ),
+                                    ),  
+                                  ],
+                                ),
                               );
                             }
                             return _buildSection(
@@ -180,16 +182,32 @@ class _SearchpageTestState extends State<SearchpageTest> {
                       BlocBuilder<ComicsListBloc, ComicsListState>(
                         builder: (context, state) {
                           if (state is ComicsListNotifierSuccessState) {
-                            final Comics = state.Comics;
-                            if (Comics != null && Comics.isEmpty) {
-                              return const Text(
-                                'Aucun comic trouvé.',
-                                textAlign: TextAlign.center,
+                            _isFounded = true;
+                            final comics = state.Comics;
+                            if (comics != null && comics.isEmpty) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                  color: AppColors.cardBackground,
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                                padding: const EdgeInsets.all(16.0),
+                                margin: const EdgeInsets.symmetric(horizontal: 40),
+                                child: const Column(
+                                  children: [
+                                    Text(
+                                      'Aucun Comic trouvé.',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.white,
+                                      ),
+                                    ),  
+                                  ],
+                                ),
                               );
                             }
                             return _buildSection(
                               title: "Comics",
-                              items: Comics,
+                              items: comics,
                               context: context,
                             );
                           } else if (state is ComicsListNotifierErrorState) {
@@ -206,6 +224,32 @@ class _SearchpageTestState extends State<SearchpageTest> {
                     ],
                   ),
                 ),
+
+              // Partie quand la recherche est lancée (durant la recherche)
+              if (_isSearching) 
+                if(!_isFounded)
+                  Container(
+                    decoration: BoxDecoration(
+                      color: AppColors.cardBackground,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    padding: const EdgeInsets.all(16.0),
+                    margin: const EdgeInsets.symmetric(horizontal: 40),
+                    child: Column(
+                      children: [
+                        SvgPicture.asset(AppVectorialImages.astronaut),
+                        const SizedBox(width: 32),
+                        const Text(
+                          'Recherche en cours, merci de patienter...',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                          ),
+                        ),  
+                      ],
+                    ),
+                  ),
+
             ],
           ),
         ),
