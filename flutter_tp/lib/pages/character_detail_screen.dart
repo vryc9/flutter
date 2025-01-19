@@ -76,7 +76,7 @@ class CharacterDetailScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    character.results.issues_died_in!.firstOrNull!.name,
+                    character.results.issues_died_in!.firstOrNull!.name!,
                     style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
