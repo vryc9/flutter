@@ -79,12 +79,12 @@ class SearchpageTest extends StatelessWidget {
                         final comics = state.response.results;
                         if (comics == null || comics.isEmpty) {
                           return const Text(
-                            'Aucune bande dessinée trouvée.',
+                            'Aucun comic trouvé.',
                             textAlign: TextAlign.center,
                           );
                         }
                         return _buildSection(
-                          title: "Bandes Dessinées",
+                          title: "Comics",
                           items: comics,
                           context: context,
                         );
@@ -96,7 +96,7 @@ class SearchpageTest extends StatelessWidget {
                       }
 
                       return const Text(
-                        'Saisissez une recherche pour trouver des bandes dessinées.',
+                        'Saisissez une recherche pour trouver des comics.',
                         textAlign: TextAlign.center,
                       );
                     },
