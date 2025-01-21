@@ -6,14 +6,14 @@ import 'package:flutter_tp/pages/bloc/comicsList_bloc.dart';
 import 'package:flutter_tp/res/app_colors.dart';
 import 'package:flutter_tp/res/app_svg.dart';
 
-class SearchpageTest extends StatefulWidget {
-  const SearchpageTest({super.key});
+class SearchScreen extends StatefulWidget {
+  const SearchScreen({super.key});
 
   @override
-  _SearchpageTestState createState() => _SearchpageTestState();
+  _SearchScreenState createState() => _SearchScreenState();
 }
 
-class _SearchpageTestState extends State<SearchpageTest> {
+class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController _searchController = TextEditingController();
   bool _isSearching = false;
   bool _isFounded = false;
@@ -61,20 +61,29 @@ class _SearchpageTestState extends State<SearchpageTest> {
                     TextField(
                       controller: _searchController,
                       decoration: InputDecoration(
-                        labelText: "Rechercher un personnage",
+                        labelText: 'Personnage, Comic...',
                         filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
+                        labelStyle: TextStyle(color: AppColors.bottomBarTextUnselected),
+                        suffixIcon: const Icon(
+                          Icons.search,
+                          color: AppColors.bottomBarTextUnselected, 
+                          ), 
+                        fillColor: AppColors.screenBackground,
+                        enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(color: AppColors.bottomBarTextSelected), // Couleur de la bordure non focussée
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(color: AppColors.bottomBarTextUnselected), // Couleur de la bordure focussée
                         ),
                       ),
+                      style: const TextStyle(color: Colors.white),
                       onChanged: (query) {
                         // Cette fonction est appelée chaque fois que l'utilisateur tape quelque chose
-                        if (query.isEmpty) {
-                          setState(() {
-                            _isSearching = false;
-                          });
-                        }
+                        setState(() {
+                          _isSearching = false;
+                        });
                       },
                       onSubmitted: (query) {
                         if (query.isNotEmpty) {

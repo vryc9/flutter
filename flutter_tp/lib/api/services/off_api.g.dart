@@ -110,6 +110,7 @@ class _OFFAPI implements OFFAPI {
     String apiKey,
     String format,
     String query,
+    String limit,
     String resources,
   ) async {
     final _extra = <String, dynamic>{};
@@ -117,6 +118,7 @@ class _OFFAPI implements OFFAPI {
       r'api_key': apiKey,
       r'format': format,
       r'query': query,
+      r'limit': limit,
       r'resources': resources,
     };
     final _headers = <String, dynamic>{};
@@ -310,6 +312,7 @@ class _OFFAPI implements OFFAPI {
     String apiKey,
     String format,
     String query,
+    String limit,
     String resources,
   ) async {
     final _extra = <String, dynamic>{};
@@ -317,6 +320,7 @@ class _OFFAPI implements OFFAPI {
       r'api_key': apiKey,
       r'format': format,
       r'query': query,
+      r'limit': limit,
       r'resources': resources,
     };
     final _headers = <String, dynamic>{};

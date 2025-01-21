@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tp/pages/bloc/charactersList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/comicsList_bloc.dart';
-import 'package:flutter_tp/pages/searchcharactertest.dart';
+import 'package:flutter_tp/pages/search_screen.dart';
 
 void main() {
   runApp(
@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const HomePage(),
-        '/search': (context) => SearchpageTest(),
+        '/search': (context) => const SearchScreen(),
       },
     );
   }
