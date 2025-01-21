@@ -16,14 +16,26 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController _searchController = TextEditingController();
   bool _isSearching = false;
-  bool _isFounded = false;
+  bool _isFoundedCharacter = false;
+  bool _isFoundedComic = false;
   String _query = "";
 
   @override
   void initState() {
     super.initState();
   }
+  
+ // Méthode asynchrone pour observer les deux booléens et attendre avant de mettre à jour
+  Future<void> _makeInvisible() async {
+    await Future.delayed(const Duration(seconds: 3));
 
+    // Met à jour l'état uniquement après l'attente
+    setState(() {
+      _isFoundedCharacter = true;
+      _isFoundedComic = true;
+    });
+  }
+  
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.sizeOf(context).height;
@@ -89,9 +101,11 @@ class _SearchScreenState extends State<SearchScreen> {
                         if (query.isNotEmpty) {
                           setState(() {
                             _isSearching = true;
-                            _isFounded = false;
+                            _isFoundedCharacter = false;
+                            _isFoundedComic = false;
                             _query = query;
                           });
+                          _makeInvisible();
                         }
                       },
                     ),
@@ -148,7 +162,6 @@ class _SearchScreenState extends State<SearchScreen> {
                       BlocBuilder<CharacterListBloc, CharacterListState>(
                         builder: (context, state) {
                           if (state is CharacterListNotifierSuccessState) {
-                            _isFounded = true;
                             final characters = state.characters;
                             if (characters != null && characters.isEmpty) {
                               return Container(
@@ -191,7 +204,6 @@ class _SearchScreenState extends State<SearchScreen> {
                       BlocBuilder<ComicsListBloc, ComicsListState>(
                         builder: (context, state) {
                           if (state is ComicsListNotifierSuccessState) {
-                            _isFounded = true;
                             final comics = state.Comics;
                             if (comics != null && comics.isEmpty) {
                               return Container(
@@ -228,16 +240,16 @@ class _SearchScreenState extends State<SearchScreen> {
                           return const SizedBox.shrink();
                         },
                       ),
-
                       SizedBox(height: height * 0.08),
                     ],
                   ),
                 ),
-
+              
               // Partie quand la recherche est lancée (durant la recherche)
-              if (_isSearching) 
-                if(!_isFounded)
-                  Container(
+              if (_isSearching)
+                Visibility(
+                  visible: !_isFoundedCharacter & !_isFoundedComic,
+                  child: Container(
                     decoration: BoxDecoration(
                       color: AppColors.cardBackground,
                       borderRadius: BorderRadius.circular(16),
@@ -258,7 +270,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       ],
                     ),
                   ),
-
+                ),
             ],
           ),
         ),
