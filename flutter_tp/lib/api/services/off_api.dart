@@ -28,14 +28,14 @@ abstract class OFFAPI {
     @Query("resources") String resources,
   );
 
-  @GET(
-      '/series_list?api_key=c6eabeb68c2dd781df0fc65806e8ed5ab839334c&format=json')
-  @GET(
-      '/series_list?api_key=c6eabeb68c2dd781df0fc65806e8ed5ab839334c&format=json')
-  Future<SerieListResponseServer> loadSeriesList();
+  @GET('/series_list/')
+  Future<SerieListResponseServer> loadSeriesList(
+    @Query("api_key") String apiKey,
+    @Query("format") String format,
+    @Query('limit') String limit,
+  );
 
-  @GET(
-      "/episodes?api_key=c6eabeb68c2dd781df0fc65806e8ed5ab839334c&format=json&filter=series:{seriesId}")
+  @GET("/episodes/")
   Future<EpisodesResponseServer> loadEpisodeList(
     @Path('seriesId') String seriesId,
     @Query('api_key') String apiKey,
@@ -75,6 +75,7 @@ class OFFAPIManager {
   }
 
   final OFFAPI api;
+  //léane
   final String _apiKey = "8d2e74d3727e2c7edc9f8d43e96ba96a0ab6afaa";
 
   OFFAPIManager._()
@@ -121,7 +122,7 @@ class OFFAPIManager {
 
   //Méthode pour récupérer une liste de série
   Future<SerieListResponseServer> loadSeriesList() async {
-    return api.loadSeriesList();
+    return api.loadSeriesList(_apiKey, "json", "15");
   }
 
   //Méthode pour récupérer une série par ID

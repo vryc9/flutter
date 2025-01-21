@@ -5,9 +5,9 @@ part 'volume_api.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class Volume {
-  final int? id; // ID unique de l'issue
-  final ImageAPI? image; // Image principale de l'issue
-  final String? name; // Nom de l'issue
+  final int? id;
+  final ImageAPI? image;
+  final String? name;
 
   Volume({
     required this.id,

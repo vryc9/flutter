@@ -9,15 +9,15 @@ part 'comic_api.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class Comic {
-  final List<Character?>? character_credits; // Liste des personnages présent
-  final String? description; // Description détaillée
-  final int? id; // ID unique de l'issue
-  final ImageAPI? image; // Image principale de l'issue
-  final String? issue_number; // Numéro de l'issue
-  final String? name; // Nom de l'issue
-  final List<Person?>? person_credits; // Personnes ayant travaillé sur l'issue
-  final String? store_date; // Date de sortie en magasin
-  final Volume? volume; // Volume auquel appartient l'issue
+  final List<Character?>? character_credits; 
+  final String? description;
+  final int? id;
+  final ImageAPI? image;
+  final String? issue_number;
+  final String? name;
+  final List<Person?>? person_credits;
+  final String? store_date;
+  final Volume? volume;
 
   Comic(
       {this.description,

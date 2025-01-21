@@ -19,9 +19,11 @@ class SerieListResponse {
     required this.publisher,
   });
 
+  // Généré automatiquement par json_serializable
   factory SerieListResponse.fromJson(Map<String, dynamic> json) =>
       _$SerieListResponseFromJson(json);
 
+  // Généré automatiquement par json_serializable
   Map<String, dynamic> toJson() => _$SerieListResponseToJson(this);
 }
 

@@ -8,8 +8,10 @@ part of 'series_api.dart';
 
 SerieResponse _$SerieResponseFromJson(Map<String, dynamic> json) =>
     SerieResponse(
-      name: json['name'] as String,
-      image: ImageAPI.fromJson(json['image'] as Map<String, dynamic>),
+      name: json['name'] as String?,
+      image: json['image'] == null
+          ? null
+          : ImageAPI.fromJson(json['image'] as Map<String, dynamic>),
       count_of_episodes: (json['count_of_episodes'] as num?)?.toInt(),
       publisher: json['publisher'] == null
           ? null
@@ -23,7 +25,7 @@ SerieResponse _$SerieResponseFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$SerieResponseToJson(SerieResponse instance) =>
     <String, dynamic>{
       'name': instance.name,
-      'image': instance.image.toJson(),
+      'image': instance.image?.toJson(),
       'count_of_episodes': instance.count_of_episodes,
       'publisher': instance.publisher?.toJson(),
       'characters': instance.characters?.map((e) => e.toJson()).toList(),

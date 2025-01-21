@@ -38,9 +38,9 @@ sealed class ComicsSearchListState {}
 class ComicsSearchListNotifierLoadingState extends ComicsSearchListState {}
 
 class ComicsSearchListNotifierSuccessState extends ComicsSearchListState {
-  final List<Comic?> Comics;
+  final List<Comic?> comics;
 
-  ComicsSearchListNotifierSuccessState(this.Comics);
+  ComicsSearchListNotifierSuccessState(this.comics);
 
 }
 

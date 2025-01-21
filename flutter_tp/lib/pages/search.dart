@@ -14,7 +14,7 @@ class Searchpage extends StatelessWidget {
     final double height = MediaQuery.sizeOf(context).height;
 
     return BlocProvider(
-      create: (context) => SerieslistBloc(),
+      create: (context) => SeriesListBloc(),
       child: Scaffold(
         appBar: AppBar(
           title: const Text('RECHERCHE'),
@@ -28,7 +28,7 @@ class Searchpage extends StatelessWidget {
               children: [
                 SvgPicture.asset(AppVectorialImages.astronaut),
                 SizedBox(height: height * 0.1),
-                BlocBuilder<SerieslistBloc, SeriesListState>(
+                BlocBuilder<SeriesListBloc, SeriesListState>(
                   builder: (context, state) {
                     if (state is SeriesListNotifierLoadingState) {
                       return const CircularProgressIndicator();

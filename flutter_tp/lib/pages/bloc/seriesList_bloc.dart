@@ -6,8 +6,8 @@ abstract class SeriesListEvent {}
 
 class LoadSeriesListEvent extends SeriesListEvent {}
 
-class SerieslistBloc extends Bloc<SeriesListEvent, SeriesListState> {
-  SerieslistBloc() : super(SeriesListNotifierLoadingState()) {
+class SeriesListBloc extends Bloc<SeriesListEvent, SeriesListState> {
+  SeriesListBloc() : super(SeriesListNotifierLoadingState()) {
     on<LoadSeriesListEvent>(_loadSeriesList);
     add(LoadSeriesListEvent());
   }

@@ -153,9 +153,17 @@ class _OFFAPI implements OFFAPI {
   }
 
   @override
-  Future<SerieListResponseServer> loadSeriesList() async {
+  Future<SerieListResponseServer> loadSeriesList(
+    String apiKey,
+    String format,
+    String limit,
+  ) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'api_key': apiKey,
+      r'format': format,
+      r'limit': limit,
+    };
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<SerieListResponseServer>(Options(
@@ -165,7 +173,7 @@ class _OFFAPI implements OFFAPI {
     )
         .compose(
           _dio.options,
-          '/series_list?api_key=c6eabeb68c2dd781df0fc65806e8ed5ab839334c&format=json',
+          '/series_list/',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -205,7 +213,7 @@ class _OFFAPI implements OFFAPI {
     )
         .compose(
           _dio.options,
-          '/episodes?api_key=c6eabeb68c2dd781df0fc65806e8ed5ab839334c&format=json&filter=series:${seriesId}',
+          '/episodes/',
           queryParameters: queryParameters,
           data: _data,
         )

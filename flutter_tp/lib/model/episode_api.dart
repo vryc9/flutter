@@ -31,8 +31,10 @@ class EpisodesResponseServer {
     required this.error,
   });
 
+  // Généré automatiquement par json_serializable
   factory EpisodesResponseServer.fromJson(Map<String, dynamic> json) =>
       _$EpisodesResponseServerFromJson(json);
 
+  // Généré automatiquement par json_serializable
   Map<String, dynamic> toJson() => _$EpisodesResponseServerToJson(this);
 }

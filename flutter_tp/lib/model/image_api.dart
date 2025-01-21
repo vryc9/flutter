@@ -27,8 +27,10 @@ class ImageAPI {
       this.thumb_url,
       this.tiny_url);
 
+  // Généré automatiquement par json_serializable
   factory ImageAPI.fromJson(Map<String, dynamic> json) =>
       _$ImageAPIFromJson(json);
 
+  // Généré automatiquement par json_serializable
   Map<String, dynamic> toJson() => _$ImageAPIToJson(this);
 }

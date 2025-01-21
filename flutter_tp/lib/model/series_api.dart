@@ -7,8 +7,8 @@ part 'series_api.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class SerieResponse {
-  final String name;
-  final ImageAPI image;
+  final String? name;
+  final ImageAPI? image;
   final int? count_of_episodes;
   final Person? publisher;
   final List<Character>? characters;
@@ -22,8 +22,10 @@ class SerieResponse {
       required this.characters,
       required this.deck});
 
+  // Généré automatiquement par json_serializable
   factory SerieResponse.fromJson(Map<String, dynamic> json) =>
       _$SerieResponseFromJson(json);
 
+  // Généré automatiquement par json_serializable
   Map<String, dynamic> toJson() => _$SerieResponseToJson(this);
 }

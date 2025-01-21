@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_tp/pages/bloc/charactersList_bloc.dart';
-import 'package:flutter_tp/pages/bloc/comicsList_bloc.dart';
+import 'package:flutter_tp/pages/bloc/charactersSearchList_bloc.dart';
+import 'package:flutter_tp/pages/bloc/comicsSearchList_bloc.dart';
 import 'package:flutter_tp/res/app_colors.dart';
 import 'package:flutter_tp/res/app_svg.dart';
+import 'package:flutter_tp/widgets/horizontal_list.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -24,12 +25,9 @@ class _SearchScreenState extends State<SearchScreen> {
   void initState() {
     super.initState();
   }
-  
- // Méthode asynchrone pour observer les deux booléens et attendre avant de mettre à jour
+
   Future<void> _makeInvisible() async {
     await Future.delayed(const Duration(seconds: 3));
-
-    // Met à jour l'état uniquement après l'attente
     setState(() {
       _isFoundedCharacter = true;
       _isFoundedComic = true;
@@ -47,7 +45,6 @@ class _SearchScreenState extends State<SearchScreen> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Partie barre de recherche
               Container(
                 decoration: const BoxDecoration(
                   color: AppColors.cardBackground,
@@ -83,16 +80,15 @@ class _SearchScreenState extends State<SearchScreen> {
                         fillColor: AppColors.screenBackground,
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
-                          borderSide: const BorderSide(color: AppColors.bottomBarTextSelected), // Couleur de la bordure non focussée
+                          borderSide: const BorderSide(color: AppColors.bottomBarTextSelected),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
-                          borderSide: const BorderSide(color: AppColors.bottomBarTextUnselected), // Couleur de la bordure focussée
+                          borderSide: const BorderSide(color: AppColors.bottomBarTextUnselected),
                         ),
                       ),
                       style: const TextStyle(color: Colors.white),
                       onChanged: (query) {
-                        // Cette fonction est appelée chaque fois que l'utilisateur tape quelque chose
                         setState(() {
                           _isSearching = false;
                         });
@@ -114,7 +110,6 @@ class _SearchScreenState extends State<SearchScreen> {
               ),
               const SizedBox(height: 32),
 
-              // Partie centrale en attendant la recherche (avant que la recherche commence)
               if (!_isSearching)
                 Container(
                   decoration: BoxDecoration(
@@ -145,7 +140,6 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                 ),
 
-              // Partie après réception des résultats de l'API
               if (_isSearching) 
                 MultiBlocProvider(
                   providers: [
@@ -184,10 +178,9 @@ class _SearchScreenState extends State<SearchScreen> {
                                 ),
                               );
                             }
-                            return _buildSection(
+                            return HorizontalListWidget(
                               title: "Personnages",
                               items: characters,
-                              context: context,
                             );
                           } else if (state is CharacterSearchListNotifierErrorState) {
                             return Text(
@@ -204,7 +197,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       BlocBuilder<ComicsSearchListBloc, ComicsSearchListState>(
                         builder: (context, state) {
                           if (state is ComicsSearchListNotifierSuccessState) {
-                            final comics = state.Comics;
+                            final comics = state.comics;
                             if (comics != null && comics.isEmpty) {
                               return Container(
                                 decoration: BoxDecoration(
@@ -226,10 +219,9 @@ class _SearchScreenState extends State<SearchScreen> {
                                 ),
                               );
                             }
-                            return _buildSection(
+                            return HorizontalListWidget(
                               title: "Comics",
                               items: comics,
-                              context: context,
                             );
                           } else if (state is ComicsSearchListNotifierErrorState) {
                             return Text(
@@ -245,7 +237,6 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                 ),
               
-              // Partie quand la recherche est lancée (durant la recherche)
               if (_isSearching)
                 Visibility(
                   visible: !_isFoundedCharacter & !_isFoundedComic,
@@ -273,125 +264,6 @@ class _SearchScreenState extends State<SearchScreen> {
                 ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  // Widget des listes (Personnages ou Comics)
-  Widget _buildSection({
-    required String title,
-    required List<dynamic> items,
-    required BuildContext context,
-  }) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.cardBackground,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.2),
-            blurRadius: 8,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Container(
-                  width: 10,
-                  height: 10,
-                  decoration: const BoxDecoration(
-                    color: AppColors.orange,
-                    shape: BoxShape.circle,
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            SizedBox(
-              height: 230,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: items.length,
-                itemBuilder: (context, index) {
-                  final item = items[index];
-                  return Container(
-                    width: 150,
-                    margin: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Card(
-                      color: AppColors.cardElementBackground,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      elevation: 4,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(16),
-                              topRight: Radius.circular(16),
-                            ),
-                            child: Image.network(
-                              item.image.screen_large_url!,
-                              height: 150,
-                              width: double.infinity,
-                              fit: BoxFit.cover,
-                              loadingBuilder:
-                                  (context, child, loadingProgress) {
-                                if (loadingProgress == null) return child;
-                                return const Center(
-                                  child: CircularProgressIndicator(),
-                                );
-                              },
-                              errorBuilder: (context, error, stackTrace) {
-                                return const Center(
-                                  child: Icon(
-                                    Icons.broken_image,
-                                    color: AppColors.cardElementBackground,
-                                    size: 40,
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Text(
-                              item.name ?? "Nom inconnu",
-                              style: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                              textAlign: TextAlign.left,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-          ],
         ),
       ),
     );

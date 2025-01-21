@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_tp/pages/bloc/charactersList_bloc.dart';
-import 'package:flutter_tp/pages/bloc/comicsList_bloc.dart';
+import 'package:flutter_tp/pages/bloc/charactersSearchList_bloc.dart';
+import 'package:flutter_tp/pages/bloc/comicsSearchList_bloc.dart';
+import 'package:flutter_tp/pages/bloc/seriesList_bloc.dart';
+import 'package:flutter_tp/pages/home_screen.dart';
 import 'package:flutter_tp/pages/search_screen.dart';
 
 void main() {
@@ -14,7 +16,9 @@ void main() {
         BlocProvider(
           create: (_) => ComicsSearchListBloc(""),
         ),
-        // Ajoutez d'autres blocs si nécessaire
+        BlocProvider(
+          create: (_) => SeriesListBloc(),
+        ),
       ],
       child: const MyApp(),
     ),
@@ -34,7 +38,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => const HomePage(),
+        '/': (context) => const HomeScreen(),
         '/search': (context) => const SearchScreen(),
       },
     );
@@ -53,7 +57,6 @@ class HomePage extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           onPressed: () {
-            // Naviguer vers SearchpageTest
             Navigator.pushNamed(context, '/search');
           },
           child: const Text('Aller à la recherche'),

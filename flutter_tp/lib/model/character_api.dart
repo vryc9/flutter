@@ -7,20 +7,20 @@ part 'character_api.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class Character {
-  final String? aliases; // Alias du personnage (séparés par \n)
-  final String? api_detail_url; // URL vers les détails du personnage
-  final String? birth; // Date de naissance (si disponible, sinon null)
-  final List<Person>? creators; // Liste des créateurs du personnage
-  final String? deck; // Résumé bref du personnage
-  final String? description; // Description complète du personnage
-  final int? gender; // Sexe (Male, Female, Other)
-  final int? id; // ID unique du personnage
-  final ImageAPI? image; // Image principale du personnage
-  final List<Comic>? issues_died_in; // Liste des numéros où le personnage meurt
-  final String? name; // Nom du personnage
-  final Person? publisher; // Éditeur principal du personnage
-  final String? real_name; // Nom réel du personnage
-  final String? site_detail_url; // URL vers les détails sur Giant Bomb
+  final String? aliases;
+  final String? api_detail_url;
+  final String? birth;
+  final List<Person>? creators;
+  final String? deck;
+  final String? description;
+  final int? gender;
+  final int? id;
+  final ImageAPI? image;
+  final List<Comic>? issues_died_in;
+  final String? name;
+  final Person? publisher; 
+  final String? real_name;
+  final String? site_detail_url;
 
   Character(
       {this.aliases,
@@ -38,9 +38,10 @@ class Character {
       this.real_name,
       this.site_detail_url});
 
-  //Méthode pour la sérialisation JSON
+  // Généré automatiquement par json_serializable
   factory Character.fromJson(Map<String, dynamic> json) =>
       _$CharacterFromJson(json);
 
+  // Généré automatiquement par json_serializable
   Map<String, dynamic> toJson() => _$CharacterToJson(this);
 }

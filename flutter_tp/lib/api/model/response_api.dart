@@ -15,7 +15,7 @@ class OFFServerResponseComicList {
   final int offset;
   final int number_of_page_results;
   final int number_of_total_results;
-  final int status_code; // Volume auquel appartient l'issue
+  final int status_code;
 
   OFFServerResponseComicList(
       this.results,
@@ -40,7 +40,7 @@ class OFFServerResponseComic {
   final int offset;
   final int number_of_page_results;
   final int number_of_total_results;
-  final int status_code; // Volume auquel appartient l'issue
+  final int status_code;
 
   OFFServerResponseComic(
       this.results,
