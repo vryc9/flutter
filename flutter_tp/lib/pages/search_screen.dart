@@ -150,18 +150,18 @@ class _SearchScreenState extends State<SearchScreen> {
                 MultiBlocProvider(
                   providers: [
                     BlocProvider(
-                      create: (context) => CharacterListBloc(_query),
+                      create: (context) => CharacterSearchListBloc(_query),
                     ),
                     BlocProvider(
-                      create: (context) => ComicsListBloc(_query),
+                      create: (context) => ComicsSearchListBloc(_query),
                     ),
                   ],
                   child: Column(
                     children: [
                       // BlocBuilder pour les personnages
-                      BlocBuilder<CharacterListBloc, CharacterListState>(
+                      BlocBuilder<CharacterSearchListBloc, CharacterSearchListState>(
                         builder: (context, state) {
-                          if (state is CharacterListNotifierSuccessState) {
+                          if (state is CharacterSearchListNotifierSuccessState) {
                             final characters = state.characters;
                             if (characters != null && characters.isEmpty) {
                               return Container(
@@ -189,7 +189,7 @@ class _SearchScreenState extends State<SearchScreen> {
                               items: characters,
                               context: context,
                             );
-                          } else if (state is CharacterListNotifierErrorState) {
+                          } else if (state is CharacterSearchListNotifierErrorState) {
                             return Text(
                               'Erreur : ${state.error}',
                               style: const TextStyle(color: Colors.red),
@@ -201,9 +201,9 @@ class _SearchScreenState extends State<SearchScreen> {
                       const SizedBox(height: 32),
 
                       // BlocBuilder pour les comics
-                      BlocBuilder<ComicsListBloc, ComicsListState>(
+                      BlocBuilder<ComicsSearchListBloc, ComicsSearchListState>(
                         builder: (context, state) {
-                          if (state is ComicsListNotifierSuccessState) {
+                          if (state is ComicsSearchListNotifierSuccessState) {
                             final comics = state.Comics;
                             if (comics != null && comics.isEmpty) {
                               return Container(
@@ -231,7 +231,7 @@ class _SearchScreenState extends State<SearchScreen> {
                               items: comics,
                               context: context,
                             );
-                          } else if (state is ComicsListNotifierErrorState) {
+                          } else if (state is ComicsSearchListNotifierErrorState) {
                             return Text(
                               'Erreur : ${state.error}',
                               style: const TextStyle(color: Colors.red),

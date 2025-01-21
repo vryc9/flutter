@@ -9,10 +9,10 @@ void main() {
     MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (_) => CharacterListBloc(""),
+          create: (_) => CharacterSearchListBloc(""),
         ),
         BlocProvider(
-          create: (_) => ComicsListBloc(""),
+          create: (_) => ComicsSearchListBloc(""),
         ),
         // Ajoutez d'autres blocs si nécessaire
       ],

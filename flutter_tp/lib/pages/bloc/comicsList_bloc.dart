@@ -3,50 +3,50 @@ import 'package:flutter_tp/api/model/response_api.dart';
 import 'package:flutter_tp/api/services/off_api.dart';
 import 'package:flutter_tp/model/comic_api.dart';
 
-abstract class ComicsListEvent {}
+abstract class ComicsSearchListEvent {}
 
-class LoadComicsListEvent extends ComicsListEvent {
-  LoadComicsListEvent();
+class LoadComicsSearchListEvent extends ComicsSearchListEvent {
+  LoadComicsSearchListEvent();
 }
 
-class ComicsListBloc extends Bloc<ComicsListEvent, ComicsListState> {
-  ComicsListBloc(this.query)
+class ComicsSearchListBloc extends Bloc<ComicsSearchListEvent, ComicsSearchListState> {
+  ComicsSearchListBloc(this.query)
       : assert(query.isNotEmpty),
-        super(ComicsListNotifierLoadingState()) {
-    on<LoadComicsListEvent>(_loadComics);
-    add(LoadComicsListEvent());
+        super(ComicsSearchListNotifierLoadingState()) {
+    on<LoadComicsSearchListEvent>(_loadComics);
+    add(LoadComicsSearchListEvent());
   }
 
   final String query;
 
   Future<void> _loadComics(
-    ComicsListEvent event,
-    Emitter<ComicsListState> emit,
+    ComicsSearchListEvent event,
+    Emitter<ComicsSearchListState> emit,
   ) async {
     try {
       final OFFServerResponseComicList? response =
           await OFFAPIManager().searchComics(query);
-      emit(ComicsListNotifierSuccessState(response!.results));
+      emit(ComicsSearchListNotifierSuccessState(response!.results));
     } catch (e) {
-      emit(ComicsListNotifierErrorState(e));
+      emit(ComicsSearchListNotifierErrorState(e));
     }
   }
 }
 
-sealed class ComicsListState {}
+sealed class ComicsSearchListState {}
 
-class ComicsListNotifierLoadingState extends ComicsListState {}
+class ComicsSearchListNotifierLoadingState extends ComicsSearchListState {}
 
-class ComicsListNotifierSuccessState extends ComicsListState {
+class ComicsSearchListNotifierSuccessState extends ComicsSearchListState {
   final List<Comic?> Comics;
 
-  ComicsListNotifierSuccessState(this.Comics);
+  ComicsSearchListNotifierSuccessState(this.Comics);
 
 }
 
-class ComicsListNotifierErrorState extends ComicsListState {
+class ComicsSearchListNotifierErrorState extends ComicsSearchListState {
   final dynamic error;
 
-  ComicsListNotifierErrorState(this.error);
+  ComicsSearchListNotifierErrorState(this.error);
 
 }
