@@ -46,6 +46,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => const HomePage(),
         '/search': (context) => const SearchScreen(),
         '/characterDetail': (context) => const CharacterDetailScreen(),
+        '/home': (context) => const HomeScreen(),
       },
     );
   }
@@ -68,7 +69,14 @@ class HomePage extends StatelessWidget {
               onPressed: () {
                 Navigator.pushNamed(context, '/search');
               },
-              child: const Text('Aller à la recherche'),
+              child: const Text('Aller à la page de recherche'),
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/home');
+              },
+              child: const Text('Aller à la page home'),
             ),
             const SizedBox(height: 16),
             ElevatedButton(
