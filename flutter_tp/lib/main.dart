@@ -7,6 +7,7 @@ import 'package:flutter_tp/pages/bloc/seriesList_bloc.dart';
 import 'package:flutter_tp/pages/character_detail_screen.dart';
 import 'package:flutter_tp/pages/home_screen.dart';
 import 'package:flutter_tp/pages/search_screen.dart';
+import 'package:flutter_tp/pages/serie/series_list.dart';
 
 void main() {
   runApp(
@@ -23,6 +24,9 @@ void main() {
         ),
         BlocProvider(
           create: (_) => CharacterDetailBloc(""),
+        ),
+        BlocProvider(
+          create: (_) => SeriesListBloc(),
         ),
       ],
       child: const MyApp(),
