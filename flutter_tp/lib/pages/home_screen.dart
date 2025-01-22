@@ -66,7 +66,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     // BlocBuilder pour les series
                     BlocBuilder<SeriesListBloc, SeriesListState>(
                       builder: (context, state) {
-                        if (state is SeriesListNotifierLSuccessState) {
+                        if (state is SeriesListNotifierLoadingState) {
+                          return const Center(child: CircularProgressIndicator());
+                        } else if (state is SeriesListNotifierLSuccessState) {
                           final series = state.response.results;
                           if (series != null && series.isEmpty) {
                             return Container(
@@ -93,6 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             title: "Séries populaires",
                             items: series!,
                             type: "serie",
+                            page: "home",
                           );
                         } else if (state is SeriesListNotifierErrorState) {
                           return Text(
@@ -108,49 +111,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     // BlocBuilder pour les films
                     BlocBuilder<SeriesListBloc, SeriesListState>(
                       builder: (context, state) {
-                        if (state is SeriesListNotifierLSuccessState) {
-                          final series = state.response.results;
-                          if (series != null && series.isEmpty) {
-                            return Container(
-                              decoration: BoxDecoration(
-                                color: AppColors.cardBackground,
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              padding: const EdgeInsets.all(16.0),
-                              margin: const EdgeInsets.symmetric(horizontal: 40),
-                              child: const Column(
-                                children: [
-                                  const Text(
-                                    'Aucun film trouvé.',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.white,
-                                    ),
-                                  ),  
-                                ],
-                              ),
-                            );
-                          }
-                          return HorizontalListWidget(
-                            title: "Films populaires",
-                            items: series!,
-                            type: "movie",
-                          );
-                        } else if (state is SeriesListNotifierErrorState) {
-                          return Text(
-                            'Erreur : ${state.message}',
-                            style: const TextStyle(color: Colors.red),
-                          );
-                        }
-                        return const SizedBox.shrink();
-                      },
-                    ),
-                    const SizedBox(height: 32),
-
-                    // BlocBuilder pour les comic
-                    BlocBuilder<SeriesListBloc, SeriesListState>(
-                      builder: (context, state) {
-                        if (state is SeriesListNotifierLSuccessState) {
+                        if (state is SeriesListNotifierLoadingState) {
+                          return const Center(child: CircularProgressIndicator());
+                        } else if (state is SeriesListNotifierLSuccessState) {
                           final series = state.response.results;
                           if (series != null && series.isEmpty) {
                             return Container(
@@ -177,6 +140,52 @@ class _HomeScreenState extends State<HomeScreen> {
                             title: "Comics populaires",
                             items: series!,
                             type: "comic",
+                            page: "home",
+                          );
+                        } else if (state is SeriesListNotifierErrorState) {
+                          return Text(
+                            'Erreur : ${state.message}',
+                            style: const TextStyle(color: Colors.red),
+                          );
+                        }
+                        return const SizedBox.shrink();
+                      },
+                    ),
+                    const SizedBox(height: 32),
+
+                    // BlocBuilder pour les comic
+                    BlocBuilder<SeriesListBloc, SeriesListState>(
+                      builder: (context, state) {
+                        if (state is SeriesListNotifierLoadingState) {
+                          return const Center(child: CircularProgressIndicator());
+                        } else if (state is SeriesListNotifierLSuccessState) {
+                          final series = state.response.results;
+                          if (series != null && series.isEmpty) {
+                            return Container(
+                              decoration: BoxDecoration(
+                                color: AppColors.cardBackground,
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              padding: const EdgeInsets.all(16.0),
+                              margin: const EdgeInsets.symmetric(horizontal: 40),
+                              child: const Column(
+                                children: [
+                                  const Text(
+                                    'Aucun film trouvé.',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.white,
+                                    ),
+                                  ),  
+                                ],
+                              ),
+                            );
+                          }
+                          return HorizontalListWidget(
+                            title: "Films populaires",
+                            items: series!,
+                            type: "movie",
+                            page: "home",
                           );
                         } else if (state is SeriesListNotifierErrorState) {
                           return Text(

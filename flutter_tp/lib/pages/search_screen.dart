@@ -37,7 +37,8 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.sizeOf(context).height;
-
+    final double marginHeight = height / 4;
+    
     return Scaffold(
       backgroundColor: AppColors.screenBackground,
       body: SingleChildScrollView(
@@ -112,33 +113,60 @@ class _SearchScreenState extends State<SearchScreen> {
 
               if (!_isSearching)
                 Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.cardBackground,
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  padding: const EdgeInsets.all(16.0),
-                  margin: const EdgeInsets.symmetric(horizontal: 40),
-                  child: Row(
+                  margin: EdgeInsets.symmetric(vertical: marginHeight),
+                  child: Stack(
+                    clipBehavior: Clip.none,
                     children: [
-                      const Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                      Container(
+                        height: 110,
+                        decoration: BoxDecoration(
+                          color: AppColors.cardBackground,
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        padding: const EdgeInsets.all(16.0),
+                        margin: const EdgeInsets.symmetric(horizontal: 40),
+                        child: const Row(
                           children: [
-                            Text(
-                              'Saisissez une recherche pour trouver un comic ou un personnage',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.white,
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Wrap(
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(right: 16.0),
+                                        child: SizedBox(
+                                          width: 200,
+                                          child: Text(
+                                            'Saisissez une recherche pour trouver un comic ou un personnage',
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              color: AppColors.textSearch,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
                             ),
                           ],
                         ),
                       ),
-                      const SizedBox(width: 16),
-                      SvgPicture.asset(AppVectorialImages.astronaut),
+                      Positioned(
+                        top: -25,
+                        right: 50,
+                        child: SvgPicture.asset(
+                          AppVectorialImages.astronaut,
+                          height: 100,
+                        ),
+                      ),
                     ],
                   ),
                 ),
+
+
 
               if (_isSearching) 
                 MultiBlocProvider(
@@ -182,6 +210,7 @@ class _SearchScreenState extends State<SearchScreen> {
                               title: "Personnages",
                               items: characters,
                               type: "character",
+                              page: "search",
                             );
                           } else if (state is CharacterSearchListNotifierErrorState) {
                             return Text(
@@ -224,6 +253,7 @@ class _SearchScreenState extends State<SearchScreen> {
                               title: "Comics",
                               items: comics,
                               type: "comic",
+                              page: "search",
                             );
                           } else if (state is ComicsSearchListNotifierErrorState) {
                             return Text(
@@ -243,23 +273,51 @@ class _SearchScreenState extends State<SearchScreen> {
                 Visibility(
                   visible: !_isFoundedCharacter & !_isFoundedComic,
                   child: Container(
-                    decoration: BoxDecoration(
-                      color: AppColors.cardBackground,
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    padding: const EdgeInsets.all(16.0),
-                    margin: const EdgeInsets.symmetric(horizontal: 40),
-                    child: Column(
+                    margin: EdgeInsets.symmetric(vertical: marginHeight),
+                    child: Stack(
+                      clipBehavior: Clip.none,
                       children: [
-                        SvgPicture.asset(AppVectorialImages.astronaut),
-                        const SizedBox(width: 32),
-                        const Text(
-                          'Recherche en cours, merci de patienter...',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.white,
+                        Container(
+                          height: 160,
+                          decoration: BoxDecoration(
+                            color: AppColors.cardBackground,
+                            borderRadius: BorderRadius.circular(16),
                           ),
-                        ),  
+                          padding: const EdgeInsets.all(16.0),
+                          margin: const EdgeInsets.symmetric(horizontal: 40),
+                          child: const Row(
+                            children: [
+                              Expanded(
+                                child: Wrap(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(top: 60.0, left: 48.0),
+                                      child: SizedBox(
+                                        width: 200,
+                                        child: Text(
+                                          'Recherche en cours, merci de patienter...',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color: AppColors.textSearch,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Positioned(
+                          top: -150,
+                          right: 125,
+                          child: SvgPicture.asset(
+                            AppVectorialImages.astronaut,
+                            height: 200,
+                          ),
+                        ),
                       ],
                     ),
                   ),

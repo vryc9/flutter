@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_tp/res/app_colors.dart';
 
@@ -6,17 +8,21 @@ class HorizontalListWidget extends StatelessWidget {
   final List<dynamic> items;
   // Peut être 'character', 'comic', 'movie', 'serie'
   final String type;
+  // Peut être 'home', 'search'
+  final String page;
 
   const HorizontalListWidget({
     Key? key,
     required this.title,
     required this.items,
     required this.type,
+    required this.page,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       decoration: BoxDecoration(
         color: AppColors.cardBackground,
         borderRadius: BorderRadius.circular(16),
@@ -34,24 +40,71 @@ class HorizontalListWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  width: 10,
-                  height: 10,
-                  decoration: const BoxDecoration(
-                    color: AppColors.orange,
-                    shape: BoxShape.circle,
-                  ),
+                Row(
+                  children: [
+                    Container(
+                      width: 10,
+                      height: 10,
+                      decoration: const BoxDecoration(
+                        color: AppColors.orange,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      title,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 8),
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                if (page == 'home')
+                  TextButton(
+                    onPressed: () {
+                      switch (type) {
+                        case 'comic':
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Voir plus pour "$title"')),
+                          );
+                          break;
+                        case 'movie':
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Voir plus pour "$title"')),
+                          );
+                          break;
+                        case 'serie':
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Voir plus pour "$title"')),
+                          );
+                          break;
+                        default:
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Type inconnu pour le bouton Voir plus'),
+                            ),
+                          );
+                      }
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: AppColors.seeMoreBackground,
+                        borderRadius: BorderRadius.circular(8), 
+                      ),
+                      child: const Text(
+                        "Voir plus",
+                        style: TextStyle(
+                          color: AppColors.bottomBarTextUnselected,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
               ],
             ),
             const SizedBox(height: 16),
@@ -59,7 +112,7 @@ class HorizontalListWidget extends StatelessWidget {
               height: 230,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: items.length,
+                itemCount: page == 'home' ? min(items.length, 5) : items.length,
                 itemBuilder: (context, index) {
                   final item = items[index];
 
@@ -123,7 +176,6 @@ class HorizontalListWidget extends StatelessWidget {
     );
   }
 
-  // Fonction pour construire la carte (extraction de la logique de carte dans une fonction séparée)
   Widget _buildCard(BuildContext context, dynamic item) {
     return Container(
       width: 150,
