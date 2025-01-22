@@ -5,6 +5,7 @@ import 'package:flutter_tp/model/character_api.dart';
 import 'package:flutter_tp/pages/bloc/charactersDetail_bloc.dart';
 import 'package:flutter_tp/res/app_colors.dart';
 import 'package:flutter_tp/widgets/header_detail.dart';
+import 'package:flutter_tp/widgets/histoire_detail.dart';
 
 class CharacterDetailScreen extends StatelessWidget {
 
@@ -105,22 +106,7 @@ class CharacterDetailScreen extends StatelessWidget {
                                       color: AppColors.cardBackground,
                                       child: TabBarView(
                                         children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(16.0),
-                                            child: SingleChildScrollView(
-                                              child: Html(
-                                                data: (character.description != null && character.description!.isNotEmpty)
-                                                    ? character.description
-                                                    : "Histoire indisponible.",
-                                                style: {
-                                                  'body': Style(
-                                                    color: Colors.white,
-                                                    fontSize: FontSize.medium,
-                                                  ),
-                                                },
-                                              ),
-                                            ),
-                                          ),
+                                          HistoireDetailWidget(content: character.description ?? "Histoire inconnue"),
                                           Padding(
                                             padding: const EdgeInsets.all(16.0),
                                             child: SingleChildScrollView(
