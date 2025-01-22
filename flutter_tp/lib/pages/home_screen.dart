@@ -92,6 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           return HorizontalListWidget(
                             title: "Séries populaires",
                             items: series!,
+                            type: "serie",
                           );
                         } else if (state is SeriesListNotifierErrorState) {
                           return Text(
@@ -133,6 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           return HorizontalListWidget(
                             title: "Films populaires",
                             items: series!,
+                            type: "movie",
                           );
                         } else if (state is SeriesListNotifierErrorState) {
                           return Text(
@@ -174,6 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           return HorizontalListWidget(
                             title: "Comics populaires",
                             items: series!,
+                            type: "comic",
                           );
                         } else if (state is SeriesListNotifierErrorState) {
                           return Text(

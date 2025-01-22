@@ -181,6 +181,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             return HorizontalListWidget(
                               title: "Personnages",
                               items: characters,
+                              type: "character",
                             );
                           } else if (state is CharacterSearchListNotifierErrorState) {
                             return Text(
@@ -222,6 +223,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             return HorizontalListWidget(
                               title: "Comics",
                               items: comics,
+                              type: "comic",
                             );
                           } else if (state is ComicsSearchListNotifierErrorState) {
                             return Text(

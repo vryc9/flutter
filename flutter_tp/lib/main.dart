@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_tp/pages/bloc/charactersDetail_bloc.dart';
 import 'package:flutter_tp/pages/bloc/charactersSearchList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/comicsSearchList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/seriesList_bloc.dart';
+import 'package:flutter_tp/pages/character_detail_screen.dart';
 import 'package:flutter_tp/pages/home_screen.dart';
 import 'package:flutter_tp/pages/search_screen.dart';
 
@@ -18,6 +20,9 @@ void main() {
         ),
         BlocProvider(
           create: (_) => SeriesListBloc(),
+        ),
+        BlocProvider(
+          create: (_) => CharacterDetailBloc(""),
         ),
       ],
       child: const MyApp(),
@@ -38,8 +43,9 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => const HomeScreen(),
+        '/': (context) => const HomePage(),
         '/search': (context) => const SearchScreen(),
+        '/characterDetail': (context) => const CharacterDetailScreen(),
       },
     );
   }
@@ -55,11 +61,29 @@ class HomePage extends StatelessWidget {
         title: const Text('Accueil'),
       ),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.pushNamed(context, '/search');
-          },
-          child: const Text('Aller à la recherche'),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/search');
+              },
+              child: const Text('Aller à la recherche'),
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  '/characterDetail',
+                  arguments: {
+                    'characterId': "2350",
+                  },
+                );
+              },
+              child: const Text('Voir les détails de Billy'),
+            ),
+          ],
         ),
       ),
     );

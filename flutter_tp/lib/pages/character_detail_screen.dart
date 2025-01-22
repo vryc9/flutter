@@ -1,97 +1,231 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tp/api/model/response_api.dart';
-import 'package:flutter_tp/api/services/off_api.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_tp/model/character_api.dart';
+import 'package:flutter_tp/pages/bloc/charactersDetail_bloc.dart';
+import 'package:flutter_tp/res/app_colors.dart';
+import 'package:flutter_tp/widgets/header_detail.dart';
 
 class CharacterDetailScreen extends StatelessWidget {
-  final String characterId;
 
-  const CharacterDetailScreen({Key? key, required this.characterId}) : super(key: key);
+  const CharacterDetailScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final OFFAPIManager api = OFFAPIManager();
+    final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final characterId = args['characterId'];
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Détails du Personnage"),
-      ),
-      body: FutureBuilder<OFFServerResponseCharacter?>(
-        future: characterId.isNotEmpty ? api.fetchCharacterById(characterId) : null,
-        builder: (context, AsyncSnapshot<OFFServerResponseCharacter?> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(
-              child: Text(
-                "Erreur : ${snapshot.error}",
-                style: const TextStyle(color: Colors.red),
-              ),
-            );
-          } else if (!snapshot.hasData || snapshot.data == null) {
+      backgroundColor: AppColors.cardBackground,
+      body: BlocProvider(
+        create: (context) => CharacterDetailBloc(characterId),
+        child: BlocBuilder<CharacterDetailBloc, CharacterDetailState>(
+          builder: (context, state) {
+            if (state is CharacterDetailNotifierLoadingState) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (state is CharacterDetailNotifierSuccessState) {
+              final character = state.character!;
+
+              return DefaultTabController(
+                length: 2,
+                child: Stack(
+                  children: [
+                    // L'image en fond
+                    Positioned.fill(
+                      child: Image.network(
+                        character.image!.screen_large_url!,
+                        fit: BoxFit.cover,
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        },
+                        errorBuilder: (context, error, stackTrace) {
+                          return const Center(
+                            child: Icon(
+                              Icons.broken_image,
+                              color: AppColors.cardElementBackground,
+                              size: 40,
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    // Couche semi-transparente par-dessus l'image
+                    Positioned.fill(
+                      child: Container(
+                        color: AppColors.screenBackground.withOpacity(0.6),
+                      ),
+                    ),
+                    CustomScrollView(
+                      slivers: [
+                        SliverToBoxAdapter(
+                          child: Stack(
+                            children: [
+                              HeaderWidget(title: character.name ?? "Inconnu"),
+                            ],
+                          ),
+                        ),
+
+                        SliverFillRemaining(
+                          child: Container(
+                            color: Colors.transparent,
+                            child: Column(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.4),
+                                        blurRadius: 16,
+                                        spreadRadius: 4, // Étendre l'ombre
+                                        offset: const Offset(0, 8),
+                                      ),
+                                    ],
+                                  ),
+                                  child: const TabBar(
+                                    labelColor: Colors.white,
+                                    unselectedLabelColor: Colors.grey,
+                                    indicatorColor: AppColors.orange,
+                                    tabs: [
+                                      Tab(text: "Histoire"),
+                                      Tab(text: "Infos"),
+                                    ],
+                                  ),
+                                ),
+
+                                Expanded(
+                                  child: ClipRRect(
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(30),
+                                      topRight: Radius.circular(30),
+                                    ),
+                                    child: Container(
+                                      color: AppColors.cardBackground,
+                                      child: TabBarView(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(16.0),
+                                            child: SingleChildScrollView(
+                                              child: Html(
+                                                data: (character.description != null && character.description!.isNotEmpty)
+                                                    ? character.description
+                                                    : "Histoire indisponible.",
+                                                style: {
+                                                  'body': Style(
+                                                    color: Colors.white,
+                                                    fontSize: FontSize.medium,
+                                                  ),
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(16.0),
+                                            child: SingleChildScrollView(
+                                              child: Table(
+                                                border: TableBorder.all(color: Colors.transparent),
+                                                children: [
+                                                  _buildTableRow(
+                                                    "Nom de super-héros",
+                                                    (character.name != null && character.name!.isNotEmpty)
+                                                        ? character.name!
+                                                        : "Inconnu",
+                                                  ),
+                                                  _buildTableRow(
+                                                    "Nom réel",
+                                                    (character.real_name != null && character.real_name!.isNotEmpty)
+                                                        ? character.real_name!
+                                                        : "Inconnu",
+                                                  ),
+                                                  _buildTableRow(
+                                                    "Alias",
+                                                    (character.aliases != null && character.aliases!.isNotEmpty)
+                                                        ? character.aliases!
+                                                        : "Inconnu",
+                                                  ),
+                                                  _buildTableRow(
+                                                    "Éditeur",
+                                                    (character.publisher != null &&
+                                                            character.publisher!.name != null &&
+                                                            character.publisher!.name!.isNotEmpty)
+                                                        ? character.publisher!.name!
+                                                        : "Inconnu",
+                                                  ),
+                                                  _buildTableRow(
+                                                    "Genre",
+                                                    (character.gender != null && character.gender! == 1)
+                                                        ? "Masculin"
+                                                        : "Feminin",
+                                                  ),
+                                                  _buildTableRow(
+                                                    "Date de naissance",
+                                                    (character.birth != null && character.birth!.isNotEmpty)
+                                                        ? character.birth!
+                                                        : "Inconnue",
+                                                  ),
+                                                  _buildTableRow(
+                                                    "Mort dans",
+                                                    (character.issues_died_in != null &&
+                                                            character.issues_died_in!.isNotEmpty &&
+                                                            character.issues_died_in!.first.name != null)
+                                                        ? character.issues_died_in!.first.name!
+                                                        : "Non spécifié",
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                )
+              );
+            } else if (state is CharacterDetailNotifierErrorState) {
+              return Center(
+                child: Text(
+                  'Erreur : ${state.error}',
+                  style: const TextStyle(color: Colors.red),
+                ),
+              );
+            }
             return const Center(
-              child: Text(
-                "Personnage introuvable.",
-                style: TextStyle(fontSize: 18),
-              ),
+              child: Text('Aucune donnée disponible.'),
             );
-          } else {
-            final character = snapshot.data!;
-            return SingleChildScrollView(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Affichage de l'image si elle est disponible
-              
-                  const SizedBox(height: 16),
-                  // Nom du personnage
-                  Text(
-                    character.results.name ?? "Nom inconnu",
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    character.results.issues_died_in!.firstOrNull!.name!,
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  // Alias
-                  Text(
-                    "Alias : ${character.results.aliases ?? "Non spécifié"}",
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                  const SizedBox(height: 8),
-                  // Éditeur
-                  Text(
-                    "Éditeur : ${character.results.publisher!.name ?? "Inconnu"}",
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                  const SizedBox(height: 8),
-                  // Description
-                  Text(
-                    "Description :\n${character.results.description ?? "Pas de description disponible."}",
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                  const SizedBox(height: 16),
-                  // Date de naissance
-                  if (character.results.birth != null)
-                    Text(
-                      "Date de naissance : ${character.results.birth}",
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                  const SizedBox(height: 8),
-                ],
-              ),
-            );
-          }
-        },
+          },
+        ),
       ),
+    );
+  }
+
+  TableRow _buildTableRow(String title, String value) {
+    return TableRow(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            title,
+            style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            value,
+            style: const TextStyle(color: Colors.white),
+          ),
+        ),
+      ],
     );
   }
 }
