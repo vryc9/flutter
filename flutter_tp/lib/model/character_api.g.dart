@@ -8,12 +8,10 @@ part of 'character_api.dart';
 
 Character _$CharacterFromJson(Map<String, dynamic> json) => Character(
       aliases: json['aliases'] as String?,
-      api_detail_url: json['api_detail_url'] as String?,
       birth: json['birth'] as String?,
       creators: (json['creators'] as List<dynamic>?)
           ?.map((e) => Person.fromJson(e as Map<String, dynamic>))
           .toList(),
-      deck: json['deck'] as String?,
       description: json['description'] as String?,
       gender: (json['gender'] as num?)?.toInt(),
       id: (json['id'] as num?)?.toInt(),
@@ -28,15 +26,12 @@ Character _$CharacterFromJson(Map<String, dynamic> json) => Character(
           ? null
           : Person.fromJson(json['publisher'] as Map<String, dynamic>),
       real_name: json['real_name'] as String?,
-      site_detail_url: json['site_detail_url'] as String?,
     );
 
 Map<String, dynamic> _$CharacterToJson(Character instance) => <String, dynamic>{
       'aliases': instance.aliases,
-      'api_detail_url': instance.api_detail_url,
       'birth': instance.birth,
       'creators': instance.creators?.map((e) => e.toJson()).toList(),
-      'deck': instance.deck,
       'description': instance.description,
       'gender': instance.gender,
       'id': instance.id,
@@ -46,5 +41,4 @@ Map<String, dynamic> _$CharacterToJson(Character instance) => <String, dynamic>{
       'name': instance.name,
       'publisher': instance.publisher?.toJson(),
       'real_name': instance.real_name,
-      'site_detail_url': instance.site_detail_url,
     };

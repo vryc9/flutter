@@ -45,9 +45,9 @@ class Searchpage extends StatelessWidget {
                           itemBuilder: (context, index) {
                             final serie = series[index];
                             return ListTile(
-                              title: Text(serie.name),
+                              title: Text(serie.name ?? "Inconnu"),
                               subtitle: Text(
-                                serie.name,
+                                serie.name ?? "Inconnu",
                               ),
                             );
                           },

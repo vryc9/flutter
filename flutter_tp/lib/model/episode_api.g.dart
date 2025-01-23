@@ -6,32 +6,18 @@ part of 'episode_api.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-EpisodesResponse _$EpisodesResponseFromJson(Map<String, dynamic> json) =>
-    EpisodesResponse(
+Episode _$EpisodeFromJson(Map<String, dynamic> json) => Episode(
       episode_number: (json['episode_number'] as num?)?.toInt(),
       name: json['name'] as String?,
       air_date: json['air_date'] as String?,
+      image: json['image'] == null
+          ? null
+          : ImageAPI.fromJson(json['image'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$EpisodesResponseToJson(EpisodesResponse instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$EpisodeToJson(Episode instance) => <String, dynamic>{
       'episode_number': instance.episode_number,
       'name': instance.name,
       'air_date': instance.air_date,
-    };
-
-EpisodesResponseServer _$EpisodesResponseServerFromJson(
-        Map<String, dynamic> json) =>
-    EpisodesResponseServer(
-      results: (json['results'] as List<dynamic>)
-          .map((e) => EpisodesResponse.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      error: json['error'],
-    );
-
-Map<String, dynamic> _$EpisodesResponseServerToJson(
-        EpisodesResponseServer instance) =>
-    <String, dynamic>{
-      'results': instance.results.map((e) => e.toJson()).toList(),
-      'error': instance.error,
+      'image': instance.image?.toJson(),
     };

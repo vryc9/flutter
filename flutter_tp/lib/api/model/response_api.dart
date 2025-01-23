@@ -2,55 +2,106 @@ import 'package:flutter_tp/model/character_api.dart';
 import 'package:flutter_tp/model/comic_api.dart';
 import 'package:flutter_tp/model/episode_api.dart';
 import 'package:flutter_tp/model/movie_api.dart';
-import 'package:flutter_tp/model/serie_list_api.dart';
-import 'package:flutter_tp/model/series_api.dart';
+import 'package:flutter_tp/model/serie_api.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'response_api.g.dart';
 
+//liste de comic
 @JsonSerializable(explicitToJson: true)
-class OFFServerResponseComicList {
+class OFFServerResponseComics {
   final List<Comic> results;
   final String error;
-  final int limit;
-  final int offset;
-  final int number_of_page_results;
-  final int number_of_total_results;
-  final int status_code;
 
-  OFFServerResponseComicList(
+  OFFServerResponseComics(
       this.results,
-      this.error,
-      this.limit,
-      this.number_of_page_results,
-      this.number_of_total_results,
-      this.offset,
-      this.status_code);
+      this.error
+  );
 
-  factory OFFServerResponseComicList.fromJson(Map<String, dynamic> json) =>
-      _$OFFServerResponseComicListFromJson(json);
+  factory OFFServerResponseComics.fromJson(Map<String, dynamic> json) =>
+      _$OFFServerResponseComicsFromJson(json);
 
-  Map<String, dynamic> toJson() => _$OFFServerResponseComicListToJson(this);
+  Map<String, dynamic> toJson() => _$OFFServerResponseComicsToJson(this);
 }
 
+//liste de serie
+@JsonSerializable(explicitToJson: true)
+class OFFServerResponseSeries {
+  final List<Serie> results;
+  final String error;
+
+  OFFServerResponseSeries(
+      this.results,
+      this.error
+  );
+
+  factory OFFServerResponseSeries.fromJson(Map<String, dynamic> json) =>
+      _$OFFServerResponseSeriesFromJson(json);
+
+  Map<String, dynamic> toJson() => _$OFFServerResponseSeriesToJson(this);
+}
+
+//liste d'episode
+@JsonSerializable(explicitToJson: true)
+class OFFServerResponseEpisodes {
+  final List<Episode> results;
+  final String error;
+
+  OFFServerResponseEpisodes(
+      this.results,
+      this.error
+  );
+
+  factory OFFServerResponseEpisodes.fromJson(Map<String, dynamic> json) =>
+      _$OFFServerResponseEpisodesFromJson(json);
+
+  Map<String, dynamic> toJson() => _$OFFServerResponseEpisodesToJson(this);
+}
+
+//liste de movie
+@JsonSerializable(explicitToJson: true)
+class OFFServerResponseMovies {
+  final List<Movie> results;
+  final String error;
+
+  OFFServerResponseMovies(
+      this.results,
+      this.error
+  );
+
+  factory OFFServerResponseMovies.fromJson(Map<String, dynamic> json) =>
+      _$OFFServerResponseMoviesFromJson(json);
+
+  Map<String, dynamic> toJson() => _$OFFServerResponseMoviesToJson(this);
+}
+
+//liste de character
+@JsonSerializable(explicitToJson: true)
+class OFFServerResponseCharacters {
+  final List<Character> results;
+  final String error;
+
+  OFFServerResponseCharacters(
+      this.results,
+      this.error
+  );
+
+  factory OFFServerResponseCharacters.fromJson(Map<String, dynamic> json) =>
+      _$OFFServerResponseCharactersFromJson(json);
+
+  Map<String, dynamic> toJson() => _$OFFServerResponseCharactersToJson(this);
+}
+
+//comic
 @JsonSerializable(explicitToJson: true)
 class OFFServerResponseComic {
   final Comic results;
   final String error;
-  final int limit;
-  final int offset;
-  final int number_of_page_results;
-  final int number_of_total_results;
-  final int status_code;
 
   OFFServerResponseComic(
       this.results,
-      this.error,
-      this.limit,
-      this.number_of_page_results,
-      this.number_of_total_results,
-      this.offset,
-      this.status_code);
+      this.error
+  );
 
   factory OFFServerResponseComic.fromJson(Map<String, dynamic> json) =>
       _$OFFServerResponseComicFromJson(json);
@@ -58,24 +109,16 @@ class OFFServerResponseComic {
   Map<String, dynamic> toJson() => _$OFFServerResponseComicToJson(this);
 }
 
+//character
 @JsonSerializable(explicitToJson: true)
 class OFFServerResponseCharacter {
   final Character results;
   final String error;
-  final int limit;
-  final int offset;
-  final int number_of_page_results;
-  final int number_of_total_results;
-  final int status_code;
 
   OFFServerResponseCharacter(
       this.results,
-      this.error,
-      this.limit,
-      this.number_of_page_results,
-      this.number_of_total_results,
-      this.offset,
-      this.status_code);
+      this.error
+  );
 
   factory OFFServerResponseCharacter.fromJson(Map<String, dynamic> json) =>
       _$OFFServerResponseCharacterFromJson(json);
@@ -83,96 +126,36 @@ class OFFServerResponseCharacter {
   Map<String, dynamic> toJson() => _$OFFServerResponseCharacterToJson(this);
 }
 
+//serie
 @JsonSerializable(explicitToJson: true)
-class OFFServerResponseSearchCharacter {
-  final List<Character> results;
+class OFFServerResponseSerie {
+  final Serie results;
   final String error;
-  final int limit;
-  final int offset;
-  final int number_of_page_results;
-  final int number_of_total_results;
-  final int status_code;
 
-  OFFServerResponseSearchCharacter(
+  OFFServerResponseSerie(
       this.results,
       this.error,
-      this.limit,
-      this.number_of_page_results,
-      this.number_of_total_results,
-      this.offset,
-      this.status_code);
+  );
 
-  factory OFFServerResponseSearchCharacter.fromJson(
-          Map<String, dynamic> json) =>
-      _$OFFServerResponseSearchCharacterFromJson(json);
+  factory OFFServerResponseSerie.fromJson(Map<String, dynamic> json) =>
+      _$OFFServerResponseSerieFromJson(json);
 
-  Map<String, dynamic> toJson() =>
-      _$OFFServerResponseSearchCharacterToJson(this);
+  Map<String, dynamic> toJson() => _$OFFServerResponseSerieToJson(this);
 }
 
+//movie
 @JsonSerializable(explicitToJson: true)
-class EpisodesResponseServer {
-  final List<EpisodesResponse> results;
+class OFFServerResponseMovie {
+  final Movie results;
+  final String error;
 
-  final dynamic error;
+  OFFServerResponseMovie(
+      this.results,
+      this.error,
+  );
 
-  EpisodesResponseServer({
-    required this.results,
-    required this.error,
-  });
+  factory OFFServerResponseMovie.fromJson(Map<String, dynamic> json) =>
+      _$OFFServerResponseMovieFromJson(json);
 
-  factory EpisodesResponseServer.fromJson(Map<String, dynamic> json) =>
-      _$EpisodesResponseServerFromJson(json);
-
-  Map<String, dynamic> toJson() => _$EpisodesResponseServerToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class SerieListResponseServer {
-  final List<SerieListResponse>? results;
-  final dynamic error;
-
-  SerieListResponseServer({
-    this.results,
-    this.error,
-  });
-
-  factory SerieListResponseServer.fromJson(Map<String, dynamic> json) =>
-      _$SerieListResponseServerFromJson(json);
-
-  Map<String, dynamic> toJson() => _$SerieListResponseServerToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class MovieResponseServer {
-  final List<MovieResponse>? results;
-  final dynamic error;
-
-  MovieResponseServer({
-    this.results,
-    this.error,
-  });
-
-  factory MovieResponseServer.fromJson(Map<String, dynamic> json) =>
-      _$MovieResponseServerFromJson(json);
-
-  Map<String, dynamic> toJson() => _$MovieResponseServerToJson(this);
-  
-}
-
-@JsonSerializable(explicitToJson: true)
-class SerieResponseServer {
-  final SerieResponse? results;
-  final dynamic error;
-
-  SerieResponseServer({
-    this.results,
-    this.error,
-  });
-
-  factory SerieResponseServer.fromJson(Map<String, dynamic> json) =>
-      _$SerieResponseServerFromJson(json);
-
-  Map<String, dynamic> toJson() => _$SerieResponseServerToJson(this);
-
+  Map<String, dynamic> toJson() => _$OFFServerResponseMovieToJson(this);
 }

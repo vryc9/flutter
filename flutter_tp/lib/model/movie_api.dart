@@ -1,30 +1,66 @@
+import 'package:flutter_tp/model/character_api.dart';
 import 'package:flutter_tp/model/image_api.dart';
+import 'package:flutter_tp/model/person_api.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'movie_api.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class MovieResponse {
+class Movie {
   @JsonKey(fromJson: _stringFromJson)
-  final String name;
-  final String? api_detail_url; // URL de l'image
-  final ImageAPI image;
+  final String? name;
+  final ImageAPI? image;
   @JsonKey(fromJson: _stringFromJson)
-  final String id;
+  final String? id;
+  @JsonKey(fromJson: _stringFromJson)
+  final String? description;
+  final List<Character>? characters;
+  @JsonKey(fromJson: _stringFromJson)
+  final String? runtime;
+  @JsonKey(fromJson: _stringFromJson)
+  final String? box_office_revenue;
+  @JsonKey(fromJson: _stringFromJson)
+  final String? producers;
+  @JsonKey(fromJson: _stringFromJson)
+  final String? rating;
+  @JsonKey(fromJson: _stringFromJson)
+  final String? release_date;
+  final List<Person>? studios;
+  @JsonKey(fromJson: _stringFromJson)
+  final String? total_revenue;
+  final List<Person>? writers;
+  @JsonKey(fromJson: _stringFromJson)
+  final String? budget;
+  @JsonKey(fromJson: _stringFromJson)
+  final String? distributor;
 
-  MovieResponse({
-    required this.name,
-    this.api_detail_url,
-    required this.image,
-    required this.id
+  Movie({
+    this.name,
+    this.image,
+    this.id,
+    this.box_office_revenue,
+    this.budget,
+    this.characters,
+    this.description,
+    this.distributor,
+    this.producers,
+    this.rating,
+    this.release_date,
+    this.runtime,
+    this.studios,
+    this.total_revenue,
+    this.writers,
   });
 
-  factory MovieResponse.fromJson(Map<String, dynamic> json) => _$MovieResponseFromJson(json);
+  // Généré automatiquement par json_serializable
+  factory Movie.fromJson(Map<String, dynamic> json) => _$MovieFromJson(json);
 
-  Map<String, dynamic> toJson() => _$MovieResponseToJson(this);
+  // Généré automatiquement par json_serializable
+  Map<String, dynamic> toJson() => _$MovieToJson(this);
 
+  //Convertit n'importe quelle valeur en string ou empty string si null
   static String _stringFromJson(dynamic value) {
-    return value?.toString() ?? ''; // Convert any value to a string or return an empty string if null
+    return value?.toString() ?? '';
   }
 }
 

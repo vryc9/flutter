@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tp/api/model/response_api.dart';
 import 'package:flutter_tp/api/services/off_api.dart';
-import 'package:flutter_tp/model/serie_list_api.dart';
+import 'package:flutter_tp/model/serie_api.dart';
 
 abstract class SerieSearchListEvent {}
 
@@ -24,8 +24,8 @@ class SerieSearchListBloc extends Bloc<SerieSearchListEvent, SerieSearchListStat
     Emitter<SerieSearchListState> emit,
   ) async {
     try {
-      final SerieListResponseServer? response =
-          await OFFAPIManager().searchSerie(query);
+      final OFFServerResponseSeries? response =
+          await OFFAPIManager().searchSeries(query);
       emit(SerieSearchListNotifierSuccessState(response!.results));
     } catch (e) {
       emit(SerieSearchListNotifierErrorState(e));
@@ -38,7 +38,7 @@ sealed class SerieSearchListState {}
 class SerieSearchListNotifierLoadingState extends SerieSearchListState {}
 
 class SerieSearchListNotifierSuccessState extends SerieSearchListState {
-  final List<SerieListResponse>? series;
+  final List<Serie>? series;
 
   SerieSearchListNotifierSuccessState(this.series);
 

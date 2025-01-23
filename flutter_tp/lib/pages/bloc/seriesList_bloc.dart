@@ -17,9 +17,9 @@ class SeriesListBloc extends Bloc<SeriesListEvent, SeriesListState> {
     Emitter<SeriesListState> emit,
   ) async {
     try {
-      final SerieListResponseServer response =
+      final OFFServerResponseSeries? response =
           await OFFAPIManager().loadSeriesList();
-      emit(SeriesListNotifierLSuccessState(response));
+      emit(SeriesListNotifierLSuccessState(response!));
     } catch (e) {
       emit(SeriesListNotifierErrorState(e));
     }
@@ -31,7 +31,7 @@ sealed class SeriesListState {}
 class SeriesListNotifierLoadingState extends SeriesListState {}
 
 class SeriesListNotifierLSuccessState extends SeriesListState {
-  final SerieListResponseServer response;
+  final OFFServerResponseSeries response;
 
   SeriesListNotifierLSuccessState(this.response);
 }

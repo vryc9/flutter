@@ -17,9 +17,9 @@ class MoviesListBloc extends Bloc<MoviesListEvent, MoviesListState> {
     Emitter<MoviesListState> emit,
   ) async {
     try {
-      final MovieResponseServer response =
-          await OFFAPIManager().loadMovieList();
-      emit(MoviesListNotifierLSuccessState(response));
+      final OFFServerResponseMovies? response =
+          await OFFAPIManager().loadMoviesList();
+      emit(MoviesListNotifierLSuccessState(response!));
     } catch (e) {
       emit(MoviesListNotifierErrorState(e));
     }
@@ -31,7 +31,7 @@ sealed class MoviesListState {}
 class MoviesListNotifierLoadingState extends MoviesListState {}
 
 class MoviesListNotifierLSuccessState extends MoviesListState {
-  final MovieResponseServer response;
+  final OFFServerResponseMovies response;
 
   MoviesListNotifierLSuccessState(this.response);
 }

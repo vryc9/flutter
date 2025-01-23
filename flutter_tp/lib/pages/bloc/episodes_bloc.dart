@@ -17,9 +17,9 @@ class EpisodesBloc extends Bloc<EpisodesEvent, EpisodesState> {
     Emitter<EpisodesState> emit,
   ) async {
     try {
-      final EpisodesResponseServer response =
+      final OFFServerResponseEpisodes? response =
           await OFFAPIManager().loadEpisodeList('1');
-      emit(EpisodesNotifierLSuccessState(response));
+      emit(EpisodesNotifierLSuccessState(response!));
     } catch (e) {
       emit(EpisodesNotifierErrorState(e));
     }
@@ -31,7 +31,7 @@ sealed class EpisodesState {}
 class EpisodesNotifierLoadingState extends EpisodesState {}
 
 class EpisodesNotifierLSuccessState extends EpisodesState {
-  final EpisodesResponseServer response;
+  final OFFServerResponseEpisodes response;
 
   EpisodesNotifierLSuccessState(this.response);
 }

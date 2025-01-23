@@ -24,7 +24,7 @@ class ComicsSearchListBloc extends Bloc<ComicsSearchListEvent, ComicsSearchListS
     Emitter<ComicsSearchListState> emit,
   ) async {
     try {
-      final OFFServerResponseComicList? response =
+      final OFFServerResponseComics? response =
           await OFFAPIManager().searchComics(query);
       emit(ComicsSearchListNotifierSuccessState(response!.results));
     } catch (e) {

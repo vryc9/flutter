@@ -6,30 +6,84 @@ part of 'response_api.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-OFFServerResponseComicList _$OFFServerResponseComicListFromJson(
+OFFServerResponseComics _$OFFServerResponseComicsFromJson(
         Map<String, dynamic> json) =>
-    OFFServerResponseComicList(
+    OFFServerResponseComics(
       (json['results'] as List<dynamic>)
           .map((e) => Comic.fromJson(e as Map<String, dynamic>))
           .toList(),
       json['error'] as String,
-      (json['limit'] as num).toInt(),
-      (json['number_of_page_results'] as num).toInt(),
-      (json['number_of_total_results'] as num).toInt(),
-      (json['offset'] as num).toInt(),
-      (json['status_code'] as num).toInt(),
     );
 
-Map<String, dynamic> _$OFFServerResponseComicListToJson(
-        OFFServerResponseComicList instance) =>
+Map<String, dynamic> _$OFFServerResponseComicsToJson(
+        OFFServerResponseComics instance) =>
     <String, dynamic>{
       'results': instance.results.map((e) => e.toJson()).toList(),
       'error': instance.error,
-      'limit': instance.limit,
-      'offset': instance.offset,
-      'number_of_page_results': instance.number_of_page_results,
-      'number_of_total_results': instance.number_of_total_results,
-      'status_code': instance.status_code,
+    };
+
+OFFServerResponseSeries _$OFFServerResponseSeriesFromJson(
+        Map<String, dynamic> json) =>
+    OFFServerResponseSeries(
+      (json['results'] as List<dynamic>)
+          .map((e) => Serie.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      json['error'] as String,
+    );
+
+Map<String, dynamic> _$OFFServerResponseSeriesToJson(
+        OFFServerResponseSeries instance) =>
+    <String, dynamic>{
+      'results': instance.results.map((e) => e.toJson()).toList(),
+      'error': instance.error,
+    };
+
+OFFServerResponseEpisodes _$OFFServerResponseEpisodesFromJson(
+        Map<String, dynamic> json) =>
+    OFFServerResponseEpisodes(
+      (json['results'] as List<dynamic>)
+          .map((e) => Episode.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      json['error'] as String,
+    );
+
+Map<String, dynamic> _$OFFServerResponseEpisodesToJson(
+        OFFServerResponseEpisodes instance) =>
+    <String, dynamic>{
+      'results': instance.results.map((e) => e.toJson()).toList(),
+      'error': instance.error,
+    };
+
+OFFServerResponseMovies _$OFFServerResponseMoviesFromJson(
+        Map<String, dynamic> json) =>
+    OFFServerResponseMovies(
+      (json['results'] as List<dynamic>)
+          .map((e) => Movie.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      json['error'] as String,
+    );
+
+Map<String, dynamic> _$OFFServerResponseMoviesToJson(
+        OFFServerResponseMovies instance) =>
+    <String, dynamic>{
+      'results': instance.results.map((e) => e.toJson()).toList(),
+      'error': instance.error,
+    };
+
+OFFServerResponseCharacters _$OFFServerResponseCharactersFromJson(
+        Map<String, dynamic> json) =>
+    OFFServerResponseCharacters(
+      (json['results'] as List<dynamic>)
+          .map((e) => Character.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      json['error'] as String,
+    );
+
+Map<String, dynamic> _$OFFServerResponseCharactersToJson(
+        OFFServerResponseCharacters instance) =>
+    <String, dynamic>{
+      'results': instance.results.map((e) => e.toJson()).toList(),
+      'error': instance.error,
     };
 
 OFFServerResponseComic _$OFFServerResponseComicFromJson(
@@ -37,11 +91,6 @@ OFFServerResponseComic _$OFFServerResponseComicFromJson(
     OFFServerResponseComic(
       Comic.fromJson(json['results'] as Map<String, dynamic>),
       json['error'] as String,
-      (json['limit'] as num).toInt(),
-      (json['number_of_page_results'] as num).toInt(),
-      (json['number_of_total_results'] as num).toInt(),
-      (json['offset'] as num).toInt(),
-      (json['status_code'] as num).toInt(),
     );
 
 Map<String, dynamic> _$OFFServerResponseComicToJson(
@@ -49,11 +98,6 @@ Map<String, dynamic> _$OFFServerResponseComicToJson(
     <String, dynamic>{
       'results': instance.results.toJson(),
       'error': instance.error,
-      'limit': instance.limit,
-      'offset': instance.offset,
-      'number_of_page_results': instance.number_of_page_results,
-      'number_of_total_results': instance.number_of_total_results,
-      'status_code': instance.status_code,
     };
 
 OFFServerResponseCharacter _$OFFServerResponseCharacterFromJson(
@@ -61,11 +105,6 @@ OFFServerResponseCharacter _$OFFServerResponseCharacterFromJson(
     OFFServerResponseCharacter(
       Character.fromJson(json['results'] as Map<String, dynamic>),
       json['error'] as String,
-      (json['limit'] as num).toInt(),
-      (json['number_of_page_results'] as num).toInt(),
-      (json['number_of_total_results'] as num).toInt(),
-      (json['offset'] as num).toInt(),
-      (json['status_code'] as num).toInt(),
     );
 
 Map<String, dynamic> _$OFFServerResponseCharacterToJson(
@@ -73,97 +112,32 @@ Map<String, dynamic> _$OFFServerResponseCharacterToJson(
     <String, dynamic>{
       'results': instance.results.toJson(),
       'error': instance.error,
-      'limit': instance.limit,
-      'offset': instance.offset,
-      'number_of_page_results': instance.number_of_page_results,
-      'number_of_total_results': instance.number_of_total_results,
-      'status_code': instance.status_code,
     };
 
-OFFServerResponseSearchCharacter _$OFFServerResponseSearchCharacterFromJson(
+OFFServerResponseSerie _$OFFServerResponseSerieFromJson(
         Map<String, dynamic> json) =>
-    OFFServerResponseSearchCharacter(
-      (json['results'] as List<dynamic>)
-          .map((e) => Character.fromJson(e as Map<String, dynamic>))
-          .toList(),
+    OFFServerResponseSerie(
+      Serie.fromJson(json['results'] as Map<String, dynamic>),
       json['error'] as String,
-      (json['limit'] as num).toInt(),
-      (json['number_of_page_results'] as num).toInt(),
-      (json['number_of_total_results'] as num).toInt(),
-      (json['offset'] as num).toInt(),
-      (json['status_code'] as num).toInt(),
     );
 
-Map<String, dynamic> _$OFFServerResponseSearchCharacterToJson(
-        OFFServerResponseSearchCharacter instance) =>
+Map<String, dynamic> _$OFFServerResponseSerieToJson(
+        OFFServerResponseSerie instance) =>
     <String, dynamic>{
-      'results': instance.results.map((e) => e.toJson()).toList(),
+      'results': instance.results.toJson(),
       'error': instance.error,
-      'limit': instance.limit,
-      'offset': instance.offset,
-      'number_of_page_results': instance.number_of_page_results,
-      'number_of_total_results': instance.number_of_total_results,
-      'status_code': instance.status_code,
     };
 
-EpisodesResponseServer _$EpisodesResponseServerFromJson(
+OFFServerResponseMovie _$OFFServerResponseMovieFromJson(
         Map<String, dynamic> json) =>
-    EpisodesResponseServer(
-      results: (json['results'] as List<dynamic>)
-          .map((e) => EpisodesResponse.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      error: json['error'],
+    OFFServerResponseMovie(
+      Movie.fromJson(json['results'] as Map<String, dynamic>),
+      json['error'] as String,
     );
 
-Map<String, dynamic> _$EpisodesResponseServerToJson(
-        EpisodesResponseServer instance) =>
+Map<String, dynamic> _$OFFServerResponseMovieToJson(
+        OFFServerResponseMovie instance) =>
     <String, dynamic>{
-      'results': instance.results.map((e) => e.toJson()).toList(),
-      'error': instance.error,
-    };
-
-SerieListResponseServer _$SerieListResponseServerFromJson(
-        Map<String, dynamic> json) =>
-    SerieListResponseServer(
-      results: (json['results'] as List<dynamic>?)
-          ?.map((e) => SerieListResponse.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      error: json['error'],
-    );
-
-Map<String, dynamic> _$SerieListResponseServerToJson(
-        SerieListResponseServer instance) =>
-    <String, dynamic>{
-      'results': instance.results?.map((e) => e.toJson()).toList(),
-      'error': instance.error,
-    };
-
-MovieResponseServer _$MovieResponseServerFromJson(Map<String, dynamic> json) =>
-    MovieResponseServer(
-      results: (json['results'] as List<dynamic>?)
-          ?.map((e) => MovieResponse.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      error: json['error'],
-    );
-
-Map<String, dynamic> _$MovieResponseServerToJson(
-        MovieResponseServer instance) =>
-    <String, dynamic>{
-      'results': instance.results?.map((e) => e.toJson()).toList(),
-      'error': instance.error,
-    };
-
-SerieResponseServer _$SerieResponseServerFromJson(Map<String, dynamic> json) =>
-    SerieResponseServer(
-      results: json['results'] == null
-          ? null
-          : SerieResponse.fromJson(json['results'] as Map<String, dynamic>),
-      error: json['error'],
-    );
-
-Map<String, dynamic> _$SerieResponseServerToJson(
-        SerieResponseServer instance) =>
-    <String, dynamic>{
-      'results': instance.results?.toJson(),
+      'results': instance.results.toJson(),
       'error': instance.error,
     };

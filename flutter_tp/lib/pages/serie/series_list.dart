@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_tp/model/serie_list_api.dart';
+import 'package:flutter_tp/api/model/response_api.dart';
+import 'package:flutter_tp/model/serie_api.dart';
 import 'package:flutter_tp/pages/bloc/seriesList_bloc.dart';
 
 class SeriesListScreen extends StatelessWidget {
@@ -47,7 +48,7 @@ class SeriesListScreen extends StatelessWidget {
               return ListView.builder(
                 itemCount: series.length,
                 itemBuilder: (context, index) {
-                  final SerieListResponse serie = series[index];
+                  final Serie serie = series[index];
 
                   return Padding(
                     padding: const EdgeInsets.symmetric(

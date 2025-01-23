@@ -23,9 +23,9 @@ class SeriesBloc extends Bloc<SeriesEvent, SeriesState> {
   ) async {
     try {
       emit(SeriesNotifierLoadingState());
-      final SerieResponseServer response =
-          await apiManager.getSerieById(event.seriesId);
-      emit(SeriesNotifierSuccessState(response));
+      final OFFServerResponseSerie? response =
+          await apiManager.fetchSerieById(event.seriesId);
+      emit(SeriesNotifierSuccessState(response!));
     } catch (e) {
       emit(SeriesNotifierErrorState(e));
     }
@@ -37,7 +37,7 @@ sealed class SeriesState {}
 class SeriesNotifierLoadingState extends SeriesState {}
 
 class SeriesNotifierSuccessState extends SeriesState {
-  final SerieResponseServer response;
+  final OFFServerResponseSerie response;
 
   SeriesNotifierSuccessState(this.response);
 }

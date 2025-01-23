@@ -24,8 +24,8 @@ class CharacterSearchListBloc extends Bloc<CharacterSearchListEvent, CharacterSe
     Emitter<CharacterSearchListState> emit,
   ) async {
     try {
-      final OFFServerResponseSearchCharacter? response =
-          await OFFAPIManager().searchCharacter(query);
+      final OFFServerResponseCharacters? response =
+          await OFFAPIManager().searchCharacters(query);
       emit(CharacterSearchListNotifierSuccessState(response!.results));
     } catch (e) {
       emit(CharacterSearchListNotifierErrorState(e));

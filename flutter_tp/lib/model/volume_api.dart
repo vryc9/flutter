@@ -10,9 +10,9 @@ class Volume {
   final String? name;
 
   Volume({
-    required this.id,
+    this.id,
     this.image,
-    required this.name,
+    this.name,
   });
 
   // Généré automatiquement par json_serializable

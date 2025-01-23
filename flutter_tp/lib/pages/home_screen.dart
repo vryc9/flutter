@@ -74,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: CircularProgressIndicator());
                               } else if (state is SeriesListNotifierLSuccessState) {
                                 final series = state.response.results;
-                                if (series != null && series.isEmpty) {
+                                if (series.isEmpty) {
                                   return Container(
                                     decoration: BoxDecoration(
                                       color: AppColors.cardBackground,
@@ -98,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 }
                                 return HorizontalListWidget(
                                   title: "Séries populaires",
-                                  items: series!,
+                                  items: series,
                                   type: "serie",
                                   page: "home",
                                 );
@@ -120,7 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 return const Center(child: CircularProgressIndicator());
                               } else if (state is SeriesListNotifierLSuccessState) {
                                 final series = state.response.results;
-                                if (series != null && series.isEmpty) {
+                                if (series.isEmpty) {
                                   return Container(
                                     decoration: BoxDecoration(
                                       color: AppColors.cardBackground,
@@ -143,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 }
                                 return HorizontalListWidget(
                                   title: "Comics populaires",
-                                  items: series!,
+                                  items: series,
                                   type: "comic",
                                   page: "home",
                                 );
@@ -165,7 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 return const Center(child: CircularProgressIndicator());
                               } else if (state is MoviesListNotifierLSuccessState) {
                                 final movies = state.response.results;
-                                if (movies != null && movies.isEmpty) {
+                                if (movies.isEmpty) {
                                   return Container(
                                     decoration: BoxDecoration(
                                       color: AppColors.cardBackground,
@@ -175,7 +175,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     margin: const EdgeInsets.symmetric(horizontal: 40),
                                     child: const Column(
                                       children: [
-                                        const Text(
+                                        Text(
                                           'Aucun film trouvé.',
                                           style: TextStyle(
                                             fontSize: 16,
@@ -188,7 +188,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 }
                                 return HorizontalListWidget(
                                   title: "Films populaires",
-                                  items: movies!,
+                                  items: movies,
                                   type: "movie",
                                   page: "home",
                                 );
