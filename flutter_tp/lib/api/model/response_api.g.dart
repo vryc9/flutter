@@ -138,6 +138,21 @@ Map<String, dynamic> _$SerieListResponseServerToJson(
       'error': instance.error,
     };
 
+MovieResponseServer _$MovieResponseServerFromJson(Map<String, dynamic> json) =>
+    MovieResponseServer(
+      results: (json['results'] as List<dynamic>?)
+          ?.map((e) => MovieResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      error: json['error'],
+    );
+
+Map<String, dynamic> _$MovieResponseServerToJson(
+        MovieResponseServer instance) =>
+    <String, dynamic>{
+      'results': instance.results?.map((e) => e.toJson()).toList(),
+      'error': instance.error,
+    };
+
 SerieResponseServer _$SerieResponseServerFromJson(Map<String, dynamic> json) =>
     SerieResponseServer(
       results: json['results'] == null

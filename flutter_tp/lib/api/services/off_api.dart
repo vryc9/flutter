@@ -44,6 +44,10 @@ abstract class OFFAPI {
     @Query('limit') String limit,
   );
 
+
+  @GET('/movies?api_key=c6eabeb68c2dd781df0fc65806e8ed5ab839334c&format=json')
+  Future<MovieResponseServer> loadMoviesList();
+
   @GET("/episodes/")
   Future<EpisodesResponseServer> loadEpisodeList(
     @Path('seriesId') String seriesId,
@@ -149,6 +153,10 @@ class OFFAPIManager {
   Future<SerieResponseServer> getSerieById(String id) async {
     return api.getSerieById(id, _apiKey, "json");
   }
+  Future<MovieResponseServer> loadMovieList() async {
+    return api.loadMoviesList();
+  }
+
 
   //Méthode pour récupérer une liste d'épisode
   Future<EpisodesResponseServer> loadEpisodeList(String id) async {

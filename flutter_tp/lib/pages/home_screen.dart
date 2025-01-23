@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_tp/pages/bloc/moviesList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/seriesList_bloc.dart';
 import 'package:flutter_tp/res/app_colors.dart';
 import 'package:flutter_tp/res/app_svg.dart';
@@ -112,12 +113,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           const SizedBox(height: 20),
 
-                          // BlocBuilder pour les films
+                          // BlocBuilder pour les comics
                           BlocBuilder<SeriesListBloc, SeriesListState>(
                             builder: (context, state) {
                               if (state is SeriesListNotifierLoadingState) {
-                                return const Center(
-                                    child: CircularProgressIndicator());
+                                return const Center(child: CircularProgressIndicator());
                               } else if (state is SeriesListNotifierLSuccessState) {
                                 final series = state.response.results;
                                 if (series != null && series.isEmpty) {
@@ -127,17 +127,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                       borderRadius: BorderRadius.circular(16),
                                     ),
                                     padding: const EdgeInsets.all(16.0),
-                                    margin:
-                                        const EdgeInsets.symmetric(horizontal: 40),
+                                    margin: const EdgeInsets.symmetric(horizontal: 40),
                                     child: const Column(
                                       children: [
-                                        Text(
+                                        const Text(
                                           'Aucun comic trouvé.',
                                           style: TextStyle(
                                             fontSize: 16,
                                             color: Colors.white,
                                           ),
-                                        ),
+                                        ),  
                                       ],
                                     ),
                                   );
@@ -157,45 +156,43 @@ class _HomeScreenState extends State<HomeScreen> {
                               return const SizedBox.shrink();
                             },
                           ),
-                          const SizedBox(height: 20),
+                          const SizedBox(height: 32),
 
-                          // BlocBuilder pour les comics
-                          BlocBuilder<SeriesListBloc, SeriesListState>(
+                          // BlocBuilder pour les films
+                          BlocBuilder<MoviesListBloc, MoviesListState>(
                             builder: (context, state) {
-                              if (state is SeriesListNotifierLoadingState) {
-                                return const Center(
-                                    child: CircularProgressIndicator());
-                              } else if (state is SeriesListNotifierLSuccessState) {
-                                final series = state.response.results;
-                                if (series != null && series.isEmpty) {
+                              if (state is MoviesListNotifierLoadingState) {
+                                return const Center(child: CircularProgressIndicator());
+                              } else if (state is MoviesListNotifierLSuccessState) {
+                                final movies = state.response.results;
+                                if (movies != null && movies.isEmpty) {
                                   return Container(
                                     decoration: BoxDecoration(
                                       color: AppColors.cardBackground,
                                       borderRadius: BorderRadius.circular(16),
                                     ),
                                     padding: const EdgeInsets.all(16.0),
-                                    margin:
-                                        const EdgeInsets.symmetric(horizontal: 40),
+                                    margin: const EdgeInsets.symmetric(horizontal: 40),
                                     child: const Column(
                                       children: [
-                                        Text(
+                                        const Text(
                                           'Aucun film trouvé.',
                                           style: TextStyle(
                                             fontSize: 16,
                                             color: Colors.white,
                                           ),
-                                        ),
+                                        ),  
                                       ],
                                     ),
                                   );
                                 }
                                 return HorizontalListWidget(
                                   title: "Films populaires",
-                                  items: series!,
+                                  items: movies!,
                                   type: "movie",
                                   page: "home",
                                 );
-                              } else if (state is SeriesListNotifierErrorState) {
+                              } else if (state is MoviesListNotifierErrorState) {
                                 return Text(
                                   'Erreur : ${state.message}',
                                   style: const TextStyle(color: Colors.red),
@@ -204,7 +201,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               return const SizedBox.shrink();
                             },
                           ),
-
+                        
                           SizedBox(height: height * 0.08),
                         ],
                       ),

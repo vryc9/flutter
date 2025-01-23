@@ -1,6 +1,7 @@
 import 'package:flutter_tp/model/character_api.dart';
 import 'package:flutter_tp/model/comic_api.dart';
 import 'package:flutter_tp/model/episode_api.dart';
+import 'package:flutter_tp/model/movie_api.dart';
 import 'package:flutter_tp/model/serie_list_api.dart';
 import 'package:flutter_tp/model/series_api.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -143,6 +144,23 @@ class SerieListResponseServer {
 }
 
 @JsonSerializable(explicitToJson: true)
+class MovieResponseServer {
+  final List<MovieResponse>? results;
+  final dynamic error;
+
+  MovieResponseServer({
+    this.results,
+    this.error,
+  });
+
+  factory MovieResponseServer.fromJson(Map<String, dynamic> json) =>
+      _$MovieResponseServerFromJson(json);
+
+  Map<String, dynamic> toJson() => _$MovieResponseServerToJson(this);
+  
+}
+
+@JsonSerializable(explicitToJson: true)
 class SerieResponseServer {
   final SerieResponse? results;
   final dynamic error;
@@ -156,4 +174,5 @@ class SerieResponseServer {
       _$SerieResponseServerFromJson(json);
 
   Map<String, dynamic> toJson() => _$SerieResponseServerToJson(this);
+
 }

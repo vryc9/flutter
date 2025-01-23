@@ -153,6 +153,53 @@ class _OFFAPI implements OFFAPI {
   }
 
   @override
+  Future<SerieListResponseServer?> searchSerie(
+    String apiKey,
+    String format,
+    String query,
+    String limit,
+    String resources,
+  ) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'api_key': apiKey,
+      r'format': format,
+      r'query': query,
+      r'limit': limit,
+      r'resources': resources,
+    };
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<SerieListResponseServer>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/search/',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>?>(_options);
+    late SerieListResponseServer? _value;
+    try {
+      _value = _result.data == null
+          ? null
+          : SerieListResponseServer.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
   Future<SerieListResponseServer> loadSeriesList(
     String apiKey,
     String format,
@@ -186,6 +233,39 @@ class _OFFAPI implements OFFAPI {
     late SerieListResponseServer _value;
     try {
       _value = SerieListResponseServer.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
+  @override
+  Future<MovieResponseServer> loadMoviesList() async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<MovieResponseServer>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/movies?api_key=c6eabeb68c2dd781df0fc65806e8ed5ab839334c&format=json',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late MovieResponseServer _value;
+    try {
+      _value = MovieResponseServer.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
