@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_tp/pages/bloc/charactersSearchList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/comicsSearchList_bloc.dart';
+import 'package:flutter_tp/pages/bloc/serieSearchList_bloc.dart';
 import 'package:flutter_tp/res/app_colors.dart';
 import 'package:flutter_tp/res/app_svg.dart';
 import 'package:flutter_tp/widgets/horizontal_list.dart';
@@ -19,6 +20,7 @@ class _SearchScreenState extends State<SearchScreen> {
   bool _isSearching = false;
   bool _isFoundedCharacter = false;
   bool _isFoundedComic = false;
+  bool _isFoundedSerie = false;
   String _query = "";
 
   @override
@@ -27,10 +29,11 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   Future<void> _makeInvisible() async {
-    await Future.delayed(const Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 5));
     setState(() {
       _isFoundedCharacter = true;
       _isFoundedComic = true;
+      _isFoundedSerie = true;
     });
   }
   
@@ -50,42 +53,43 @@ class _SearchScreenState extends State<SearchScreen> {
                 decoration: const BoxDecoration(
                   color: AppColors.cardBackground,
                   borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(16),
-                    bottomRight: Radius.circular(16),
+                    bottomLeft: Radius.circular(35),
+                    bottomRight: Radius.circular(35),
                   ),
                 ),
                 margin: const EdgeInsets.symmetric(horizontal: 0),
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(23.0),
                 child: Column(
                   children: [
                     const Text(
                       'Recherche',
                       textAlign: TextAlign.left,
                       style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                        fontSize: 30,
+                        fontWeight: FontWeight.w700,
                         color: Colors.white,
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 17),
                     TextField(
                       controller: _searchController,
                       decoration: InputDecoration(
-                        labelText: 'Personnage, Comic...',
+                        labelText: 'Comic, film, série...',
                         filled: true,
-                        labelStyle: TextStyle(color: AppColors.bottomBarTextUnselected),
+                        labelStyle: TextStyle(color: Colors.grey),
                         suffixIcon: const Icon(
                           Icons.search,
-                          color: AppColors.bottomBarTextUnselected, 
+                          color: Colors.grey,
+                          size: 24,
                           ), 
                         fillColor: AppColors.screenBackground,
                         enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: const BorderSide(color: AppColors.bottomBarTextSelected),
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: const BorderSide(color: AppColors.screenBackground),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: const BorderSide(color: AppColors.bottomBarTextUnselected),
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: const BorderSide(color: Colors.grey),
                         ),
                       ),
                       style: const TextStyle(color: Colors.white),
@@ -100,6 +104,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             _isSearching = true;
                             _isFoundedCharacter = false;
                             _isFoundedComic = false;
+                            _isFoundedSerie = false;
                             _query = query;
                           });
                           _makeInvisible();
@@ -109,22 +114,21 @@ class _SearchScreenState extends State<SearchScreen> {
                   ],
                 ),
               ),
-              const SizedBox(height: 32),
 
               if (!_isSearching)
                 Container(
-                  margin: EdgeInsets.symmetric(vertical: marginHeight),
+                  margin: EdgeInsets.symmetric(vertical: marginHeight, horizontal: 8),
                   child: Stack(
                     clipBehavior: Clip.none,
                     children: [
                       Container(
-                        height: 110,
+                        height: 141,
+                        width: 360,
                         decoration: BoxDecoration(
                           color: AppColors.cardBackground,
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(20),
                         ),
-                        padding: const EdgeInsets.all(16.0),
-                        margin: const EdgeInsets.symmetric(horizontal: 40),
+                        padding: const EdgeInsets.all(23.0),
                         child: const Row(
                           children: [
                             Expanded(
@@ -134,13 +138,13 @@ class _SearchScreenState extends State<SearchScreen> {
                                   Wrap(
                                     children: [
                                       Padding(
-                                        padding: EdgeInsets.only(right: 16.0),
+                                        padding: EdgeInsets.only(top: 16.0, bottom: 16.0),
                                         child: SizedBox(
                                           width: 200,
                                           child: Text(
-                                            'Saisissez une recherche pour trouver un comic ou un personnage',
+                                            'Saisissez une recherche pour trouver un comics, film, série ou personnage.',
                                             style: TextStyle(
-                                              fontSize: 16,
+                                              fontSize: 15,
                                               color: AppColors.textSearch,
                                             ),
                                           ),
@@ -155,11 +159,11 @@ class _SearchScreenState extends State<SearchScreen> {
                         ),
                       ),
                       Positioned(
-                        top: -25,
-                        right: 50,
+                        top: -35,
+                        right: 15,
                         child: SvgPicture.asset(
                           AppVectorialImages.astronaut,
-                          height: 100,
+                          height: 125,
                         ),
                       ),
                     ],
@@ -176,6 +180,9 @@ class _SearchScreenState extends State<SearchScreen> {
                     ),
                     BlocProvider(
                       create: (context) => ComicsSearchListBloc(_query),
+                    ),
+                    BlocProvider(
+                      create: (context) => SerieSearchListBloc(_query),
                     ),
                   ],
                   child: Column(
@@ -264,6 +271,49 @@ class _SearchScreenState extends State<SearchScreen> {
                           return const SizedBox.shrink();
                         },
                       ),
+                      const SizedBox(height: 32),
+
+                      // BlocBuilder pour les series
+                      BlocBuilder<SerieSearchListBloc, SerieSearchListState>(
+                        builder: (context, state) {
+                          if (state is SerieSearchListNotifierSuccessState) {
+                            final series = state.series;
+                            if (series != null && series.isEmpty) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                  color: AppColors.cardBackground,
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                                padding: const EdgeInsets.all(16.0),
+                                margin: const EdgeInsets.symmetric(horizontal: 40),
+                                child: const Column(
+                                  children: [
+                                    Text(
+                                      'Aucune série trouvé.',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.white,
+                                      ),
+                                    ),  
+                                  ],
+                                ),
+                              );
+                            }
+                            return HorizontalListWidget(
+                              title: "Series",
+                              items: series!,
+                              type: "series",
+                              page: "search",
+                            );
+                          } else if (state is SerieSearchListNotifierErrorState) {
+                            return Text(
+                              'Erreur : ${state.error}',
+                              style: const TextStyle(color: Colors.red),
+                            );
+                          }
+                          return const SizedBox.shrink();
+                        },
+                      ),
                       SizedBox(height: height * 0.08),
                     ],
                   ),
@@ -271,33 +321,32 @@ class _SearchScreenState extends State<SearchScreen> {
               
               if (_isSearching)
                 Visibility(
-                  visible: !_isFoundedCharacter & !_isFoundedComic,
+                  visible: !_isFoundedCharacter & !_isFoundedComic & !_isFoundedSerie,
                   child: Container(
-                    margin: EdgeInsets.symmetric(vertical: marginHeight),
+                    margin: EdgeInsets.symmetric(vertical: marginHeight, horizontal: 8),
                     child: Stack(
                       clipBehavior: Clip.none,
                       children: [
                         Container(
-                          height: 160,
+                          height: 141,
                           decoration: BoxDecoration(
                             color: AppColors.cardBackground,
-                            borderRadius: BorderRadius.circular(16),
+                            borderRadius: BorderRadius.circular(20),
                           ),
-                          padding: const EdgeInsets.all(16.0),
-                          margin: const EdgeInsets.symmetric(horizontal: 40),
+                          padding: const EdgeInsets.all(8.0),
                           child: const Row(
                             children: [
                               Expanded(
                                 child: Wrap(
                                   children: [
                                     Padding(
-                                      padding: EdgeInsets.only(top: 60.0, left: 48.0),
+                                      padding: EdgeInsets.only(top: 60.0, left: 120.0),
                                       child: SizedBox(
-                                        width: 200,
+                                        width: 150,
                                         child: Text(
-                                          'Recherche en cours, merci de patienter...',
+                                          'Recherche en cours, Merci de patienter...',
                                           style: TextStyle(
-                                            fontSize: 16,
+                                            fontSize: 15,
                                             color: AppColors.textSearch,
                                           ),
                                           textAlign: TextAlign.center,

@@ -28,6 +28,15 @@ abstract class OFFAPI {
     @Query("resources") String resources,
   );
 
+  @GET("/search/")
+  Future<SerieListResponseServer?> searchSerie(
+    @Query("api_key") String apiKey,
+    @Query("format") String format,
+    @Query("query") String query,
+    @Query('limit') String limit,
+    @Query("resources") String resources,
+  );
+
   @GET('/series_list/')
   Future<SerieListResponseServer> loadSeriesList(
     @Query("api_key") String apiKey,
@@ -102,10 +111,21 @@ class OFFAPIManager {
   Future<OFFServerResponseSearchCharacter?> searchCharacter(
       String query) async {
     try {
-      return await api.searchCharacter(_apiKey, "json", query, "50", "character");
+      return await api.searchCharacter(_apiKey, "json", query, "100", "character");
     } catch (e) {
       print(
           "Erreur lors de la récupération de la recherche du personnage : $e");
+      return null;
+    }
+  }
+  //Méthode pour rechercher une serie
+  Future<SerieListResponseServer?> searchSerie(
+      String query) async {
+    try {
+      return await api.searchSerie(_apiKey, "json", query, "100", "series");
+    } catch (e) {
+      print(
+          "Erreur lors de la récupération de la recherche de la serie : $e");
       return null;
     }
   }

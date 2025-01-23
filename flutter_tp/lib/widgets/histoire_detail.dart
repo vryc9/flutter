@@ -5,9 +5,9 @@ class HistoireDetailWidget extends StatelessWidget {
   final String content;
 
   const HistoireDetailWidget({
-    Key? key,
+    super.key,
     required this.content,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +18,9 @@ class HistoireDetailWidget extends StatelessWidget {
           data: content,
           style: {
             'body': Style(
+              fontSize: FontSize(17),
+              fontWeight: FontWeight.w600,
               color: Colors.white,
-              fontSize: FontSize.medium,
             ),
           },
         ),

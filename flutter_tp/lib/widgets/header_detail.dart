@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:flutter_tp/res/app_colors.dart';
+import 'package:flutter_tp/res/app_svg.dart';
 
 class HeaderWidget extends StatelessWidget {
   final String title;
 
   const HeaderWidget({
-    Key? key,
+    super.key,
     required this.title,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,16 +28,20 @@ class HeaderWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               IconButton(
-                icon: const Icon(Icons.arrow_back, color: Colors.white),
+                icon: SvgPicture.asset(
+                  AppVectorialImages.icBack,    
+                  height: 24.0,
+                ),
                 onPressed: () {
                   Navigator.pop(context);
                 },
               ),
-              const SizedBox(width: 8),
+
+              const SizedBox(width: 14),
               Text(
                 title,
                 style: const TextStyle(
-                  fontSize: 20,
+                  fontSize: 17,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),

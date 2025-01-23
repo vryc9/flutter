@@ -22,10 +22,10 @@ class HorizontalListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      margin: const EdgeInsets.symmetric(horizontal: 9.0, vertical: 8.0),
       decoration: BoxDecoration(
         color: AppColors.cardBackground,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.2),
@@ -35,7 +35,7 @@ class HorizontalListWidget extends StatelessWidget {
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(17.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -52,12 +52,12 @@ class HorizontalListWidget extends StatelessWidget {
                         shape: BoxShape.circle,
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: 9),
                     Text(
                       title,
                       style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
                         color: Colors.white,
                       ),
                     ),
@@ -91,25 +91,26 @@ class HorizontalListWidget extends StatelessWidget {
                       }
                     },
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 6),
                       decoration: BoxDecoration(
                         color: AppColors.seeMoreBackground,
-                        borderRadius: BorderRadius.circular(8), 
+                        borderRadius: BorderRadius.circular(10), 
                       ),
                       child: const Text(
                         "Voir plus",
                         style: TextStyle(
-                          color: AppColors.bottomBarTextUnselected,
-                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
                         ),
                       ),
                     ),
                   ),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 14),
             SizedBox(
-              height: 230,
+              height: 250,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: page == 'home' ? min(items.length, 5) : items.length,
@@ -178,12 +179,13 @@ class HorizontalListWidget extends StatelessWidget {
 
   Widget _buildCard(BuildContext context, dynamic item) {
     return Container(
-      width: 150,
-      margin: const EdgeInsets.symmetric(horizontal: 8),
+      width: 180,
+      height: 250,
+      margin: const EdgeInsets.symmetric(horizontal: 5),
       child: Card(
         color: AppColors.cardElementBackground,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(10),
         ),
         elevation: 4,
         child: Column(
@@ -191,13 +193,13 @@ class HorizontalListWidget extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(16),
-                topRight: Radius.circular(16),
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
               ),
               child: Image.network(
-                item.image.screen_large_url!,
-                height: 150,
-                width: double.infinity,
+                item.image.original_url!,
+                height: 178,
+                width: 180,
                 fit: BoxFit.cover,
                 loadingBuilder: (context, child, loadingProgress) {
                   if (loadingProgress == null) return child;
@@ -216,14 +218,14 @@ class HorizontalListWidget extends StatelessWidget {
                 },
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 12),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
               child: Text(
                 item.name ?? "Nom inconnu",
                 style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
                   color: Colors.white,
                 ),
                 textAlign: TextAlign.left,

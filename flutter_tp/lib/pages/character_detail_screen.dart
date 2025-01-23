@@ -31,10 +31,9 @@ class CharacterDetailScreen extends StatelessWidget {
                 length: 2,
                 child: Stack(
                   children: [
-                    // L'image en fond
                     Positioned.fill(
                       child: Image.network(
-                        character.image!.screen_large_url!,
+                        character.image!.original_url!,
                         fit: BoxFit.cover,
                         loadingBuilder: (context, child, loadingProgress) {
                           if (loadingProgress == null) return child;
@@ -53,10 +52,9 @@ class CharacterDetailScreen extends StatelessWidget {
                         },
                       ),
                     ),
-                    // Couche semi-transparente par-dessus l'image
                     Positioned.fill(
                       child: Container(
-                        color: AppColors.screenBackground.withOpacity(0.6),
+                        color: AppColors.screenBackground.withOpacity(0.7),
                       ),
                     ),
                     CustomScrollView(
@@ -78,9 +76,9 @@ class CharacterDetailScreen extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Colors.black.withOpacity(0.4),
+                                        color: Colors.black.withOpacity(0.7),
                                         blurRadius: 16,
-                                        spreadRadius: 4, // Étendre l'ombre
+                                        spreadRadius: 4,
                                         offset: const Offset(0, 8),
                                       ),
                                     ],
@@ -89,8 +87,16 @@ class CharacterDetailScreen extends StatelessWidget {
                                     labelColor: Colors.white,
                                     unselectedLabelColor: Colors.grey,
                                     indicatorColor: AppColors.orange,
+                                    labelStyle: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                    unselectedLabelStyle: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                     tabs: [
-                                      Tab(text: "Histoire"),
+                                      Tab(text: "Histoire",),
                                       Tab(text: "Infos"),
                                     ],
                                   ),
@@ -99,8 +105,8 @@ class CharacterDetailScreen extends StatelessWidget {
                                 Expanded(
                                   child: ClipRRect(
                                     borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(30),
-                                      topRight: Radius.circular(30),
+                                      topLeft: Radius.circular(20),
+                                      topRight: Radius.circular(20),
                                     ),
                                     child: Container(
                                       color: AppColors.cardBackground,
@@ -140,6 +146,12 @@ class CharacterDetailScreen extends StatelessWidget {
                                                         : "Inconnu",
                                                   ),
                                                   _buildTableRow(
+                                                    "Créateurs",
+                                                      (character.creators != null && character.creators!.isNotEmpty)
+                                                          ? character.creators!.map((creator) => creator.name).join(", ")
+                                                          : "Inconnus",
+                                                    ),
+                                                  _buildTableRow(
                                                     "Genre",
                                                     (character.gender != null && character.gender! == 1)
                                                         ? "Masculin"
@@ -157,7 +169,7 @@ class CharacterDetailScreen extends StatelessWidget {
                                                             character.issues_died_in!.isNotEmpty &&
                                                             character.issues_died_in!.first.name != null)
                                                         ? character.issues_died_in!.first.name!
-                                                        : "Non spécifié",
+                                                        : "N/A",
                                                   ),
                                                 ],
                                               ),
@@ -201,14 +213,14 @@ class CharacterDetailScreen extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Text(
             title,
-            style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+            style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w700, color: Colors.white),
           ),
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
             value,
-            style: const TextStyle(color: Colors.white),
+            style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w400, color: Colors.white),
           ),
         ),
       ],

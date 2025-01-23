@@ -7,6 +7,7 @@ class AppVectorialImages {
   static const String icMovieBicolor = 'res/svg/ic_movie_bicolor.svg';
   static const String icPublisherBicolor = 'res/svg/ic_publisher_bicolor.svg';
   static const String icTvBicolor = 'res/svg/ic_tv_bicolor.svg';
+  static const String icBack = 'res/svg/ic_back.svg';
   static const String navbarComics = 'res/svg/navbar_comics.svg';
   static const String navbarHome = 'res/svg/navbar_home.svg';
   static const String navbarMovies = 'res/svg/navbar_movies.svg';
