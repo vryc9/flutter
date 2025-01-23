@@ -11,6 +11,8 @@ import 'package:flutter_tp/pages/serie/series_list.dart';
 import 'package:flutter_tp/res/app_colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'pages/bloc/moviesList_bloc.dart';
+
 void main() {
   runApp(
     MultiBlocProvider(
@@ -30,6 +32,9 @@ void main() {
         BlocProvider(
           create: (_) => SeriesListBloc(),
         ),
+        BlocProvider(
+          create: (_) => MovieslistBloc(),
+        )
       ],
       child: const MyApp(),
     ),

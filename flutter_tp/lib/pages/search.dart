@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_tp/pages/bloc/seriesList_bloc.dart';
+import 'package:flutter_tp/pages/bloc/moviesList_bloc.dart';
 import 'package:flutter_tp/res/app_svg.dart';
 
 class Searchpage extends StatelessWidget {
@@ -14,7 +14,7 @@ class Searchpage extends StatelessWidget {
     final double height = MediaQuery.sizeOf(context).height;
 
     return BlocProvider(
-      create: (context) => SeriesListBloc(),
+      create: (context) => MovieslistBloc(),
       child: Scaffold(
         appBar: AppBar(
           title: const Text('RECHERCHE'),
@@ -28,11 +28,11 @@ class Searchpage extends StatelessWidget {
               children: [
                 SvgPicture.asset(AppVectorialImages.astronaut),
                 SizedBox(height: height * 0.1),
-                BlocBuilder<SeriesListBloc, SeriesListState>(
+                BlocBuilder<MovieslistBloc, MoviesListState>(
                   builder: (context, state) {
-                    if (state is SeriesListNotifierLoadingState) {
+                    if (state is MoviesListNotifierLoadingState) {
                       return const CircularProgressIndicator();
-                    } else if (state is SeriesListNotifierLSuccessState) {
+                    } else if (state is MoviesListNotifierLSuccessState) {
                       final series = state.response.results;
                       if (series == null || series.isEmpty) {
                         return const Text(
@@ -49,13 +49,13 @@ class Searchpage extends StatelessWidget {
                             return ListTile(
                               title: Text(serie.name ?? 'Nom non disponible'),
                               subtitle: Text(
-                                serie.publisher?.name ?? 'Éditeur inconnu',
+                                serie.name ?? 'Éditeur inconnu',
                               ),
                             );
                           },
                         ),
                       );
-                    } else if (state is SeriesListNotifierErrorState) {
+                    } else if (state is MoviesListNotifierErrorState) {
                       return Text(
                         'Erreur : ${state.message}',
                         style: const TextStyle(color: Colors.red),
