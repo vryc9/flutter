@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_tp/res/app_colors.dart';
 import 'package:flutter_tp/res/app_svg.dart';
 
 class HeaderWidget extends StatelessWidget {

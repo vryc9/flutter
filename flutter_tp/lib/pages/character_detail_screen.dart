@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_html/flutter_html.dart';
-import 'package:flutter_tp/model/character_api.dart';
 import 'package:flutter_tp/pages/bloc/charactersDetail_bloc.dart';
 import 'package:flutter_tp/res/app_colors.dart';
 import 'package:flutter_tp/widgets/header_detail.dart';

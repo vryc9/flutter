@@ -76,7 +76,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       decoration: InputDecoration(
                         labelText: 'Comic, film, série...',
                         filled: true,
-                        labelStyle: TextStyle(color: Colors.grey),
+                        labelStyle: const TextStyle(color: Colors.grey),
                         suffixIcon: const Icon(
                           Icons.search,
                           color: Colors.grey,
@@ -192,7 +192,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         builder: (context, state) {
                           if (state is CharacterSearchListNotifierSuccessState) {
                             final characters = state.characters;
-                            if (characters != null && characters.isEmpty) {
+                            if (characters.isEmpty) {
                               return Container(
                                 decoration: BoxDecoration(
                                   color: AppColors.cardBackground,
@@ -202,7 +202,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                 margin: const EdgeInsets.symmetric(horizontal: 40),
                                 child: const Column(
                                   children: [
-                                    const Text(
+                                    Text(
                                       'Aucun personnage trouvé.',
                                       style: TextStyle(
                                         fontSize: 16,
@@ -235,7 +235,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         builder: (context, state) {
                           if (state is ComicsSearchListNotifierSuccessState) {
                             final comics = state.comics;
-                            if (comics != null && comics.isEmpty) {
+                            if (comics.isEmpty) {
                               return Container(
                                 decoration: BoxDecoration(
                                   color: AppColors.cardBackground,

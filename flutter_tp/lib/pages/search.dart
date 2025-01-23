@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -47,9 +45,9 @@ class Searchpage extends StatelessWidget {
                           itemBuilder: (context, index) {
                             final serie = series[index];
                             return ListTile(
-                              title: Text(serie.name ?? 'Nom non disponible'),
+                              title: Text(serie.name),
                               subtitle: Text(
-                                serie.name ?? 'Éditeur inconnu',
+                                serie.name,
                               ),
                             );
                           },
