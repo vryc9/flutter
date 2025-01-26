@@ -123,6 +123,18 @@ class HomePage extends StatelessWidget {
               },
               child: const Text('Voir les détails de Billy'),
             ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  '/serieList',
+                  arguments: {
+                    'type': "serie",
+                  },
+                );
+              },
+              child: const Text('Voir la liste des séries'),
+            ),
           ],
         ),
       ),
