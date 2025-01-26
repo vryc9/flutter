@@ -147,7 +147,7 @@
   - État *success* : affiche le character et son contenu.
   - État *error* : affiche le message d'erreur brut sur fond rouge.
 
-- **Style** : Identique.
+- **Style** : Identique, sauf qu'il y a une ligne blanche sous les titres d'onglets que nous n'avons pas réussi à retirer.
 
  ---
 
