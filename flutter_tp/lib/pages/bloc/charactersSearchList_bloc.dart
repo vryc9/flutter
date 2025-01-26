@@ -3,50 +3,50 @@ import 'package:flutter_tp/api/model/response_api.dart';
 import 'package:flutter_tp/api/services/off_api.dart';
 import 'package:flutter_tp/model/character_api.dart';
 
-abstract class CharacterSearchListEvent {}
+abstract class CharactersSearchListEvent {}
 
-class LoadCharacterSearchListEvent extends CharacterSearchListEvent {
-  LoadCharacterSearchListEvent();
+class LoadCharactersSearchListEvent extends CharactersSearchListEvent {
+  LoadCharactersSearchListEvent();
 }
 
-class CharacterSearchListBloc extends Bloc<CharacterSearchListEvent, CharacterSearchListState> {
-  CharacterSearchListBloc(this.query)
+class CharactersSearchListBloc extends Bloc<CharactersSearchListEvent, CharactersSearchListState> {
+  CharactersSearchListBloc(this.query)
       : assert(query.isNotEmpty),
-        super(CharacterSearchListNotifierLoadingState()) {
-    on<LoadCharacterSearchListEvent>(_loadCharacter);
-    add(LoadCharacterSearchListEvent());
+        super(CharactersSearchListNotifierLoadingState()) {
+    on<LoadCharactersSearchListEvent>(_loadCharacter);
+    add(LoadCharactersSearchListEvent());
   }
 
   final String query;
 
   Future<void> _loadCharacter(
-    CharacterSearchListEvent event,
-    Emitter<CharacterSearchListState> emit,
+    CharactersSearchListEvent event,
+    Emitter<CharactersSearchListState> emit,
   ) async {
     try {
       final OFFServerResponseCharacters? response =
           await OFFAPIManager().searchCharacters(query);
-      emit(CharacterSearchListNotifierSuccessState(response!.results));
+      emit(CharactersSearchListNotifierSuccessState(response!.results));
     } catch (e) {
-      emit(CharacterSearchListNotifierErrorState(e));
+      emit(CharactersSearchListNotifierErrorState(e));
     }
   }
 }
 
-sealed class CharacterSearchListState {}
+sealed class CharactersSearchListState {}
 
-class CharacterSearchListNotifierLoadingState extends CharacterSearchListState {}
+class CharactersSearchListNotifierLoadingState extends CharactersSearchListState {}
 
-class CharacterSearchListNotifierSuccessState extends CharacterSearchListState {
+class CharactersSearchListNotifierSuccessState extends CharactersSearchListState {
   final List<Character?> characters;
 
-  CharacterSearchListNotifierSuccessState(this.characters);
+  CharactersSearchListNotifierSuccessState(this.characters);
 
 }
 
-class CharacterSearchListNotifierErrorState extends CharacterSearchListState {
+class CharactersSearchListNotifierErrorState extends CharactersSearchListState {
   final dynamic error;
 
-  CharacterSearchListNotifierErrorState(this.error);
+  CharactersSearchListNotifierErrorState(this.error);
 
 }

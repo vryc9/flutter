@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_tp/api/model/response_api.dart';
 import 'package:flutter_tp/model/serie_api.dart';
 import 'package:flutter_tp/pages/bloc/seriesList_bloc.dart';
 
@@ -43,7 +42,7 @@ class SeriesListScreen extends StatelessWidget {
                 ),
               );
             } else if (state is SeriesListNotifierLSuccessState) {
-              final series = state.response.results ?? [];
+              final series = state.response.results;
 
               return ListView.builder(
                 itemCount: series.length,

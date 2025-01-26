@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_tp/pages/bloc/charactersSearchList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/comicsSearchList_bloc.dart';
+import 'package:flutter_tp/pages/bloc/moviesSearchList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/seriesSearchList_bloc.dart';
 import 'package:flutter_tp/res/app_colors.dart';
 import 'package:flutter_tp/res/app_svg.dart';
@@ -176,23 +177,26 @@ class _SearchScreenState extends State<SearchScreen> {
                 MultiBlocProvider(
                   providers: [
                     BlocProvider(
-                      create: (context) => CharacterSearchListBloc(_query),
+                      create: (context) => CharactersSearchListBloc(_query),
                     ),
                     BlocProvider(
                       create: (context) => ComicsSearchListBloc(_query),
                     ),
                     BlocProvider(
-                      create: (context) => SerieSearchListBloc(_query),
+                      create: (context) => SeriesSearchListBloc(_query),
+                    ),
+                    BlocProvider(
+                      create: (context) => MoviesSearchListBloc(_query),
                     ),
                   ],
                   child: Column(
                     children: [
-                      // BlocBuilder pour les personnages
-                      BlocBuilder<CharacterSearchListBloc, CharacterSearchListState>(
+                      // BlocBuilder pour les series
+                      BlocBuilder<SeriesSearchListBloc, SeriesSearchListState>(
                         builder: (context, state) {
-                          if (state is CharacterSearchListNotifierSuccessState) {
-                            final characters = state.characters;
-                            if (characters.isEmpty) {
+                          if (state is SeriesSearchListNotifierSuccessState) {
+                            final series = state.series;
+                            if (series != null && series.isEmpty) {
                               return Container(
                                 decoration: BoxDecoration(
                                   color: AppColors.cardBackground,
@@ -203,7 +207,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                 child: const Column(
                                   children: [
                                     Text(
-                                      'Aucun personnage trouvé.',
+                                      'Aucune Série trouvé.',
                                       style: TextStyle(
                                         fontSize: 16,
                                         color: Colors.white,
@@ -214,12 +218,12 @@ class _SearchScreenState extends State<SearchScreen> {
                               );
                             }
                             return HorizontalListWidget(
-                              title: "Personnages",
-                              items: characters,
-                              type: "character",
+                              title: "Series",
+                              items: series!,
+                              type: "series",
                               page: "search",
                             );
-                          } else if (state is CharacterSearchListNotifierErrorState) {
+                          } else if (state is SeriesSearchListNotifierErrorState) {
                             return Text(
                               'Erreur : ${state.error}',
                               style: const TextStyle(color: Colors.red),
@@ -273,12 +277,12 @@ class _SearchScreenState extends State<SearchScreen> {
                       ),
                       const SizedBox(height: 32),
 
-                      // BlocBuilder pour les series
-                      BlocBuilder<SerieSearchListBloc, SerieSearchListState>(
+                      // BlocBuilder pour les movies
+                      BlocBuilder<MoviesSearchListBloc, MoviesSearchListState>(
                         builder: (context, state) {
-                          if (state is SerieSearchListNotifierSuccessState) {
-                            final series = state.series;
-                            if (series != null && series.isEmpty) {
+                          if (state is MoviesSearchListNotifierSuccessState) {
+                            final movies = state.movies;
+                            if (movies.isEmpty) {
                               return Container(
                                 decoration: BoxDecoration(
                                   color: AppColors.cardBackground,
@@ -289,7 +293,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                 child: const Column(
                                   children: [
                                     Text(
-                                      'Aucune série trouvé.',
+                                      'Aucun Film trouvé.',
                                       style: TextStyle(
                                         fontSize: 16,
                                         color: Colors.white,
@@ -300,12 +304,55 @@ class _SearchScreenState extends State<SearchScreen> {
                               );
                             }
                             return HorizontalListWidget(
-                              title: "Series",
-                              items: series!,
-                              type: "series",
+                              title: "Films",
+                              items: movies,
+                              type: "movie",
                               page: "search",
                             );
-                          } else if (state is SerieSearchListNotifierErrorState) {
+                          } else if (state is MoviesSearchListNotifierErrorState) {
+                            return Text(
+                              'Erreur : ${state.error}',
+                              style: const TextStyle(color: Colors.red),
+                            );
+                          }
+                          return const SizedBox.shrink();
+                        },
+                      ),
+                      const SizedBox(height: 32),
+
+                      // BlocBuilder pour les personnages
+                      BlocBuilder<CharactersSearchListBloc, CharactersSearchListState>(
+                        builder: (context, state) {
+                          if (state is CharactersSearchListNotifierSuccessState) {
+                            final characters = state.characters;
+                            if (characters.isEmpty) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                  color: AppColors.cardBackground,
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                                padding: const EdgeInsets.all(16.0),
+                                margin: const EdgeInsets.symmetric(horizontal: 40),
+                                child: const Column(
+                                  children: [
+                                    Text(
+                                      'Aucun Personnage trouvé.',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.white,
+                                      ),
+                                    ),  
+                                  ],
+                                ),
+                              );
+                            }
+                            return HorizontalListWidget(
+                              title: "Personnages",
+                              items: characters,
+                              type: "character",
+                              page: "search",
+                            );
+                          } else if (state is CharactersSearchListNotifierErrorState) {
                             return Text(
                               'Erreur : ${state.error}',
                               style: const TextStyle(color: Colors.red),

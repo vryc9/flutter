@@ -3,50 +3,50 @@ import 'package:flutter_tp/api/model/response_api.dart';
 import 'package:flutter_tp/api/services/off_api.dart';
 import 'package:flutter_tp/model/serie_api.dart';
 
-abstract class SerieSearchListEvent {}
+abstract class SeriesSearchListEvent {}
 
-class LoadSerieSearchListEvent extends SerieSearchListEvent {
-  LoadSerieSearchListEvent();
+class LoadSeriesSearchListEvent extends SeriesSearchListEvent {
+  LoadSeriesSearchListEvent();
 }
 
-class SerieSearchListBloc extends Bloc<SerieSearchListEvent, SerieSearchListState> {
-  SerieSearchListBloc(this.query)
+class SeriesSearchListBloc extends Bloc<SeriesSearchListEvent, SeriesSearchListState> {
+  SeriesSearchListBloc(this.query)
       : assert(query.isNotEmpty),
-        super(SerieSearchListNotifierLoadingState()) {
-    on<LoadSerieSearchListEvent>(_loadSerie);
-    add(LoadSerieSearchListEvent());
+        super(SeriesSearchListNotifierLoadingState()) {
+    on<LoadSeriesSearchListEvent>(_loadSerie);
+    add(LoadSeriesSearchListEvent());
   }
 
   final String query;
 
   Future<void> _loadSerie(
-    SerieSearchListEvent event,
-    Emitter<SerieSearchListState> emit,
+    SeriesSearchListEvent event,
+    Emitter<SeriesSearchListState> emit,
   ) async {
     try {
       final OFFServerResponseSeries? response =
           await OFFAPIManager().searchSeries(query);
-      emit(SerieSearchListNotifierSuccessState(response!.results));
+      emit(SeriesSearchListNotifierSuccessState(response!.results));
     } catch (e) {
-      emit(SerieSearchListNotifierErrorState(e));
+      emit(SeriesSearchListNotifierErrorState(e));
     }
   }
 }
 
-sealed class SerieSearchListState {}
+sealed class SeriesSearchListState {}
 
-class SerieSearchListNotifierLoadingState extends SerieSearchListState {}
+class SeriesSearchListNotifierLoadingState extends SeriesSearchListState {}
 
-class SerieSearchListNotifierSuccessState extends SerieSearchListState {
+class SeriesSearchListNotifierSuccessState extends SeriesSearchListState {
   final List<Serie>? series;
 
-  SerieSearchListNotifierSuccessState(this.series);
+  SeriesSearchListNotifierSuccessState(this.series);
 
 }
 
-class SerieSearchListNotifierErrorState extends SerieSearchListState {
+class SeriesSearchListNotifierErrorState extends SeriesSearchListState {
   final dynamic error;
 
-  SerieSearchListNotifierErrorState(this.error);
+  SeriesSearchListNotifierErrorState(this.error);
 
 }

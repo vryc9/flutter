@@ -24,8 +24,7 @@ class MoviesSearchListBloc extends Bloc<MoviesSearchListEvent, MoviesSearchListS
     Emitter<MoviesSearchListState> emit,
   ) async {
     try {
-      final OFFServerResponseMovies? response =
-          await OFFAPIManager().searchMovies(query);
+      final OFFServerResponseMovies? response = await OFFAPIManager().searchMovies(query);
       emit(MoviesSearchListNotifierSuccessState(response!.results));
     } catch (e) {
       emit(MoviesSearchListNotifierErrorState(e));
