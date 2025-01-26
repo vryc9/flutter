@@ -449,7 +449,7 @@ class GenericListScreen extends StatelessWidget {
                         ),
                         const SizedBox(width: 8.0),
                         Text(
-                          formatDateMonthYear(comic.cover_date) ?? 'Date inconnue',
+                          formatDateMonthYear(comic.cover_date),
                           style: const TextStyle(
                             color: AppColors.bottomBarTextUnselected,
                             fontSize: 12.0,

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_tp/pages/bloc/comicsList_bloc.dart';
-import 'package:flutter_tp/pages/bloc/comicsSearchList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/moviesList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/seriesList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/charactersList_bloc.dart';
@@ -133,7 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     margin: const EdgeInsets.symmetric(horizontal: 40),
                                     child: const Column(
                                       children: [
-                                        const Text(
+                                        Text(
                                           'Aucun comic trouvé.',
                                           style: TextStyle(
                                             fontSize: 16,
