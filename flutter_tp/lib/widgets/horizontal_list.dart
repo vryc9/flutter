@@ -68,18 +68,30 @@ class HorizontalListWidget extends StatelessWidget {
                     onPressed: () {
                       switch (type) {
                         case 'comic':
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Voir plus pour "$title"')),
+                          Navigator.pushNamed(
+                            context,
+                            '/comicList',
+                            arguments: {
+                              'type': "comic",
+                            },
                           );
                           break;
                         case 'movie':
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Voir plus pour "$title"')),
+                          Navigator.pushNamed(
+                            context,
+                            '/movieList',
+                            arguments: {
+                              'type': "movie",
+                            },
                           );
                           break;
                         case 'serie':
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Voir plus pour "$title"')),
+                          Navigator.pushNamed(
+                            context,
+                            '/serieList',
+                            arguments: {
+                              'type': "serie",
+                            },
                           );
                           break;
                         default:

@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_tp/api/model/response_api.dart';
 import 'package:flutter_tp/model/comic_api.dart';
 import 'package:flutter_tp/model/movie_api.dart';
 import 'package:flutter_tp/model/serie_api.dart';
-import 'package:flutter_tp/pages/bloc/comicList_bloc.dart';
-import 'package:flutter_tp/pages/bloc/comicsSearchList_bloc.dart';
+import 'package:flutter_tp/pages/bloc/comicsList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/moviesList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/seriesList_bloc.dart';
 import 'package:flutter_tp/res/app_svg.dart';
+import 'package:flutter_tp/res/app_colors.dart';
 import 'package:flutter_tp/utils/date_format.dart';
 
 class GenericListScreen extends StatelessWidget {
+  //serie, movie ou comic
   final String type;
 
   const GenericListScreen({super.key, required this.type});
@@ -21,17 +21,28 @@ class GenericListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(100),
+        preferredSize: const Size.fromHeight(140),
         child: Container(
-          color: const Color(0xFF1A1A2E),
+          color: AppColors.screenBackground,
           alignment: Alignment.center,
+          margin: const EdgeInsets.only(left:24, top: 34, bottom: 21),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24.0),
             child: Text(
-              'Liste des $type',
-              style: const TextStyle(fontSize: 24, color: Colors.white),
+              type == 'comic'
+                  ? 'Comics les plus populaires'
+                  : type == 'movie'
+                      ? 'Films les plus populaires'
+                      : type == 'serie'
+                          ? 'Séries les plus populaires'
+                          : 'Type inconnu',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 30.0,
+                fontWeight: FontWeight.bold,
+              ),
               maxLines: 2,
-              textAlign: TextAlign.center,
+              textAlign: TextAlign.left,
               overflow: TextOverflow.ellipsis,
             ),
           ),
@@ -50,7 +61,7 @@ class GenericListScreen extends StatelessWidget {
             if (state is SeriesListNotifierLoadingState) {
               return const Center(child: CircularProgressIndicator());
             } else if (state is SeriesListNotifierLSuccessState) {
-              final items = state.response.results ?? [];
+              final items = state.response.results;
               return _buildList(items);
             } else if (state is SeriesListNotifierErrorState) {
               return Center(
@@ -67,15 +78,15 @@ class GenericListScreen extends StatelessWidget {
       );
     } else if (type == 'comic') {
       return BlocProvider(
-        create: (context) => ComicListBloc(),
-        child: BlocBuilder<ComicListBloc, ComicListState>(
+        create: (context) => ComicsListBloc(),
+        child: BlocBuilder<ComicsListBloc, ComicsListState>(
           builder: (context, state) {
-            if (state is ComicListNotifierLoadingState) {
+            if (state is ComicsListNotifierLoadingState) {
               return const Center(child: CircularProgressIndicator());
-            } else if (state is ComicListNotifierLSuccessState) {
-              final items = state.response.results ?? [];
+            } else if (state is ComicsListNotifierLSuccessState) {
+              final items = state.response.results;
               return _buildList(items);
-            } else if (state is ComicListNotifierErrorState) {
+            } else if (state is ComicsListNotifierErrorState) {
               return Center(
                 child: Text(
                   'Erreur : ${state.message}',
@@ -96,7 +107,7 @@ class GenericListScreen extends StatelessWidget {
             if (state is MoviesListNotifierLoadingState) {
               return const Center(child: CircularProgressIndicator());
             } else if (state is MoviesListNotifierLSuccessState) {
-              final items = state.response.results ?? [];
+              final items = state.response.results;
               return _buildList(items);
             } else if (state is MoviesListNotifierErrorState) {
               return Center(
@@ -152,21 +163,42 @@ class GenericListScreen extends StatelessWidget {
         horizontal: 16.0,
       ),
       child: Container(
+        height: 164,
         decoration: BoxDecoration(
-          color: const Color(0xFF1F3243),
-          borderRadius: BorderRadius.circular(12.0),
+          color: AppColors.cardBackground,
+          borderRadius: BorderRadius.circular(20),
         ),
         padding: const EdgeInsets.all(20.0),
         child: Stack(
           clipBehavior: Clip.none,
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(8.0),
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+                bottomLeft: Radius.circular(10),
+                bottomRight: Radius.circular(10),
+              ),
               child: Image.network(
-                serie.image?.icon_url ?? '',
+                serie.image!.original_url!,
+                height: 132.62,
+                width: 128.86,
                 fit: BoxFit.cover,
-                width: 132.62,
-                height: 155,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+                errorBuilder: (context, error, stackTrace) {
+                  return const Center(
+                    child: Icon(
+                      Icons.broken_image,
+                      color: AppColors.cardElementBackground,
+                      size: 40,
+                    ),
+                  );
+                },
               ),
             ),
             Positioned(
@@ -179,7 +211,7 @@ class GenericListScreen extends StatelessWidget {
                   width: 60,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFFF8100),
+                    color: AppColors.orange,
                     borderRadius: BorderRadius.circular(20.0),
                   ),
                   alignment: Alignment.center,
@@ -209,7 +241,7 @@ class GenericListScreen extends StatelessWidget {
                         serie.name ?? 'Série inconnue',
                         style: const TextStyle(
                           color: Colors.white,
-                          fontSize: 16.0,
+                          fontSize: 17.0,
                           fontWeight: FontWeight.bold,
                         ),
                         maxLines: 2,
@@ -221,16 +253,16 @@ class GenericListScreen extends StatelessWidget {
                       children: [
                         SvgPicture.asset(
                           AppVectorialImages.icPublisherBicolor,
-                          height: 18.0,
+                          height: 12.0,
                           colorFilter: const ColorFilter.mode(
-                              Colors.white70, BlendMode.srcIn),
+                              AppColors.bottomBarTextUnselected, BlendMode.srcIn),
                         ),
                         const SizedBox(width: 8.0),
                         Text(
                           serie.publisher?.name ?? 'Éditeur inconnu',
                           style: const TextStyle(
-                            color: Colors.white70,
-                            fontSize: 14.0,
+                            color: AppColors.bottomBarTextUnselected,
+                            fontSize: 12.0,
                           ),
                         ),
                       ],
@@ -239,16 +271,16 @@ class GenericListScreen extends StatelessWidget {
                     Row(
                       children: [
                         const Icon(
-                          Icons.calendar_today,
-                          color: Colors.white70,
-                          size: 18,
+                          Icons.tv,
+                            color: AppColors.bottomBarTextUnselected,
+                          size: 15,
                         ),
                         const SizedBox(width: 8.0),
                         Text(
-                          serie.start_year ?? '',
+                          '${serie.count_of_episodes ?? 0} épisodes',
                           style: const TextStyle(
-                            color: Colors.white70,
-                            fontSize: 14.0,
+                            color: AppColors.bottomBarTextUnselected,
+                            fontSize: 12.0,
                           ),
                         ),
                       ],
@@ -257,16 +289,16 @@ class GenericListScreen extends StatelessWidget {
                     Row(
                       children: [
                         const Icon(
-                          Icons.tv,
-                          color: Colors.white70,
-                          size: 18,
+                          Icons.calendar_today,
+                            color: AppColors.bottomBarTextUnselected,
+                          size: 15,
                         ),
                         const SizedBox(width: 8.0),
                         Text(
-                          '${serie.count_of_episodes ?? 0} épisodes',
+                          serie.start_year ?? '',
                           style: const TextStyle(
-                            color: Colors.white70,
-                            fontSize: 14.0,
+                            color: AppColors.bottomBarTextUnselected,
+                            fontSize: 12.0,
                           ),
                         ),
                       ],
@@ -288,21 +320,42 @@ class GenericListScreen extends StatelessWidget {
         horizontal: 16.0,
       ),
       child: Container(
+        height: 196,
         decoration: BoxDecoration(
-          color: const Color(0xFF1F3243),
-          borderRadius: BorderRadius.circular(12.0),
+          color: AppColors.cardBackground,
+          borderRadius: BorderRadius.circular(20.0),
         ),
         padding: const EdgeInsets.all(20.0),
         child: Stack(
           clipBehavior: Clip.none,
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(8.0),
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+                bottomLeft: Radius.circular(10),
+                bottomRight: Radius.circular(10),
+              ),
               child: Image.network(
-                comic.image?.icon_url ?? '',
-                fit: BoxFit.cover,
-                width: 128.86,
+                comic.image!.original_url!,
                 height: 163,
+                width: 128.86,
+                fit: BoxFit.cover,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+                errorBuilder: (context, error, stackTrace) {
+                  return const Center(
+                    child: Icon(
+                      Icons.broken_image,
+                      color: AppColors.cardElementBackground,
+                      size: 40,
+                    ),
+                  );
+                },
               ),
             ),
             Positioned(
@@ -315,7 +368,7 @@ class GenericListScreen extends StatelessWidget {
                   width: 60,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFFFA41B),
+                    color: AppColors.orange,
                     borderRadius: BorderRadius.circular(20.0),
                   ),
                   alignment: Alignment.center,
@@ -339,12 +392,17 @@ class GenericListScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
-                      comic.volume?.name ?? 'Comic inconnu',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 17.0,
-                        fontWeight: FontWeight.bold,
+                    SizedBox(
+                      width: 191,
+                      child: Text(
+                        comic.volume!.name ?? 'Volume inconnu',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 17.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     const SizedBox(height: 10.0),
@@ -354,7 +412,7 @@ class GenericListScreen extends StatelessWidget {
                         comic.name ?? 'Comic inconnu',
                         style: const TextStyle(
                           color: Colors.white,
-                          fontSize: 16.0,
+                          fontSize: 17.0,
                           fontWeight: FontWeight.bold,
                         ),
                         maxLines: 2,
@@ -366,16 +424,16 @@ class GenericListScreen extends StatelessWidget {
                       children: [
                         SvgPicture.asset(
                           AppVectorialImages.icBooksBicolor,
-                          height: 18.0,
+                          height: 15.0,
                           colorFilter: const ColorFilter.mode(
-                              Colors.white70, BlendMode.srcIn),
+                              AppColors.bottomBarTextUnselected, BlendMode.srcIn),
                         ),
                         const SizedBox(width: 8.0),
                         Text(
                           'N°${comic.issue_number ?? 'Non défini'}',
                           style: const TextStyle(
-                            color: Colors.white70,
-                            fontSize: 14.0,
+                            color: AppColors.bottomBarTextUnselected,
+                            fontSize: 12.0,
                           ),
                         ),
                       ],
@@ -385,16 +443,16 @@ class GenericListScreen extends StatelessWidget {
                       children: [
                         SvgPicture.asset(
                           AppVectorialImages.icCalendarBicolor,
-                          height: 18.0,
+                          height: 15.0,
                           colorFilter: const ColorFilter.mode(
-                              Colors.white70, BlendMode.srcIn),
+                              AppColors.bottomBarTextUnselected, BlendMode.srcIn),
                         ),
                         const SizedBox(width: 8.0),
                         Text(
-                          formatDate(comic.store_date) ?? 'Date inconnue',
+                          formatDateMonthYear(comic.cover_date) ?? 'Date inconnue',
                           style: const TextStyle(
-                            color: Colors.white70,
-                            fontSize: 14.0,
+                            color: AppColors.bottomBarTextUnselected,
+                            fontSize: 12.0,
                           ),
                         ),
                       ],
@@ -414,23 +472,44 @@ Widget _buildMovieCard(Movie movie, int index) {
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
     child: Container(
+      height: 153,
       decoration: BoxDecoration(
-        color: const Color(0xFF1F3243),
-        borderRadius: BorderRadius.circular(12.0),
+        color: AppColors.cardBackground,
+        borderRadius: BorderRadius.circular(20.0),
       ),
       padding: const EdgeInsets.all(20.0),
       child: Stack(
         clipBehavior: Clip.none,
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(8.0),
-            child: Image.network(
-              movie.image?.icon_url ?? '',
-              fit: BoxFit.cover,
-              width: 132.62,
-              height: 128.86,
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+                bottomLeft: Radius.circular(10),
+                bottomRight: Radius.circular(10),
+              ),
+              child: Image.network(
+                movie.image!.original_url!,
+                height: 118,
+                width: 128.86,
+                fit: BoxFit.cover,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+                errorBuilder: (context, error, stackTrace) {
+                  return const Center(
+                    child: Icon(
+                      Icons.broken_image,
+                      color: AppColors.cardElementBackground,
+                      size: 40,
+                    ),
+                  );
+                },
+              ),
             ),
-          ),
           Positioned(
             top: -15,
             left: -5,
@@ -441,7 +520,7 @@ Widget _buildMovieCard(Movie movie, int index) {
                 width: 60,
                 height: 40,
                 decoration: BoxDecoration(
-                  color: const Color(0xFFFFA41B),
+                  color: AppColors.orange,
                   borderRadius: BorderRadius.circular(20.0),
                 ),
                 alignment: Alignment.center,
@@ -471,7 +550,7 @@ Widget _buildMovieCard(Movie movie, int index) {
                       movie.name ?? 'Film inconnue',
                       style: const TextStyle(
                         color: Colors.white,
-                        fontSize: 16.0,
+                        fontSize: 17.0,
                         fontWeight: FontWeight.bold,
                       ),
                       maxLines: 2,
@@ -483,15 +562,15 @@ Widget _buildMovieCard(Movie movie, int index) {
                     children: [
                       const Icon(
                         Icons.movie,
-                        color: Colors.white70,
-                        size: 18,
+                        color: AppColors.bottomBarTextUnselected,
+                        size: 15,
                       ),
                       const SizedBox(width: 8.0),
                       Text(
                         '${movie.runtime ?? 'Inconnu'} minutes',
                         style: const TextStyle(
-                          color: Colors.white70,
-                          fontSize: 14.0,
+                          color: AppColors.bottomBarTextUnselected,
+                          fontSize: 12.0,
                         ),
                       ),
                     ],
@@ -501,15 +580,15 @@ Widget _buildMovieCard(Movie movie, int index) {
                     children: [
                       const Icon(
                         Icons.calendar_today,
-                        color: Colors.white70,
-                        size: 18,
+                        color: AppColors.bottomBarTextUnselected,
+                        size: 15,
                       ),
                       const SizedBox(width: 8.0),
                       Text(
-                        movie.release_date ?? 'Date inconnue',
+                        formatDateYear(movie.date_added),
                         style: const TextStyle(
-                          color: Colors.white70,
-                          fontSize: 14.0,
+                          color: AppColors.bottomBarTextUnselected,
+                          fontSize: 12.0,
                         ),
                       ),
                     ],

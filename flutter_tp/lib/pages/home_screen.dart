@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_tp/pages/bloc/comicsList_bloc.dart';
+import 'package:flutter_tp/pages/bloc/comicsSearchList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/moviesList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/seriesList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/charactersList_bloc.dart';
@@ -115,13 +117,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           const SizedBox(height: 20),
 
                           // BlocBuilder pour les comics
-                          BlocBuilder<SeriesListBloc, SeriesListState>(
+                          BlocBuilder<ComicsListBloc, ComicsListState>(
                             builder: (context, state) {
-                              if (state is SeriesListNotifierLoadingState) {
+                              if (state is ComicsListNotifierLoadingState) {
                                 return const Center(child: CircularProgressIndicator());
-                              } else if (state is SeriesListNotifierLSuccessState) {
-                                final series = state.response.results;
-                                if (series.isEmpty) {
+                              } else if (state is ComicsListNotifierLSuccessState) {
+                                final comics = state.response.results;
+                                if (comics.isEmpty) {
                                   return Container(
                                     decoration: BoxDecoration(
                                       color: AppColors.cardBackground,
@@ -144,11 +146,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                 }
                                 return HorizontalListWidget(
                                   title: "Comics populaires",
-                                  items: series,
+                                  items: comics,
                                   type: "comic",
                                   page: "home",
                                 );
-                              } else if (state is SeriesListNotifierErrorState) {
+                              } else if (state is ComicsListNotifierErrorState) {
                                 return Text(
                                   'Erreur : ${state.message}',
                                   style: const TextStyle(color: Colors.red),

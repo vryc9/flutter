@@ -11,7 +11,7 @@ Movie _$MovieFromJson(Map<String, dynamic> json) => Movie(
       image: json['image'] == null
           ? null
           : ImageAPI.fromJson(json['image'] as Map<String, dynamic>),
-      id: Movie._stringFromJson(json['id']),
+      id: (json['id'] as num?)?.toInt(),
       box_office_revenue: Movie._stringFromJson(json['box_office_revenue']),
       budget: Movie._stringFromJson(json['budget']),
       characters: (json['characters'] as List<dynamic>?)
@@ -21,7 +21,7 @@ Movie _$MovieFromJson(Map<String, dynamic> json) => Movie(
       distributor: Movie._stringFromJson(json['distributor']),
       producers: Movie._stringFromJson(json['producers']),
       rating: Movie._stringFromJson(json['rating']),
-      release_date: Movie._stringFromJson(json['release_date']),
+      date_added: Movie._stringFromJson(json['date_added']),
       runtime: Movie._stringFromJson(json['runtime']),
       studios: (json['studios'] as List<dynamic>?)
           ?.map((e) => Person.fromJson(e as Map<String, dynamic>))
@@ -42,7 +42,7 @@ Map<String, dynamic> _$MovieToJson(Movie instance) => <String, dynamic>{
       'box_office_revenue': instance.box_office_revenue,
       'producers': instance.producers,
       'rating': instance.rating,
-      'release_date': instance.release_date,
+      'date_added': instance.date_added,
       'studios': instance.studios?.map((e) => e.toJson()).toList(),
       'total_revenue': instance.total_revenue,
       'writers': instance.writers?.map((e) => e.toJson()).toList(),

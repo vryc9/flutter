@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tp/pages/bloc/charactersDetail_bloc.dart';
 import 'package:flutter_tp/pages/bloc/charactersList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/charactersSearchList_bloc.dart';
+import 'package:flutter_tp/pages/bloc/comicsList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/comicsSearchList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/moviesSearchList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/seriesSearchList_bloc.dart';
@@ -43,6 +44,9 @@ void main() {
         ),
         BlocProvider(
           create: (_) => CharactersListBloc(),
+        ),
+        BlocProvider(
+          create: (_) => ComicsListBloc(),
         )
       ],
       child: const MyApp(),
@@ -69,9 +73,10 @@ class MyApp extends StatelessWidget {
         '/search': (context) => const SearchScreen(),
         '/characterDetail': (context) => const CharacterDetailScreen(),
         '/home': (context) => const HomeScreen(),
-        '/serieList': (context) => const GenericListScreen(
-              type: "serie",
-            ),
+        '/serieList': (context) => const GenericListScreen(type: "serie"),
+        '/comicList': (context) => const GenericListScreen(type: "comic"),
+        '/movieList': (context) => const GenericListScreen(type: "movie"),
+           
       },
     );
   }
@@ -106,13 +111,6 @@ class HomePage extends StatelessWidget {
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/serieList');
-              },
-              child: const Text('Aller à la page série liste'),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
                 Navigator.pushNamed(
                   context,
                   '/characterDetail',
@@ -123,6 +121,20 @@ class HomePage extends StatelessWidget {
               },
               child: const Text('Voir les détails de Billy'),
             ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  '/comicList',
+                  arguments: {
+                    'type': "comic",
+                  },
+                );
+              },
+              child: const Text('Voir la liste des comics'),
+            ),
+            const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
                 Navigator.pushNamed(
@@ -133,7 +145,20 @@ class HomePage extends StatelessWidget {
                   },
                 );
               },
-              child: const Text('Voir la liste des séries'),
+              child: const Text('Voir la liste des series'),
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  '/movieList',
+                  arguments: {
+                    'type': "movie",
+                  },
+                );
+              },
+              child: const Text('Voir la liste des movies'),
             ),
           ],
         ),

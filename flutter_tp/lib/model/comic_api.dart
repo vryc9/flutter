@@ -16,7 +16,8 @@ class Comic {
   final String? issue_number;
   final String? name;
   final List<Person?>? person_credits;
-  final String? store_date;
+  @JsonKey(fromJson: _stringFromJson)
+  final String? cover_date;
   final Volume? volume;
 
   Comic(
@@ -25,7 +26,7 @@ class Comic {
       this.image,
       this.issue_number,
       this.name,
-      this.store_date,
+      this.cover_date,
       this.volume,
       this.character_credits,
       this.person_credits});
@@ -35,4 +36,9 @@ class Comic {
 
   // Généré automatiquement par json_serializable
   Map<String, dynamic> toJson() => _$ComicToJson(this);
+
+  //Convertit n'importe quelle valeur en string ou empty string si null
+  static String _stringFromJson(dynamic value) {
+    return value?.toString() ?? '';
+  }
 }

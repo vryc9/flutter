@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tp/pages/bloc/charactersDetail_bloc.dart';
 import 'package:flutter_tp/res/app_colors.dart';
+import 'package:flutter_tp/utils/date_format.dart';
 import 'package:flutter_tp/widgets/header_detail.dart';
 import 'package:flutter_tp/widgets/histoire_detail.dart';
 
@@ -148,7 +149,7 @@ class CharacterDetailScreen extends StatelessWidget {
                                                       (character.creators != null && character.creators!.isNotEmpty)
                                                           ? character.creators!.map((creator) => creator.name).join(", ")
                                                           : "Inconnus",
-                                                    ),
+                                                  ),
                                                   _buildTableRow(
                                                     "Genre",
                                                     (character.gender != null && character.gender! == 1)
@@ -156,18 +157,13 @@ class CharacterDetailScreen extends StatelessWidget {
                                                         : "Feminin",
                                                   ),
                                                   _buildTableRow(
-                                                    "Date de naissance",
-                                                    (character.birth != null && character.birth!.isNotEmpty)
-                                                        ? character.birth!
-                                                        : "Inconnue",
+                                                    "Date de naissance", formatDateDayMonthYear(character.birth),
                                                   ),
                                                   _buildTableRow(
                                                     "Mort dans",
-                                                    (character.issues_died_in != null &&
-                                                            character.issues_died_in!.isNotEmpty &&
-                                                            character.issues_died_in!.first.name != null)
-                                                        ? character.issues_died_in!.first.name!
-                                                        : "N/A",
+                                                      (character.issues_died_in != null && character.issues_died_in!.isNotEmpty)
+                                                          ? character.issues_died_in!.map((issue) => issue.name).join(", ")
+                                                          : "N/A",
                                                   ),
                                                 ],
                                               ),

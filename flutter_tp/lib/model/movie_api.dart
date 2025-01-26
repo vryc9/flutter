@@ -10,8 +10,7 @@ class Movie {
   @JsonKey(fromJson: _stringFromJson)
   final String? name;
   final ImageAPI? image;
-  @JsonKey(fromJson: _stringFromJson)
-  final String? id;
+  final int? id;
   @JsonKey(fromJson: _stringFromJson)
   final String? description;
   final List<Character>? characters;
@@ -24,7 +23,7 @@ class Movie {
   @JsonKey(fromJson: _stringFromJson)
   final String? rating;
   @JsonKey(fromJson: _stringFromJson)
-  final String? release_date;
+  final String? date_added;
   final List<Person>? studios;
   @JsonKey(fromJson: _stringFromJson)
   final String? total_revenue;
@@ -45,7 +44,7 @@ class Movie {
     this.distributor,
     this.producers,
     this.rating,
-    this.release_date,
+    this.date_added,
     this.runtime,
     this.studios,
     this.total_revenue,

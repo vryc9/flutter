@@ -191,6 +191,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   ],
                   child: Column(
                     children: [
+                      const SizedBox(height: 32),
                       // BlocBuilder pour les series
                       BlocBuilder<SeriesSearchListBloc, SeriesSearchListState>(
                         builder: (context, state) {
