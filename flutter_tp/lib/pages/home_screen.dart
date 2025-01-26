@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_tp/pages/bloc/moviesList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/seriesList_bloc.dart';
+import 'package:flutter_tp/pages/bloc/charactersList_bloc.dart';
 import 'package:flutter_tp/res/app_colors.dart';
 import 'package:flutter_tp/res/app_svg.dart';
 import 'package:flutter_tp/widgets/horizontal_list.dart';
@@ -193,6 +194,51 @@ class _HomeScreenState extends State<HomeScreen> {
                                   page: "home",
                                 );
                               } else if (state is MoviesListNotifierErrorState) {
+                                return Text(
+                                  'Erreur : ${state.message}',
+                                  style: const TextStyle(color: Colors.red),
+                                );
+                              }
+                              return const SizedBox.shrink();
+                            },
+                          ),
+                          const SizedBox(height: 32),
+
+                          // BlocBuilder pour les Characters
+                          BlocBuilder<CharactersListBloc, CharactersListState>(
+                            builder: (context, state) {
+                              if (state is CharactersListNotifierLoadingState) {
+                                return const Center(child: CircularProgressIndicator());
+                              } else if (state is CharactersListNotifierLSuccessState) {
+                                final characters = state.response.results;
+                                if (characters.isEmpty) {
+                                  return Container(
+                                    decoration: BoxDecoration(
+                                      color: AppColors.cardBackground,
+                                      borderRadius: BorderRadius.circular(16),
+                                    ),
+                                    padding: const EdgeInsets.all(16.0),
+                                    margin: const EdgeInsets.symmetric(horizontal: 40),
+                                    child: const Column(
+                                      children: [
+                                        Text(
+                                          'Aucun personnage trouvé.',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.white,
+                                          ),
+                                        ),  
+                                      ],
+                                    ),
+                                  );
+                                }
+                                return HorizontalListWidget(
+                                  title: "Personnages populaires",
+                                  items: characters,
+                                  type: "character",
+                                  page: "home",
+                                );
+                              } else if (state is CharactersListNotifierErrorState) {
                                 return Text(
                                   'Erreur : ${state.message}',
                                   style: const TextStyle(color: Colors.red),

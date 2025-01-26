@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tp/pages/bloc/charactersDetail_bloc.dart';
+import 'package:flutter_tp/pages/bloc/charactersList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/charactersSearchList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/comicsSearchList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/moviesSearchList_bloc.dart';
@@ -32,9 +33,6 @@ void main() {
           create: (_) => MoviesSearchListBloc(""),
         ),
         BlocProvider(
-          create: (_) => SeriesListBloc(),
-        ),
-        BlocProvider(
           create: (_) => CharacterDetailBloc(""),
         ),
         BlocProvider(
@@ -42,6 +40,9 @@ void main() {
         ),
         BlocProvider(
           create: (_) => MoviesListBloc(),
+        ),
+        BlocProvider(
+          create: (_) => CharactersListBloc(),
         )
       ],
       child: const MyApp(),

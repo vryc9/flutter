@@ -63,7 +63,7 @@ class HorizontalListWidget extends StatelessWidget {
                     ),
                   ],
                 ),
-                if (page == 'home')
+                if (page == 'home' && type != "character")
                   TextButton(
                     onPressed: () {
                       switch (type) {

@@ -74,6 +74,13 @@ abstract class OFFAPI {
     @Query('limit') String limit,
   );
 
+  @GET("/characters/")
+  Future<OFFServerResponseCharacters?> loadCharactersList(
+    @Query("api_key") String apiKey,
+    @Query("format") String format,
+    @Query('limit') String limit,
+  );
+
 //by id
   @GET("/issue/4000-{comicId}/")
   Future<OFFServerResponseComic?> getComicById(
@@ -168,7 +175,7 @@ class OFFAPIManager {
     }
   }
 
-  //Méthode pour récupérer une liste de serie
+  //Méthode pour récupérer une liste de series
   Future<OFFServerResponseSeries?> loadSeriesList() async {
     try {
       return await api.loadSeriesList(_apiKey, "json", "50");
@@ -178,7 +185,7 @@ class OFFAPIManager {
     }
   }
 
-  //Méthode pour récupérer une liste de movie
+  //Méthode pour récupérer une liste de movies
   Future<OFFServerResponseMovies?> loadMoviesList() async {
     try {
       return await api.loadMoviesList(_apiKey, "json", "50");
@@ -188,7 +195,7 @@ class OFFAPIManager {
     }
   }
   
-  //Méthode pour récupérer une liste d'épisode
+  //Méthode pour récupérer une liste d'épisodes
   Future<OFFServerResponseEpisodes?> loadEpisodeList(String id) async {
     try {
       return await api.loadEpisodesList(id, _apiKey, "json");
@@ -198,12 +205,22 @@ class OFFAPIManager {
     }
   }
 
-  //Méthode pour récupérer une liste de comic
+  //Méthode pour récupérer une liste de comics
   Future<OFFServerResponseComics?> loadComicsList() async {
     try {
       return await api.loadComicsList(_apiKey, "json", "50");
     } catch (e) {
       print("Erreur lors de la récupération des comics : $e");
+      return null;
+    }
+  }
+
+  //Méthode pour récupérer une liste de characters
+  Future<OFFServerResponseCharacters?> loadCharactersList() async {
+    try {
+      return await api.loadCharactersList(_apiKey, "json", "50");
+    } catch (e) {
+      print("Erreur lors de la récupération des characters : $e");
       return null;
     }
   }

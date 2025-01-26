@@ -15,8 +15,8 @@
 
 - **Fonctionnalités implémentées**:
   - Header avec le titre "Bienvenue !" et un astronaute.
-  - Liste de movies, series et issues (limitation à 5).
-  - Bouton "voir plus" pour chaque liste qui renvoie vers la liste complète.
+  - Liste de movies, series, issues et characters (limitation à 5).
+  - Bouton "voir plus" pour chaque liste qui renvoie vers la liste complète (sauf characters).
   - Chaque card comporte : image et nom.
   - Clic sur une card renvoie vers le détail de l'élément.
   - Intégration du menu de navigation.
