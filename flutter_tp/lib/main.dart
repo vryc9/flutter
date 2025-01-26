@@ -8,9 +8,9 @@ import 'package:flutter_tp/pages/bloc/moviesSearchList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/seriesSearchList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/seriesList_bloc.dart';
 import 'package:flutter_tp/pages/character_detail_screen.dart';
+import 'package:flutter_tp/pages/generic_list.dart';
 import 'package:flutter_tp/pages/home_screen.dart';
 import 'package:flutter_tp/pages/search_screen.dart';
-import 'package:flutter_tp/pages/serie/series_list.dart';
 import 'package:flutter_tp/res/app_colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -69,7 +69,9 @@ class MyApp extends StatelessWidget {
         '/search': (context) => const SearchScreen(),
         '/characterDetail': (context) => const CharacterDetailScreen(),
         '/home': (context) => const HomeScreen(),
-        '/serieList': (context) => const SeriesListScreen(),
+        '/serieList': (context) => const GenericListScreen(
+              type: "serie",
+            ),
       },
     );
   }
