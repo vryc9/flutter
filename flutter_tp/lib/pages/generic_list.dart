@@ -10,6 +10,7 @@ import 'package:flutter_tp/pages/bloc/seriesList_bloc.dart';
 import 'package:flutter_tp/res/app_svg.dart';
 import 'package:flutter_tp/res/app_colors.dart';
 import 'package:flutter_tp/utils/date_format.dart';
+import 'package:flutter_tp/widgets/error_widget.dart';
 
 class GenericListScreen extends StatelessWidget {
   //serie, movie ou comic
@@ -64,11 +65,10 @@ class GenericListScreen extends StatelessWidget {
               final items = state.response.results;
               return _buildList(items);
             } else if (state is SeriesListNotifierErrorState) {
-              return Center(
-                child: Text(
-                  'Erreur : ${state.message}',
-                  style: const TextStyle(color: Colors.red),
-                ),
+              return ErrorDisplayWidget(
+                message: 'La récupération de la liste des séries a échoué. Veuillez réessayer.', 
+                onRetry: () { context.read<SeriesListBloc>().add(LoadSeriesListEvent()); },
+                title: "Séries : ",
               );
             } else {
               return const SizedBox.shrink();
@@ -87,11 +87,10 @@ class GenericListScreen extends StatelessWidget {
               final items = state.response.results;
               return _buildList(items);
             } else if (state is ComicsListNotifierErrorState) {
-              return Center(
-                child: Text(
-                  'Erreur : ${state.message}',
-                  style: const TextStyle(color: Colors.red),
-                ),
+              return ErrorDisplayWidget(
+                message: 'La récupération de la liste des comics a échoué. Veuillez réessayer.', 
+                onRetry: () { context.read<ComicsListBloc>().add(LoadComicsListEvent()); },
+                title: "Comics : ",
               );
             } else {
               return const SizedBox.shrink();
@@ -110,11 +109,10 @@ class GenericListScreen extends StatelessWidget {
               final items = state.response.results;
               return _buildList(items);
             } else if (state is MoviesListNotifierErrorState) {
-              return Center(
-                child: Text(
-                  'Erreur : ${state.message}',
-                  style: const TextStyle(color: Colors.red),
-                ),
+              return ErrorDisplayWidget(
+                message: 'La récupération de la liste des films a échoué. Veuillez réessayer.', 
+                onRetry: () { context.read<MoviesListBloc>().add(LoadMoviesListEvent()); },
+                title: "Films : ",
               );
             } else {
               return const SizedBox.shrink();
@@ -238,7 +236,7 @@ class GenericListScreen extends StatelessWidget {
                     SizedBox(
                       width: 191,
                       child: Text(
-                        serie.name ?? 'Série inconnue',
+                        serie.name as String,
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 17.0,

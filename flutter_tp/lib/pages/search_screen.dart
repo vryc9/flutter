@@ -7,6 +7,7 @@ import 'package:flutter_tp/pages/bloc/moviesSearchList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/seriesSearchList_bloc.dart';
 import 'package:flutter_tp/res/app_colors.dart';
 import 'package:flutter_tp/res/app_svg.dart';
+import 'package:flutter_tp/widgets/error_widget.dart';
 import 'package:flutter_tp/widgets/horizontal_list.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -22,6 +23,7 @@ class _SearchScreenState extends State<SearchScreen> {
   bool _isFoundedCharacter = false;
   bool _isFoundedComic = false;
   bool _isFoundedSerie = false;
+  bool _isFoundedMovie = false;
   String _query = "";
 
   @override
@@ -35,6 +37,7 @@ class _SearchScreenState extends State<SearchScreen> {
       _isFoundedCharacter = true;
       _isFoundedComic = true;
       _isFoundedSerie = true;
+      _isFoundedMovie = true;
     });
   }
   
@@ -106,6 +109,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             _isFoundedCharacter = false;
                             _isFoundedComic = false;
                             _isFoundedSerie = false;
+                            _isFoundedMovie = false;
                             _query = query;
                           });
                           _makeInvisible();
@@ -225,9 +229,10 @@ class _SearchScreenState extends State<SearchScreen> {
                               page: "search",
                             );
                           } else if (state is SeriesSearchListNotifierErrorState) {
-                            return Text(
-                              'Erreur : ${state.error}',
-                              style: const TextStyle(color: Colors.red),
+                            return ErrorDisplayWidget(
+                              message: 'La récupération de la liste des séries a échoué. Veuillez réessayer.', 
+                              onRetry: () { context.read<SeriesSearchListBloc>().add(LoadSeriesSearchListEvent()); },
+                              title: "Séries : ",
                             );
                           }
                           return const SizedBox.shrink();
@@ -268,9 +273,10 @@ class _SearchScreenState extends State<SearchScreen> {
                               page: "search",
                             );
                           } else if (state is ComicsSearchListNotifierErrorState) {
-                            return Text(
-                              'Erreur : ${state.error}',
-                              style: const TextStyle(color: Colors.red),
+                            return ErrorDisplayWidget(
+                              message: 'La récupération de la liste des comics a échoué. Veuillez réessayer.', 
+                              onRetry: () { context.read<ComicsSearchListBloc>().add(LoadComicsSearchListEvent()); },
+                              title: "Comics : ",
                             );
                           }
                           return const SizedBox.shrink();
@@ -311,9 +317,10 @@ class _SearchScreenState extends State<SearchScreen> {
                               page: "search",
                             );
                           } else if (state is MoviesSearchListNotifierErrorState) {
-                            return Text(
-                              'Erreur : ${state.error}',
-                              style: const TextStyle(color: Colors.red),
+                            return ErrorDisplayWidget(
+                              message: 'La récupération de la liste des films a échoué. Veuillez réessayer.', 
+                              onRetry: () { context.read<MoviesSearchListBloc>().add(LoadMoviesSearchListEvent()); },
+                              title: "Films : ",
                             );
                           }
                           return const SizedBox.shrink();
@@ -354,9 +361,10 @@ class _SearchScreenState extends State<SearchScreen> {
                               page: "search",
                             );
                           } else if (state is CharactersSearchListNotifierErrorState) {
-                            return Text(
-                              'Erreur : ${state.error}',
-                              style: const TextStyle(color: Colors.red),
+                            return ErrorDisplayWidget(
+                              message: 'La récupération de la liste des personnages a échoué. Veuillez réessayer.', 
+                              onRetry: () { context.read<CharactersSearchListBloc>().add(LoadCharactersSearchListEvent()); },
+                              title: "Personnages : ",
                             );
                           }
                           return const SizedBox.shrink();
@@ -369,7 +377,7 @@ class _SearchScreenState extends State<SearchScreen> {
               
               if (_isSearching)
                 Visibility(
-                  visible: !_isFoundedCharacter & !_isFoundedComic & !_isFoundedSerie,
+                  visible: !_isFoundedCharacter & !_isFoundedComic & !_isFoundedSerie & !_isFoundedMovie,
                   child: Container(
                     margin: EdgeInsets.symmetric(vertical: marginHeight, horizontal: 8),
                     child: Stack(

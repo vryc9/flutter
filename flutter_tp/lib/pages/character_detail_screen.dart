@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tp/pages/bloc/charactersDetail_bloc.dart';
 import 'package:flutter_tp/res/app_colors.dart';
 import 'package:flutter_tp/utils/date_format.dart';
+import 'package:flutter_tp/widgets/error_widget.dart';
 import 'package:flutter_tp/widgets/header_detail.dart';
 import 'package:flutter_tp/widgets/histoire_detail.dart';
 
@@ -184,11 +185,10 @@ class CharacterDetailScreen extends StatelessWidget {
                 )
               );
             } else if (state is CharacterDetailNotifierErrorState) {
-              return Center(
-                child: Text(
-                  'Erreur : ${state.error}',
-                  style: const TextStyle(color: Colors.red),
-                ),
+              return ErrorDisplayWidget(
+                message: 'La récupération du personnage a échoué. Veuillez réessayer.', 
+                onRetry: () { context.read<CharacterDetailBloc>().add(LoadCharacterDetailEvent()); },
+                title: "Personnage : ",
               );
             }
             return const Center(

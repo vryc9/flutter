@@ -24,8 +24,7 @@
 - **Gestion des états**:
   - État *loading* : affiche un `CircularLoader`.
   - État *success* : affiche la liste si elle est remplie, sinon "aucun [type] trouvé."
-  - État *error* : affiche le message d'erreur brut sur fond rouge.
-
+  - État *error* : de chaque liste affiche le message d'erreur "La récupération de la liste de *type* a échoué. Veuillez réessayer." et un bouton pour relancer la requête.
 - **Style** : Identique pour tous les états.
 
 ---
@@ -41,7 +40,7 @@
 - **Gestion des états**:
   - État *loading* : affiche un `CircularLoader`.
   - État *success* : affiche la liste si elle est remplie, sinon "aucune série trouvée."
-  - État *error* : affiche le message d'erreur brut sur fond rouge.
+  - État *error* : affiche le message d'erreur "La récupération de la liste de *type* a échoué. Veuillez réessayer." et un bouton pour relancer la requête.
 
 - **Style** : Identique.
 
@@ -59,8 +58,7 @@
 - **Gestion des états**:
   - État *loading* : affiche un `CircularLoader`.
   - État *success* : affiche la série et son contenu.
-  - État *error* : affiche le message d'erreur brut sur fond rouge.
-
+  - État *error* : affiche le message d'erreur "La récupération de *type* a échoué. Veuillez réessayer." et un bouton pour relancer la requête.
 - **Style** : Identique.
 
 ---
@@ -76,7 +74,7 @@
 - **Gestion des états**:
   - État *loading* : affiche un `CircularLoader`.
   - État *success* : affiche la liste si elle est remplie, sinon "aucun comic trouvé."
-  - État *error* : affiche le message d'erreur brut sur fond rouge.
+  - État *error* : affiche le message d'erreur "La récupération de la liste de *type* a échoué. Veuillez réessayer." et un bouton pour relancer la requête.
 
 - **Style** : Identique.
 
@@ -94,7 +92,7 @@
 - **Gestion des états**:
   - État *loading* : affiche un `CircularLoader`.
   - État *success* : affiche le comic et son contenu.
-  - État *error* : affiche le message d'erreur brut sur fond rouge.
+  - État *error* : affiche le message d'erreur "La récupération de *type* a échoué. Veuillez réessayer." et un bouton pour relancer la requête.
 
 - **Style** : Identique.
 
@@ -111,8 +109,7 @@
 - **Gestion des états**:
   - État *loading* : affiche un `CircularLoader`.
   - État *success* : affiche la liste si elle est remplie, sinon "aucun film trouvé."
-  - État *error* : affiche le message d'erreur brut sur fond rouge.
-
+  - État *error* : affiche le message d'erreur "La récupération de la liste de *type* a échoué. Veuillez réessayer." et un bouton pour relancer la requête.
 - **Style** : Identique.
 
 ---
@@ -129,7 +126,7 @@
 - **Gestion des états**:
   - État *loading* : affiche un `CircularLoader`.
   - État *success* : affiche le movie et son contenu.
-  - État *error* : affiche le message d'erreur brut sur fond rouge.
+  - État *error* : affiche le message d'erreur "La récupération de *type* a échoué. Veuillez réessayer." et un bouton pour relancer la requête.
 
 - **Style** : Identique.
 
@@ -145,7 +142,7 @@
 - **Gestion des états**:
   - État *loading* : affiche un `CircularLoader`.
   - État *success* : affiche le character et son contenu.
-  - État *error* : affiche le message d'erreur brut sur fond rouge.
+  - État *error* : affiche le message d'erreur "La récupération de *type* a échoué. Veuillez réessayer." et un bouton pour relancer la requête.
 
 - **Style** : Identique, sauf qu'il y a une ligne blanche sous les titres d'onglets que nous n'avons pas réussi à retirer.
 
@@ -166,7 +163,7 @@
 - **Gestion des états**:
   - État *loading* : de chaque liste n'affiche rien card il y a le bloc avec l'astronaute qui indique déjà que la recherche est en cours.
   - État *success* : de chaque liste affiche la liste si elle est remplie sinon affiche "aucun *liste type trouvé."
-  - État *error* : de chaque liste affiche le message d'erreur brut sur fond rouge.
+  - État *error* : de chaque liste affiche le message d'erreur "La récupération de la liste de *type* a échoué. Veuillez réessayer." et un bouton pour relancer la requête.
 
 - **Style** : Identique.
 

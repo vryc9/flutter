@@ -7,6 +7,7 @@ import 'package:flutter_tp/pages/bloc/seriesList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/charactersList_bloc.dart';
 import 'package:flutter_tp/res/app_colors.dart';
 import 'package:flutter_tp/res/app_svg.dart';
+import 'package:flutter_tp/widgets/error_widget.dart';
 import 'package:flutter_tp/widgets/horizontal_list.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -104,10 +105,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                   type: "serie",
                                   page: "home",
                                 );
-                              } else if (state is SeriesListNotifierErrorState) {
-                                return Text(
-                                  'Erreur : ${state.message}',
-                                  style: const TextStyle(color: Colors.red),
+                              }  else if (state is SeriesListNotifierErrorState) {
+                                return ErrorDisplayWidget(
+                                  message: 'La récupération de la liste des séries a échoué. Veuillez réessayer.', 
+                                  onRetry: () { context.read<SeriesListBloc>().add(LoadSeriesListEvent()); },
+                                  title: "Séries : ",
                                 );
                               }
                               return const SizedBox.shrink();
@@ -150,9 +152,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                   page: "home",
                                 );
                               } else if (state is ComicsListNotifierErrorState) {
-                                return Text(
-                                  'Erreur : ${state.message}',
-                                  style: const TextStyle(color: Colors.red),
+                                return ErrorDisplayWidget(
+                                  message: 'La récupération de la liste des comics a échoué. Veuillez réessayer.', 
+                                  onRetry: () { context.read<ComicsListBloc>().add(LoadComicsListEvent()); },
+                                  title: "Comics : ",
                                 );
                               }
                               return const SizedBox.shrink();
@@ -195,9 +198,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                   page: "home",
                                 );
                               } else if (state is MoviesListNotifierErrorState) {
-                                return Text(
-                                  'Erreur : ${state.message}',
-                                  style: const TextStyle(color: Colors.red),
+                                return ErrorDisplayWidget(
+                                  message: 'La récupération de la liste des films a échoué. Veuillez réessayer.', 
+                                  onRetry: () { context.read<MoviesListBloc>().add(LoadMoviesListEvent()); },
+                                  title: "Films : ",
                                 );
                               }
                               return const SizedBox.shrink();
@@ -240,9 +244,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                   page: "home",
                                 );
                               } else if (state is CharactersListNotifierErrorState) {
-                                return Text(
-                                  'Erreur : ${state.message}',
-                                  style: const TextStyle(color: Colors.red),
+                                return ErrorDisplayWidget(
+                                  message: 'La récupération de la liste des personnages a échoué. Veuillez réessayer.', 
+                                  onRetry: () { context.read<CharactersListBloc>().add(LoadCharactersListEvent()); },
+                                  title: "Personnages : ",
                                 );
                               }
                               return const SizedBox.shrink();

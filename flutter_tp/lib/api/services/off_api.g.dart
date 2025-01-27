@@ -571,7 +571,7 @@ class _OFFAPI implements OFFAPI {
     )
         .compose(
           _dio.options,
-          '/series/4075-${movieId}/',
+          '/movie/4075-${movieId}/',
           queryParameters: queryParameters,
           data: _data,
         )
