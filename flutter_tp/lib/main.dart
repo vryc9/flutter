@@ -13,6 +13,7 @@ import 'package:flutter_tp/pages/generic_list.dart';
 import 'package:flutter_tp/pages/home_screen.dart';
 import 'package:flutter_tp/pages/search_screen.dart';
 import 'package:flutter_tp/res/app_colors.dart';
+import 'package:flutter_tp/widgets/navbar.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'pages/bloc/moviesList_bloc.dart';
@@ -69,100 +70,21 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => const HomePage(),
-        '/search': (context) => const SearchScreen(),
+        '/': (context) => const MainNavigationBar(),
+        '/comicList': (context) => const MainNavigationBar(
+              initialIndex: 1,
+              child: GenericListScreen(type: "comic"),
+            ),
+        '/serieList': (context) => const MainNavigationBar(
+              initialIndex: 2,
+              child: GenericListScreen(type: "serie"),
+            ),
+        '/movieList': (context) => const MainNavigationBar(
+              initialIndex: 3,
+              child: GenericListScreen(type: "movie"),
+            ),
         '/characterDetail': (context) => const CharacterDetailScreen(),
-        '/home': (context) => const HomeScreen(),
-        '/serieList': (context) => const GenericListScreen(type: "serie"),
-        '/comicList': (context) => const GenericListScreen(type: "comic"),
-        '/movieList': (context) => const GenericListScreen(type: "movie"),
-           
       },
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Accueil'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/search');
-              },
-              child: const Text('Aller à la page de recherche'),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/home');
-              },
-              child: const Text('Aller à la page home'),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(
-                  context,
-                  '/characterDetail',
-                  arguments: {
-                    'characterId': "2350",
-                  },
-                );
-              },
-              child: const Text('Voir les détails de Billy'),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(
-                  context,
-                  '/comicList',
-                  arguments: {
-                    'type': "comic",
-                  },
-                );
-              },
-              child: const Text('Voir la liste des comics'),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(
-                  context,
-                  '/serieList',
-                  arguments: {
-                    'type': "serie",
-                  },
-                );
-              },
-              child: const Text('Voir la liste des series'),
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(
-                  context,
-                  '/movieList',
-                  arguments: {
-                    'type': "movie",
-                  },
-                );
-              },
-              child: const Text('Voir la liste des movies'),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
