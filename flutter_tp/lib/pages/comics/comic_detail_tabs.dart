@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_tp/pages/bloc/personsDetail_bloc.dart';
 import 'package:flutter_tp/utils/text_formatter_utils.dart';
 
 import '../../model/comic_api.dart';
@@ -17,7 +18,8 @@ class ComicDetailTabs extends StatelessWidget {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(getDefaultTextForEmptyValue(comic.name, defaultValue: "Nom indisponible")),
+          title: Text(getDefaultTextForEmptyValue(comic.name,
+              defaultValue: "Nom indisponible")),
           bottom: const TabBar(
             tabs: [
               Tab(text: "Histoire"),
@@ -57,20 +59,19 @@ class ComicDetailTabs extends StatelessWidget {
 
         // Déclenche le chargement d'un personnage si nécessaire
         return BlocProvider(
-            create: (context) => CharacterDetailBloc(personId.toString()),
-            child: BlocBuilder<CharacterDetailBloc, CharacterDetailState>(
+            create: (context) => PersonDetailBloc(personId.toString()),
+            child: BlocBuilder<PersonDetailBloc, PersonDetailState>(
               builder: (context, state) {
-                if (state is CharacterDetailNotifierLoadingState) {
+                if (state is PersonDetailNotifierLoadingState) {
                   return const ListTile(
                     leading: CircularProgressIndicator(),
                     title: Text('Chargement...'),
                   );
-                } else if (state is CharacterDetailNotifierSuccessState) {
-                  final character = state.character!;
+                } else if (state is PersonDetailNotifierSuccessState) {
+                  final person = state.person!;
                   return ListTile(
                     leading: CircleAvatar(
-                      backgroundImage:
-                          NetworkImage(character.image!.thumb_url!),
+                      backgroundImage: NetworkImage(person.image!.thumb_url!),
                       onBackgroundImageError: (_, __) =>
                           const Icon(Icons.broken_image_rounded),
                     ),
@@ -79,7 +80,16 @@ class ComicDetailTabs extends StatelessWidget {
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                             color: Colors.white),
-                        getDefaultTextForEmptyValue(character.name, defaultValue: "Nom indisponible")),
+                        getDefaultTextForEmptyValue(person.name,
+                            defaultValue: "Nom indisponible")),
+                    subtitle: Text(
+                        style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white),
+                        getDefaultTextForEmptyValue(
+                            comic.person_credits?[index]?.role,
+                            defaultValue: "Rôle indisponible")),
                   );
                 } else if (state is CharacterDetailNotifierErrorState) {
                   return const ListTile(
@@ -91,20 +101,6 @@ class ComicDetailTabs extends StatelessWidget {
                 }
               },
             ));
-      },
-    );
-
-    return ListView.builder(
-      itemCount: comic.person_credits?.length,
-      itemBuilder: (context, index) {
-        final author = comic.person_credits?[index];
-        return ListTile(
-          leading: CircleAvatar(
-            backgroundImage: NetworkImage(author!.image!.icon_url!),
-          ),
-          title: Text(author.name!),
-          //subtitle: Text(author.role),
-        );
       },
     );
   }
@@ -139,7 +135,8 @@ class ComicDetailTabs extends StatelessWidget {
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                             color: Colors.white),
-                        getDefaultTextForEmptyValue(character.name, defaultValue: "Nom indisponible")),
+                        getDefaultTextForEmptyValue(character.name,
+                            defaultValue: "Nom indisponible")),
                   );
                 } else if (state is CharacterDetailNotifierErrorState) {
                   return const ListTile(
