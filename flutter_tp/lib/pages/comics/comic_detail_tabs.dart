@@ -56,9 +56,9 @@ class ComicDetailTabs extends StatelessWidget {
                     child: NestedScrollView(
                       headerSliverBuilder: (context, innerBoxIsScrolled) => [
                         SliverAppBar(
-                          expandedHeight: 210.0,           
+                          expandedHeight: 240.0,           
                           pinned: false,
-                          floating: false,
+                          floating: true,
                           backgroundColor: Colors.transparent,
                           elevation: 0,
                           leading: IconButton(
@@ -79,13 +79,12 @@ class ComicDetailTabs extends StatelessWidget {
                             ),
                           ),
                           flexibleSpace: Padding(
-                            padding: const EdgeInsets.all(16.0),
+                            padding: const EdgeInsets.only(top: 0.0, bottom: 0.0, left: 20.0),
                             child: FlexibleSpaceBar(
                               background: Stack(
                                 children: [
                                   Container(
-                                    margin: const EdgeInsets.all(16.0),
-                                    padding: const EdgeInsets.all(16.0),
+                                    margin: const EdgeInsets.only(bottom: 50.0),
                                     child: Column(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,11 +92,34 @@ class ComicDetailTabs extends StatelessWidget {
                                         Row(
                                           mainAxisAlignment: MainAxisAlignment.start,
                                           children: [
-                                            Image.network(
-                                              comic.image!.original_url!,
-                                              height: 127,
-                                              width: 94.87,
-                                              fit: BoxFit.cover,
+                                            ClipRRect(
+                                              borderRadius: const BorderRadius.only(
+                                                topLeft: Radius.circular(10),
+                                                topRight: Radius.circular(10),
+                                                bottomLeft: Radius.circular(10),
+                                                bottomRight: Radius.circular(10),
+                                              ),
+                                              child: Image.network(
+                                                comic.image!.original_url!,
+                                                height: 127,
+                                                width: 94.87,
+                                                fit: BoxFit.cover,
+                                                loadingBuilder: (context, child, loadingProgress) {
+                                                  if (loadingProgress == null) return child;
+                                                  return const Center(
+                                                    child: CircularProgressIndicator(),
+                                                  );
+                                                },
+                                                errorBuilder: (context, error, stackTrace) {
+                                                  return const Center(
+                                                    child: Icon(
+                                                      Icons.broken_image,
+                                                      color: AppColors.cardElementBackground,
+                                                      size: 40,
+                                                    ),
+                                                  );
+                                                },
+                                              ),
                                             ),
                                             const SizedBox(width: 12.0),
                                             Expanded(
@@ -135,7 +157,7 @@ class ComicDetailTabs extends StatelessWidget {
                                                         AppVectorialImages.icBooksBicolor,
                                                         height: 15.0,
                                                         colorFilter: const ColorFilter.mode(
-                                                            AppColors.iconsList, BlendMode.srcIn),
+                                                            Colors.white, BlendMode.srcIn),
                                                       ),
                                                       const SizedBox(width: 8.0),
                                                       Text(
@@ -154,7 +176,7 @@ class ComicDetailTabs extends StatelessWidget {
                                                         AppVectorialImages.icCalendarBicolor,
                                                         height: 15.0,
                                                         colorFilter: const ColorFilter.mode(
-                                                            AppColors.iconsList, BlendMode.srcIn),
+                                                            Colors.white, BlendMode.srcIn),
                                                       ),
                                                       const SizedBox(width: 8.0),
                                                       Text(
