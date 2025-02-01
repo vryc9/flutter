@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_tp/res/app_colors.dart';
+import 'package:flutter_tp/res/app_svg.dart';
+import 'package:flutter_tp/utils/date_format.dart';
 import 'package:flutter_tp/pages/bloc/personsDetail_bloc.dart';
 import 'package:flutter_tp/utils/text_formatter_utils.dart';
 
@@ -17,30 +21,220 @@ class ComicDetailTabs extends StatelessWidget {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
+        extendBodyBehindAppBar: true,
         appBar: AppBar(
           title: Text(getDefaultTextForEmptyValue(comic.name,
               defaultValue: "Nom indisponible")),
+          leading: IconButton(
+            icon: SvgPicture.asset(
+              AppVectorialImages.icBack,
+              height: 24.0,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          title: Text(
+            getDefaultTextForEmptyValue(comic.name, defaultValue: "Nom indisponible"),
+            style: const TextStyle(
+              fontSize: 17,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          flexibleSpace: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Image.network(
+                          comic.image!.original_url!,
+                          height: 127,
+                          width: 94.87,
+                          fit: BoxFit.cover,
+                          loadingBuilder: (context, child, loadingProgress) {
+                            if (loadingProgress == null) return child;
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          },
+                          errorBuilder: (context, error, stackTrace) {
+                            return const Center(
+                              child: Icon(
+                                Icons.broken_image,
+                                color: AppColors.cardElementBackground,
+                                size: 40,
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                    const SizedBox(width: 12.0),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SizedBox(
+                          width: 191,
+                          child: Text(
+                            getDefaultTextForEmptyValue(comic.volume?.name, defaultValue: "Volume indisponible"),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 17.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        const SizedBox(height: 10.0),
+                        SizedBox(
+                          width: 191,
+                          child: Text(
+                            getDefaultTextForEmptyValue(comic.name, defaultValue: "Nom indisponible"),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 17.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        const SizedBox(height: 22.0),
+                        Row(
+                          children: [
+                            SvgPicture.asset(
+                              AppVectorialImages.icBooksBicolor,
+                              height: 15.0,
+                              colorFilter: const ColorFilter.mode(
+                                  AppColors.iconsList, BlendMode.srcIn),
+                            ),
+                            const SizedBox(width: 8.0),
+                            Text(
+                              'N°${getDefaultTextForEmptyValue(comic.issue_number, defaultValue: "Indisponible")}',
+                              style: const TextStyle(
+                                color: Colors.white60,
+                                fontSize: 12.0,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10.0),
+                        Row(
+                          children: [
+                            SvgPicture.asset(
+                              AppVectorialImages.icCalendarBicolor,
+                              height: 15.0,
+                              colorFilter: const ColorFilter.mode(
+                                  AppColors.iconsList, BlendMode.srcIn),
+                            ),
+                            const SizedBox(width: 8.0),
+                            Text(
+                              getDefaultTextForEmptyValue(formatDateDayMonthYear(comic.cover_date)),
+                              style: const TextStyle(
+                                color: Colors.white60,
+                                fontSize: 12.0,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
           bottom: const TabBar(
+            labelColor: Colors.white,
+            unselectedLabelColor: Colors.grey,
+            indicatorColor: AppColors.orange,
+            labelStyle: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ),
+            unselectedLabelStyle: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ),
             tabs: [
               Tab(text: "Histoire"),
               Tab(text: "Auteurs"),
-              Tab(text: "Personnages"),
+              Tab(text: "Personnages")
             ],
+            overlayColor: WidgetStatePropertyAll(Colors.transparent),
+            dividerColor: Colors.transparent,
+            splashFactory: NoSplash.splashFactory,
           ),
         ),
-        body: TabBarView(
+        body: Stack(
           children: [
-            // Onglet Histoire
-            _buildStoryTab(),
-            // Onglet Auteurs
-            _buildAuthorsTab(),
-            // Onglet Personnages
-            _buildCharactersTab(),
+            Positioned.fill(
+              child: Image.network(
+                comic.image!.original_url!,
+                fit: BoxFit.cover,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+                errorBuilder: (context, error, stackTrace) {
+                  return const Center(
+                    child: Icon(
+                      Icons.broken_image,
+                      color: AppColors.cardElementBackground,
+                      size: 40,
+                    ),
+                  );
+                },
+              ),
+            ),
+            Positioned.fill(
+              child: Container(
+                color: AppColors.screenBackground.withOpacity(0.7),
+              ),
+            ),
+            Column(
+              children: [
+                const SizedBox(height: kToolbarHeight + kTextTabBarHeight),
+                Expanded(
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                    child: Container(
+                      color: AppColors.cardBackground,
+                      child: TabBarView(
+                        children: [
+                          _buildStoryTab(),
+                          _buildAuthorsTab(),
+                          _buildCharactersTab(),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
     );
   }
+
+
 
   Widget _buildStoryTab() {
     return Padding(
@@ -57,7 +251,7 @@ class ComicDetailTabs extends StatelessWidget {
       itemBuilder: (context, index) {
         final personId = comic.person_credits?[index]?.id;
 
-        // Déclenche le chargement d'un personnage si nécessaire
+
         return BlocProvider(
             create: (context) => PersonDetailBloc(personId.toString()),
             child: BlocBuilder<PersonDetailBloc, PersonDetailState>(
