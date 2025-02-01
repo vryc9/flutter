@@ -36,7 +36,7 @@ String formatDateYear(String? date) {
   try {
     final parts = date.split('-');
     final year = parts[0];
-    return "$year";
+    return year;
   } catch (_) {
     return "Date invalide";
   }

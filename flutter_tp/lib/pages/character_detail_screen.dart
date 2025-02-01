@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tp/pages/bloc/charactersDetail_bloc.dart';
 import 'package:flutter_tp/res/app_colors.dart';
 import 'package:flutter_tp/utils/date_format.dart';
+import 'package:flutter_tp/utils/text_formatter_utils.dart';
 import 'package:flutter_tp/widgets/error_widget.dart';
 import 'package:flutter_tp/widgets/header_detail.dart';
 import 'package:flutter_tp/widgets/histoire_detail.dart';
@@ -62,7 +63,7 @@ class CharacterDetailScreen extends StatelessWidget {
                         SliverToBoxAdapter(
                           child: Stack(
                             children: [
-                              HeaderWidget(title: character.name ?? "Inconnu"),
+                              HeaderWidget(title: getDefaultTextForEmptyValue(character.name, defaultValue: "Nom indisponible")),
                             ],
                           ),
                         ),
@@ -112,7 +113,7 @@ class CharacterDetailScreen extends StatelessWidget {
                                       color: AppColors.cardBackground,
                                       child: TabBarView(
                                         children: [
-                                          HistoireDetailWidget(content: character.description ?? "Histoire inconnue"),
+                                          HistoireDetailWidget(content: getDefaultTextForEmptyValue(character.description, defaultValue: "Description indisponible")),
                                           Padding(
                                             padding: const EdgeInsets.all(16.0),
                                             child: SingleChildScrollView(
@@ -121,29 +122,19 @@ class CharacterDetailScreen extends StatelessWidget {
                                                 children: [
                                                   _buildTableRow(
                                                     "Nom de super-héros",
-                                                    (character.name != null && character.name!.isNotEmpty)
-                                                        ? character.name!
-                                                        : "Inconnu",
+                                                    getDefaultTextForEmptyValue(character.name, defaultValue: "Nom indisponible")
                                                   ),
                                                   _buildTableRow(
                                                     "Nom réel",
-                                                    (character.real_name != null && character.real_name!.isNotEmpty)
-                                                        ? character.real_name!
-                                                        : "Inconnu",
+                                                    getDefaultTextForEmptyValue(character.real_name, defaultValue: "Nom réel indisponible")
                                                   ),
                                                   _buildTableRow(
                                                     "Alias",
-                                                    (character.aliases != null && character.aliases!.isNotEmpty)
-                                                        ? character.aliases!
-                                                        : "Inconnu",
+                                                    getDefaultTextForEmptyValue(character.aliases, defaultValue: "Alias indisponible")
                                                   ),
                                                   _buildTableRow(
                                                     "Éditeur",
-                                                    (character.publisher != null &&
-                                                            character.publisher!.name != null &&
-                                                            character.publisher!.name!.isNotEmpty)
-                                                        ? character.publisher!.name!
-                                                        : "Inconnu",
+                                                    getDefaultTextForEmptyValue(character.publisher?.name, defaultValue: "Éditeur indisponibles")
                                                   ),
                                                   _buildTableRow(
                                                     "Créateurs",
@@ -158,7 +149,7 @@ class CharacterDetailScreen extends StatelessWidget {
                                                         : "Feminin",
                                                   ),
                                                   _buildTableRow(
-                                                    "Date de naissance", formatDateDayMonthYear(character.birth),
+                                                    "Date de naissance", getDefaultTextForEmptyValue(formatDateDayMonthYear(character.birth)),
                                                   ),
                                                   _buildTableRow(
                                                     "Mort dans",
@@ -186,7 +177,7 @@ class CharacterDetailScreen extends StatelessWidget {
               );
             } else if (state is CharacterDetailNotifierErrorState) {
               return ErrorDisplayWidget(
-                message: 'La récupération du personnage a échoué. Veuillez réessayer.', 
+                message: 'La récupération du personnage a échoué. Veuillez réessayer après avoir vérifié votre connexion internet.', 
                 onRetry: () { context.read<CharacterDetailBloc>().add(LoadCharacterDetailEvent()); },
                 title: "Personnage : ",
               );

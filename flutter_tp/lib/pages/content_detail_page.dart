@@ -5,7 +5,7 @@ import 'package:flutter_tp/pages/bloc/comicsDetail_bloc.dart';
 import 'comics/comic_detail_tabs.dart';
 
 class ContentDetailPage extends StatelessWidget {
-  //serie, movie ou comic
+  // Peut être 'serie', 'movie' ou 'comic'
   final String type;
 
   const ContentDetailPage({super.key, required this.type});

@@ -107,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 );
                               }  else if (state is SeriesListNotifierErrorState) {
                                 return ErrorDisplayWidget(
-                                  message: 'La récupération de la liste des séries a échoué. Veuillez réessayer.', 
+                                  message: 'La récupération de la liste des séries a échoué. Veuillez réessayer après avoir vérifié votre connexion internet.', 
                                   onRetry: () { context.read<SeriesListBloc>().add(LoadSeriesListEvent()); },
                                   title: "Séries : ",
                                 );
@@ -153,7 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 );
                               } else if (state is ComicsListNotifierErrorState) {
                                 return ErrorDisplayWidget(
-                                  message: 'La récupération de la liste des comics a échoué. Veuillez réessayer.', 
+                                  message: 'La récupération de la liste des comics a échoué. Veuillez réessayer après avoir vérifié votre connexion internet.', 
                                   onRetry: () { context.read<ComicsListBloc>().add(LoadComicsListEvent()); },
                                   title: "Comics : ",
                                 );
@@ -199,7 +199,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 );
                               } else if (state is MoviesListNotifierErrorState) {
                                 return ErrorDisplayWidget(
-                                  message: 'La récupération de la liste des films a échoué. Veuillez réessayer.', 
+                                  message: 'La récupération de la liste des films a échoué. Veuillez réessayer après avoir vérifié votre connexion internet.', 
                                   onRetry: () { context.read<MoviesListBloc>().add(LoadMoviesListEvent()); },
                                   title: "Films : ",
                                 );
@@ -245,7 +245,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 );
                               } else if (state is CharactersListNotifierErrorState) {
                                 return ErrorDisplayWidget(
-                                  message: 'La récupération de la liste des personnages a échoué. Veuillez réessayer.', 
+                                  message: 'La récupération de la liste des personnages a échoué. Veuillez réessayer après avoir vérifié votre connexion internet.', 
                                   onRetry: () { context.read<CharactersListBloc>().add(LoadCharactersListEvent()); },
                                   title: "Personnages : ",
                                 );

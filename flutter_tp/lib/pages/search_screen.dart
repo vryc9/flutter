@@ -78,7 +78,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     TextField(
                       controller: _searchController,
                       decoration: InputDecoration(
-                        labelText: 'Comic, film, série...',
+                        labelText: 'Comic, film, série, personnage...',
                         filled: true,
                         labelStyle: const TextStyle(color: Colors.grey),
                         suffixIcon: const Icon(
@@ -147,7 +147,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                         child: SizedBox(
                                           width: 200,
                                           child: Text(
-                                            'Saisissez une recherche pour trouver un comics, film, série ou personnage.',
+                                            'Saisissez une recherche pour trouver un comic, film, série ou personnage.',
                                             style: TextStyle(
                                               fontSize: 15,
                                               color: AppColors.textSearch,
@@ -212,7 +212,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                 child: const Column(
                                   children: [
                                     Text(
-                                      'Aucune Série trouvé.',
+                                      'Aucune série trouvée.',
                                       style: TextStyle(
                                         fontSize: 16,
                                         color: Colors.white,
@@ -230,7 +230,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             );
                           } else if (state is SeriesSearchListNotifierErrorState) {
                             return ErrorDisplayWidget(
-                              message: 'La récupération de la liste des séries a échoué. Veuillez réessayer.', 
+                              message: 'La récupération de la liste des séries a échoué. Veuillez réessayer après avoir vérifié votre connexion internet.', 
                               onRetry: () { context.read<SeriesSearchListBloc>().add(LoadSeriesSearchListEvent()); },
                               title: "Séries : ",
                             );
@@ -256,7 +256,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                 child: const Column(
                                   children: [
                                     Text(
-                                      'Aucun Comic trouvé.',
+                                      'Aucun comic trouvé.',
                                       style: TextStyle(
                                         fontSize: 16,
                                         color: Colors.white,
@@ -274,7 +274,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             );
                           } else if (state is ComicsSearchListNotifierErrorState) {
                             return ErrorDisplayWidget(
-                              message: 'La récupération de la liste des comics a échoué. Veuillez réessayer.', 
+                              message: 'La récupération de la liste des comics a échoué. Veuillez réessayer après avoir vérifié votre connexion internet.', 
                               onRetry: () { context.read<ComicsSearchListBloc>().add(LoadComicsSearchListEvent()); },
                               title: "Comics : ",
                             );
@@ -300,7 +300,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                 child: const Column(
                                   children: [
                                     Text(
-                                      'Aucun Film trouvé.',
+                                      'Aucun film trouvé.',
                                       style: TextStyle(
                                         fontSize: 16,
                                         color: Colors.white,
@@ -318,7 +318,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             );
                           } else if (state is MoviesSearchListNotifierErrorState) {
                             return ErrorDisplayWidget(
-                              message: 'La récupération de la liste des films a échoué. Veuillez réessayer.', 
+                              message: 'La récupération de la liste des films a échoué. Veuillez réessayer après avoir vérifié votre connexion internet.', 
                               onRetry: () { context.read<MoviesSearchListBloc>().add(LoadMoviesSearchListEvent()); },
                               title: "Films : ",
                             );
@@ -344,7 +344,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                 child: const Column(
                                   children: [
                                     Text(
-                                      'Aucun Personnage trouvé.',
+                                      'Aucun personnage trouvé.',
                                       style: TextStyle(
                                         fontSize: 16,
                                         color: Colors.white,
@@ -362,7 +362,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             );
                           } else if (state is CharactersSearchListNotifierErrorState) {
                             return ErrorDisplayWidget(
-                              message: 'La récupération de la liste des personnages a échoué. Veuillez réessayer.', 
+                              message: 'La récupération de la liste des personnages a échoué. Veuillez réessayer après avoir vérifié votre connexion internet.', 
                               onRetry: () { context.read<CharactersSearchListBloc>().add(LoadCharactersSearchListEvent()); },
                               title: "Personnages : ",
                             );

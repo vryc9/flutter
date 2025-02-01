@@ -17,7 +17,7 @@ class ComicDetailTabs extends StatelessWidget {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(getDefaultTextForEmptyValue(comic.name)),
+          title: Text(getDefaultTextForEmptyValue(comic.name, defaultValue: "Nom indisponible")),
           bottom: const TabBar(
             tabs: [
               Tab(text: "Histoire"),
@@ -79,7 +79,7 @@ class ComicDetailTabs extends StatelessWidget {
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                             color: Colors.white),
-                        getDefaultTextForEmptyValue(character.name)),
+                        getDefaultTextForEmptyValue(character.name, defaultValue: "Nom indisponible")),
                   );
                 } else if (state is CharacterDetailNotifierErrorState) {
                   return const ListTile(
@@ -139,7 +139,7 @@ class ComicDetailTabs extends StatelessWidget {
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                             color: Colors.white),
-                        getDefaultTextForEmptyValue(character.name)),
+                        getDefaultTextForEmptyValue(character.name, defaultValue: "Nom indisponible")),
                   );
                 } else if (state is CharacterDetailNotifierErrorState) {
                   return const ListTile(

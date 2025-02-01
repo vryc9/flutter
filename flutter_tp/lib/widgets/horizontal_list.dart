@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_tp/res/app_colors.dart';
+import 'package:flutter_tp/utils/text_formatter_utils.dart';
 
 class HorizontalListWidget extends StatelessWidget {
   final String title;
@@ -12,12 +13,12 @@ class HorizontalListWidget extends StatelessWidget {
   final String page;
 
   const HorizontalListWidget({
-    Key? key,
+    super.key,
     required this.title,
     required this.items,
     required this.type,
     required this.page,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -124,7 +125,7 @@ class HorizontalListWidget extends StatelessWidget {
             ),
             const SizedBox(height: 14),
             SizedBox(
-              height: 250,
+              height: 270,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: page == 'home' ? min(items.length, 5) : items.length,
@@ -203,7 +204,7 @@ class HorizontalListWidget extends StatelessWidget {
   Widget _buildCard(BuildContext context, dynamic item) {
     return Container(
       width: 180,
-      height: 250,
+      height: 270,
       margin: const EdgeInsets.symmetric(horizontal: 5),
       child: Card(
         color: AppColors.cardElementBackground,
@@ -245,7 +246,7 @@ class HorizontalListWidget extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
               child: Text(
-                item.name ?? "Nom inconnu",
+                getDefaultTextForEmptyValue(item.name, defaultValue: "Nom indisponible"),
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,

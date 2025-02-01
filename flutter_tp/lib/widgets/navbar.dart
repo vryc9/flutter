@@ -11,10 +11,10 @@ class MainNavigationBar extends StatefulWidget {
   final int initialIndex;
 
   const MainNavigationBar({
-    Key? key,
+    super.key,
     this.child,
     this.initialIndex = 0,
-  }) : super(key: key);
+  });
 
   @override
   State<MainNavigationBar> createState() => _MainNavigationBarState();
@@ -122,8 +122,7 @@ class _NavItem extends StatelessWidget {
     required this.label,
     required this.isActive,
     required this.onTap,
-    Key? key,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

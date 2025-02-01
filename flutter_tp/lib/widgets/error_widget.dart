@@ -7,11 +7,11 @@ class ErrorDisplayWidget extends StatelessWidget {
   final String title;
 
   const ErrorDisplayWidget({
-    Key? key,
+    super.key,
     required this.message,
     required this.onRetry,
     required this.title,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
