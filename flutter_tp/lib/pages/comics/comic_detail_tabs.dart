@@ -17,109 +17,148 @@ class ComicDetailTabs extends StatelessWidget {
   const ComicDetailTabs({super.key, required this.comic});
 
   @override
-Widget build(BuildContext context) {
-  return DefaultTabController(
-    length: 3,
-    child: Column(
-      children: [
-        HeaderWidget(
-          title: getDefaultTextForEmptyValue(comic.name, defaultValue: "Nom indisponible"),
-        ),
-
-        Padding(
-          padding: const EdgeInsets.all(12.0), 
-          child: Container(
-          
-            color: AppColors.screenBackground, // Background color (customize as needed)
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.25, // 1/4 of screen width
-                  height: 250, // Fixed height (adjustable)
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8), // Rounded corners
-                    image: DecorationImage(
-                      image: NetworkImage(comic.image!.original_url!), 
-                      fit: BoxFit.cover,
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 3,
+      child: Column(
+        children: [
+          HeaderWidget(
+            title: getDefaultTextForEmptyValue(comic.name, defaultValue: "Nom indisponible"),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(12.0), 
+            child: Container(
+            
+              color: AppColors.screenBackground, 
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.25, 
+                    height: 250, 
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8), 
+                      image: DecorationImage(
+                        image: NetworkImage(comic.image!.original_url!), 
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(width: 12), 
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          SvgPicture.asset(
-                            AppVectorialImages.icBooksBicolor,
-                            height: 15.0,
-                            colorFilter: const ColorFilter.mode(
-                                AppColors.bottomBarTextUnselected, BlendMode.srcIn),
+                  const SizedBox(width: 12), 
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          getDefaultTextForEmptyValue(comic.volume?.name, defaultValue: "Nom indisponible"),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
                           ),
-                          const SizedBox(width: 8.0),
-                          Text(
-                            'N°${comic.issue_number ?? 'Non défini'}',
-                            style: const TextStyle(
-                              color: AppColors.bottomBarTextUnselected,
-                              fontSize: 12.0,
+                        ),
+                        Row(
+                          children: [
+                            SvgPicture.asset(
+                              AppVectorialImages.icBooksBicolor,
+                              height: 15.0,
+                              colorFilter: const ColorFilter.mode(
+                                  AppColors.bottomBarTextUnselected, BlendMode.srcIn),
                             ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 4), // Space between texts
-                      Row(
-                        children: [
-                          SvgPicture.asset(
-                            AppVectorialImages.icCalendarBicolor,
-                            height: 15.0,
-                            colorFilter: const ColorFilter.mode(
-                                AppColors.bottomBarTextUnselected, BlendMode.srcIn),
-                          ),
-                          const SizedBox(width: 8.0),
-                          Text(
-                            formatDateMonthYear(comic.cover_date),
-                            style: const TextStyle(
-                              color: AppColors.bottomBarTextUnselected,
-                              fontSize: 12.0,
+                            const SizedBox(width: 8.0),
+                            Text(
+                              'N°${comic.issue_number ?? 'Non défini'}',
+                              style: const TextStyle(
+                                color: AppColors.bottomBarTextUnselected,
+                                fontSize: 12.0,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                        const SizedBox(height: 4), 
+                        Row(
+                          children: [
+                            SvgPicture.asset(
+                              AppVectorialImages.icCalendarBicolor,
+                              height: 15.0,
+                              colorFilter: const ColorFilter.mode(
+                                  AppColors.bottomBarTextUnselected, BlendMode.srcIn),
+                            ),
+                            const SizedBox(width: 8.0),
+                            Text(
+                              formatDateMonthYear(comic.cover_date),
+                              style: const TextStyle(
+                                color: AppColors.bottomBarTextUnselected,
+                                fontSize: 12.0,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ),  
-        ),
-        
-        Expanded(
-          child: Scaffold(
-            appBar: AppBar(
-              automaticallyImplyLeading: false,
-              bottom: const TabBar(
-                tabs: [
-                  Tab(text: "Histoire"),
-                  Tab(text: "Auteurs"),
-                  Tab(text: "Personnages"),
                 ],
               ),
-            ),
-            body: TabBarView(
-              children: [
-                _buildStoryTab(),
-                _buildAuthorsTab(),
-                _buildCharactersTab(),
-              ],
-            ),
+            ),  
           ),
-        ),
-      ],
-    ),
-  );
-}
+          
+          Expanded(
+            child: Scaffold(
+              appBar: AppBar(
+                automaticallyImplyLeading: false,
+                backgroundColor: Colors.transparent,
+                bottom: 
+                    const TabBar(
+                      labelColor: Colors.white,
+                      unselectedLabelColor: Colors.grey,
+                      indicatorColor: AppColors.orange,
+                      labelStyle: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      unselectedLabelStyle: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      tabs: [
+                        Tab(text: "Histoire"),
+                        Tab(text: "Auteurs"),
+                        Tab(text: "Personnages",)
+                      ],
+                      overlayColor: WidgetStatePropertyAll(Colors.transparent),
+                      dividerColor: Colors.transparent,
+                      splashFactory: NoSplash.splashFactory,
+                    ),
+                  ),
+              body: 
+                Column(
+                  children: [
+                    Expanded(
+                      child: ClipRRect(
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20),
+                        ),
+                        child: Container(
+                          color: AppColors.cardBackground,
+                          child: TabBarView(
+                              children: [
+                                _buildStoryTab(),
+                                _buildAuthorsTab(),
+                                _buildCharactersTab(),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+      ),
+    );
+  }
 
 
   Widget _buildStoryTab() {
@@ -137,7 +176,7 @@ Widget build(BuildContext context) {
       itemBuilder: (context, index) {
         final personId = comic.person_credits?[index]?.id;
 
-        // Déclenche le chargement d'un personnage si nécessaire
+        
         return BlocProvider(
             create: (context) => CharacterDetailBloc(personId.toString()),
             child: BlocBuilder<CharacterDetailBloc, CharacterDetailState>(
