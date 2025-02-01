@@ -25,6 +25,7 @@
   - État *loading* : de chaque liste affiche un `CircularLoader`.
   - État *success* : de chaque liste affiche la liste si elle est remplie, sinon "aucun *type* trouvé."
   - État *error* : de chaque liste affiche le message d'erreur "La récupération de la liste de *type* a échoué. Veuillez réessayer après avoir vérifié votre connexion internet." et un bouton réessayer pour relancer la requête.
+  
 - **Style** : Identique.
 
 ---
@@ -62,6 +63,8 @@
   - État *success* : affiche la série et son contenu.
   - État *error* : affiche le message d'erreur "La récupération de la liste de *type* a échoué. Veuillez réessayer après avoir vérifié votre connexion internet." et un bouton réessayer pour relancer la requête.
 
+- **Style** : Identique, sauf le flou de l'image en arrière plan.
+
 ---
 
 ### Liste de comics
@@ -95,7 +98,7 @@
   - État *success* : affiche le comic et son contenu.
   - État *error* : affiche le message d'erreur "La récupération de la liste de *type* a échoué. Veuillez réessayer après avoir vérifié votre connexion internet." et un bouton réessayer pour relancer la requête.
 
-- **Style** : pas identique / en cours.
+- **Style** : Identique, sauf le flou de l'image en arrière plan.
 
 ---
 
@@ -131,7 +134,7 @@
   - État *success* : affiche le movie et son contenu.
   - État *error* : affiche le message d'erreur "La récupération de la liste de *type* a échoué. Veuillez réessayer après avoir vérifié votre connexion internet." et un bouton réessayer pour relancer la requête.
 
-- **Style** : Identique.
+- **Style** : Identique, sauf le flou de l'image en arrière plan.
 
 ---
 
@@ -147,7 +150,7 @@
   - État *success* : affiche le character et son contenu.
   - État *error* : affiche le message d'erreur "La récupération de la liste de *type* a échoué. Veuillez réessayer après avoir vérifié votre connexion internet." et un bouton réessayer pour relancer la requête.
 
-- **Style** : Identique, sauf l'ombre qui n'est pas tout à fait pareil.
+- **Style** : Identique, sauf l'ombre qui n'est pas tout à fait pareil et le flou de l'image en arrière plan.
 
  ---
 
