@@ -15,223 +15,217 @@ class ComicDetailTabs extends StatelessWidget {
 
   const ComicDetailTabs({super.key, required this.comic});
 
-  @override
+ @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
         extendBodyBehindAppBar: true,
-        appBar: AppBar(
-          leading: IconButton(
-            icon: SvgPicture.asset(
-              AppVectorialImages.icBack,    
-              height: 24.0,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-          title: Text(
-            getDefaultTextForEmptyValue(comic.name, defaultValue: "Nom indisponible"), 
-            style: const TextStyle(
-              fontSize: 17,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          flexibleSpace: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Image.network(
-                          comic.image!.original_url!,
-                          height: 127,
-                          width: 94.87, 
-                          fit: BoxFit.cover,
-                          loadingBuilder: (context, child, loadingProgress) {
-                            if (loadingProgress == null) return child;
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          },
-                          errorBuilder: (context, error, stackTrace) {
-                            return const Center(
-                              child: Icon(
-                                Icons.broken_image,
-                                color: AppColors.cardElementBackground,
-                                size: 40,
-                              ),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                    const SizedBox(width: 12.0),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SizedBox(
-                          width: 191,
-                          child: Text(
-                            getDefaultTextForEmptyValue(comic.volume?.name, defaultValue: "Volume indisponible"),
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 17.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                        const SizedBox(height: 10.0),
-                        SizedBox(
-                          width: 191,
-                          child: Text(
-                            getDefaultTextForEmptyValue(comic.name, defaultValue: "Nom indisponible"),
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 17.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                        const SizedBox(height: 22.0),
-                        Row(
-                          children: [
-                            SvgPicture.asset(
-                              AppVectorialImages.icBooksBicolor,
-                              height: 15.0,
-                              colorFilter: const ColorFilter.mode(
-                                  AppColors.iconsList, BlendMode.srcIn),
-                            ),
-                            const SizedBox(width: 8.0),
-                            Text(
-                              'N°${getDefaultTextForEmptyValue(comic.issue_number, defaultValue: "Indisponible")}',
-                              style: const TextStyle(
-                                color: Colors.white60,
-                                fontSize: 12.0,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 10.0),
-                        Row(
-                          children: [
-                            SvgPicture.asset(
-                              AppVectorialImages.icCalendarBicolor,
-                              height: 15.0,
-                              colorFilter: const ColorFilter.mode(
-                                  AppColors.iconsList, BlendMode.srcIn),
-                            ),
-                            const SizedBox(width: 8.0),
-                            Text(
-                              getDefaultTextForEmptyValue(formatDateDayMonthYear(comic.cover_date)),
-                              style: const TextStyle(
-                                color: Colors.white60,
-                                fontSize: 12.0,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          bottom: const TabBar(
-            labelColor: Colors.white,
-            unselectedLabelColor: Colors.grey,
-            indicatorColor: AppColors.orange,
-            labelStyle: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-            ),
-            unselectedLabelStyle: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-            ),
-            tabs: [
-              Tab(text: "Histoire"),
-              Tab(text: "Auteurs"),
-              Tab(text: "Personnages")
-            ],
-            overlayColor: WidgetStatePropertyAll(Colors.transparent),
-            dividerColor: Colors.transparent,
-            splashFactory: NoSplash.splashFactory,
-          ),
-        ),
         body: Stack(
-          children: [
-            Positioned.fill(
-              child: Image.network(
-                comic.image!.original_url!,
-                fit: BoxFit.cover,
-                loadingBuilder: (context, child, loadingProgress) {
-                  if (loadingProgress == null) return child;
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                },
-                errorBuilder: (context, error, stackTrace) {
-                  return const Center(
-                    child: Icon(
-                      Icons.broken_image,
-                      color: AppColors.cardElementBackground,
-                      size: 40,
-                    ),
-                  );
-                },
+            children: [
+              Positioned.fill(
+                child: Image.network(
+                  comic.image!.original_url!,
+                  fit: BoxFit.cover,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  },
+                  errorBuilder: (context, error, stackTrace) {
+                    return const Center(
+                      child: Icon(
+                        Icons.broken_image,
+                        color: AppColors.cardElementBackground,
+                        size: 40,
+                      ),
+                    );
+                  },
+                ),
               ),
-            ),
-            Positioned.fill(
-              child: Container(
-                color: AppColors.screenBackground.withOpacity(0.7),
+              Positioned.fill(
+                child: Container(
+                  color: AppColors.screenBackground.withOpacity(0.7),
+                ),
               ),
-            ),
-            Column(
-              children: [
-                const SizedBox(height: kToolbarHeight + kTextTabBarHeight),
-                Expanded(
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                    ),
-                    child: Container(
-                      color: AppColors.cardBackground,
-                      child: TabBarView(
-                        children: [
-                          _buildStoryTab(),
-                          _buildAuthorsTab(),
-                          _buildCharactersTab(),
-                        ],
+              Column(
+                children: [
+                  Expanded(
+                    child: NestedScrollView(
+                      headerSliverBuilder: (context, innerBoxIsScrolled) => [
+                        SliverAppBar(
+                          expandedHeight: 210.0,           
+                          pinned: false,
+                          floating: false,
+                          backgroundColor: Colors.transparent,
+                          elevation: 0,
+                          leading: IconButton(
+                            icon: SvgPicture.asset(
+                              AppVectorialImages.icBack,
+                              height: 24.0,
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                          title: Text(
+                            getDefaultTextForEmptyValue(comic.name, defaultValue: "Nom indisponible"), 
+                            style: const TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                          flexibleSpace: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: FlexibleSpaceBar(
+                              background: Stack(
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.all(16.0),
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          children: [
+                                            Image.network(
+                                              comic.image!.original_url!,
+                                              height: 127,
+                                              width: 94.87,
+                                              fit: BoxFit.cover,
+                                            ),
+                                            const SizedBox(width: 12.0),
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  Text(
+                                                    getDefaultTextForEmptyValue(
+                                                        comic.volume?.name, defaultValue: "Volume indisponible"),
+                                                    style: const TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 17.0,
+                                                      fontWeight: FontWeight.bold,
+                                                    ),
+                                                    maxLines: 2,
+                                                    overflow: TextOverflow.ellipsis,
+                                                  ),
+                                                  const SizedBox(height: 10.0),
+                                                  Text(
+                                                    getDefaultTextForEmptyValue(
+                                                        comic.name, defaultValue: "Nom indisponible"),
+                                                    style: const TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 17.0,
+                                                      fontWeight: FontWeight.bold,
+                                                    ),
+                                                    maxLines: 2,
+                                                    overflow: TextOverflow.ellipsis,
+                                                  ),
+                                                  const SizedBox(height: 22.0),
+                                                  Row(
+                                                    children: [
+                                                      SvgPicture.asset(
+                                                        AppVectorialImages.icBooksBicolor,
+                                                        height: 15.0,
+                                                        colorFilter: const ColorFilter.mode(
+                                                            AppColors.iconsList, BlendMode.srcIn),
+                                                      ),
+                                                      const SizedBox(width: 8.0),
+                                                      Text(
+                                                        'N°${getDefaultTextForEmptyValue(comic.issue_number, defaultValue: "Indisponible")}',
+                                                        style: const TextStyle(
+                                                          color: Colors.white60,
+                                                          fontSize: 12.0,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  const SizedBox(height: 10.0),
+                                                  Row(
+                                                    children: [
+                                                      SvgPicture.asset(
+                                                        AppVectorialImages.icCalendarBicolor,
+                                                        height: 15.0,
+                                                        colorFilter: const ColorFilter.mode(
+                                                            AppColors.iconsList, BlendMode.srcIn),
+                                                      ),
+                                                      const SizedBox(width: 8.0),
+                                                      Text(
+                                                        getDefaultTextForEmptyValue(
+                                                            formatDateDayMonthYear(comic.cover_date)),
+                                                        style: const TextStyle(
+                                                          color: Colors.white60,
+                                                          fontSize: 12.0,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          bottom: const TabBar(
+                            dividerColor: Colors.transparent,
+                            labelColor: Colors.white,
+                            unselectedLabelColor: Colors.grey,
+                            indicatorColor: AppColors.orange,
+                            labelStyle: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            unselectedLabelStyle: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            tabs: [
+                              Tab(text: "Histoire"),
+                              Tab(text: "Auteurs"),
+                              Tab(text: "Personnages"),
+                            ],
+                            overlayColor: WidgetStatePropertyAll(Colors.transparent),
+                            splashFactory: NoSplash.splashFactory,
+                          ),
+                        ),
+                      ],
+                      body: ClipRRect(
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20),
+                        ),
+                        child: Container(
+                          color: AppColors.cardBackground,
+                          child: TabBarView(
+                            children: [
+                              _buildStoryTab(),
+                              _buildAuthorsTab(),
+                              _buildCharactersTab(),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ],
-        ),
+                ],
+              ),
+            ],
+          ),
       ),
     );
   }
-
-
 
   Widget _buildStoryTab() {
     return Padding(
