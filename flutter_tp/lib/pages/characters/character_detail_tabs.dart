@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_tp/res/app_colors.dart';
 import 'package:flutter_tp/res/app_svg.dart';
@@ -49,7 +48,6 @@ class CharacterDetailTabs extends StatelessWidget {
                     color: Colors.black.withOpacity(0.4),
                     blurRadius: 20,
                     spreadRadius: 6,
-                    offset: const Offset(0, 0),
                   ),
                 ],
               ),

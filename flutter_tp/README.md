@@ -147,7 +147,7 @@
   - État *success* : affiche le character et son contenu.
   - État *error* : affiche le message d'erreur "La récupération de la liste de *type* a échoué. Veuillez réessayer après avoir vérifié votre connexion internet." et un bouton réessayer pour relancer la requête.
 
-- **Style** : Identique, sauf qu'il y a une ligne blanche sous les titres d'onglets que nous n'avons pas réussi à retirer.
+- **Style** : Identique, sauf l'ombre qui n'est pas tout à fait pareil.
 
  ---
 
