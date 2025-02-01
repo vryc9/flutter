@@ -49,7 +49,6 @@ class CharacterDetailTabs extends StatelessWidget {
                     color: Colors.black.withOpacity(0.4),
                     blurRadius: 20,
                     spreadRadius: 6,
-                    offset: const Offset(0, 0),
                   ),
                 ],
               ),
