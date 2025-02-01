@@ -72,7 +72,7 @@ class ComicDetailTabs extends StatelessWidget {
                       backgroundImage:
                           NetworkImage(character.image!.thumb_url!),
                       onBackgroundImageError: (_, __) =>
-                          const Icon(Icons.error),
+                          const Icon(Icons.broken_image_rounded),
                     ),
                     title: Text(
                         style: const TextStyle(
@@ -132,7 +132,7 @@ class ComicDetailTabs extends StatelessWidget {
                       backgroundImage:
                           NetworkImage(character.image!.thumb_url!),
                       onBackgroundImageError: (_, __) =>
-                          const Icon(Icons.error),
+                          const Icon(Icons.broken_image_rounded),
                     ),
                     title: Text(
                         style: const TextStyle(
