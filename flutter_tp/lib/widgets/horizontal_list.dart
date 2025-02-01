@@ -140,7 +140,7 @@ class HorizontalListWidget extends StatelessWidget {
                             context,
                             '/characterDetail',
                             arguments: {
-                              'characterId': item.id.toString(),
+                              'itemId': item.id.toString(),
                             },
                           );
                         },

@@ -87,7 +87,7 @@ class MyApp extends StatelessWidget {
               initialIndex: 3,
               child: GenericListScreen(type: "movie"),
             ),
-        '/characterDetail': (context) => const CharacterDetailScreen(),
+        '/characterDetail': (context) => const ContentDetailPage(type: "character"),
         '/comicDetail': (context) => const ContentDetailPage(type: "comic"),
         '/home': (context) => const HomeScreen(),
       },
