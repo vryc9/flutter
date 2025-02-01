@@ -141,3 +141,17 @@ Map<String, dynamic> _$OFFServerResponseMovieToJson(
       'results': instance.results.toJson(),
       'error': instance.error,
     };
+
+OFFServerResponsePerson _$OFFServerResponsePersonFromJson(
+        Map<String, dynamic> json) =>
+    OFFServerResponsePerson(
+      Person.fromJson(json['results'] as Map<String, dynamic>),
+      json['error'] as String,
+    );
+
+Map<String, dynamic> _$OFFServerResponsePersonToJson(
+        OFFServerResponsePerson instance) =>
+    <String, dynamic>{
+      'results': instance.results.toJson(),
+      'error': instance.error,
+    };

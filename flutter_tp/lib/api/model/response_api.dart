@@ -2,6 +2,7 @@ import 'package:flutter_tp/model/character_api.dart';
 import 'package:flutter_tp/model/comic_api.dart';
 import 'package:flutter_tp/model/episode_api.dart';
 import 'package:flutter_tp/model/movie_api.dart';
+import 'package:flutter_tp/model/person_api.dart';
 import 'package:flutter_tp/model/serie_api.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -13,10 +14,7 @@ class OFFServerResponseComics {
   final List<Comic> results;
   final String error;
 
-  OFFServerResponseComics(
-      this.results,
-      this.error
-  );
+  OFFServerResponseComics(this.results, this.error);
 
   factory OFFServerResponseComics.fromJson(Map<String, dynamic> json) =>
       _$OFFServerResponseComicsFromJson(json);
@@ -30,10 +28,7 @@ class OFFServerResponseSeries {
   final List<Serie> results;
   final String error;
 
-  OFFServerResponseSeries(
-      this.results,
-      this.error
-  );
+  OFFServerResponseSeries(this.results, this.error);
 
   factory OFFServerResponseSeries.fromJson(Map<String, dynamic> json) =>
       _$OFFServerResponseSeriesFromJson(json);
@@ -47,10 +42,7 @@ class OFFServerResponseEpisodes {
   final List<Episode> results;
   final String error;
 
-  OFFServerResponseEpisodes(
-      this.results,
-      this.error
-  );
+  OFFServerResponseEpisodes(this.results, this.error);
 
   factory OFFServerResponseEpisodes.fromJson(Map<String, dynamic> json) =>
       _$OFFServerResponseEpisodesFromJson(json);
@@ -64,10 +56,7 @@ class OFFServerResponseMovies {
   final List<Movie> results;
   final String error;
 
-  OFFServerResponseMovies(
-      this.results,
-      this.error
-  );
+  OFFServerResponseMovies(this.results, this.error);
 
   factory OFFServerResponseMovies.fromJson(Map<String, dynamic> json) =>
       _$OFFServerResponseMoviesFromJson(json);
@@ -81,10 +70,7 @@ class OFFServerResponseCharacters {
   final List<Character> results;
   final String error;
 
-  OFFServerResponseCharacters(
-      this.results,
-      this.error
-  );
+  OFFServerResponseCharacters(this.results, this.error);
 
   factory OFFServerResponseCharacters.fromJson(Map<String, dynamic> json) =>
       _$OFFServerResponseCharactersFromJson(json);
@@ -98,10 +84,7 @@ class OFFServerResponseComic {
   final Comic results;
   final String error;
 
-  OFFServerResponseComic(
-      this.results,
-      this.error
-  );
+  OFFServerResponseComic(this.results, this.error);
 
   factory OFFServerResponseComic.fromJson(Map<String, dynamic> json) =>
       _$OFFServerResponseComicFromJson(json);
@@ -115,10 +98,7 @@ class OFFServerResponseCharacter {
   final Character results;
   final String error;
 
-  OFFServerResponseCharacter(
-      this.results,
-      this.error
-  );
+  OFFServerResponseCharacter(this.results, this.error);
 
   factory OFFServerResponseCharacter.fromJson(Map<String, dynamic> json) =>
       _$OFFServerResponseCharacterFromJson(json);
@@ -133,8 +113,8 @@ class OFFServerResponseSerie {
   final String error;
 
   OFFServerResponseSerie(
-      this.results,
-      this.error,
+    this.results,
+    this.error,
   );
 
   factory OFFServerResponseSerie.fromJson(Map<String, dynamic> json) =>
@@ -150,12 +130,29 @@ class OFFServerResponseMovie {
   final String error;
 
   OFFServerResponseMovie(
-      this.results,
-      this.error,
+    this.results,
+    this.error,
   );
 
   factory OFFServerResponseMovie.fromJson(Map<String, dynamic> json) =>
       _$OFFServerResponseMovieFromJson(json);
 
   Map<String, dynamic> toJson() => _$OFFServerResponseMovieToJson(this);
+}
+
+//person
+@JsonSerializable(explicitToJson: true)
+class OFFServerResponsePerson {
+  final Person results;
+  final String error;
+
+  OFFServerResponsePerson(
+    this.results,
+    this.error,
+  );
+
+  factory OFFServerResponsePerson.fromJson(Map<String, dynamic> json) =>
+      _$OFFServerResponsePersonFromJson(json);
+
+  Map<String, dynamic> toJson() => _$OFFServerResponsePersonToJson(this);
 }

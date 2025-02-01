@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_tp/api/model/response_api.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -88,7 +89,7 @@ abstract class OFFAPI {
     @Query("api_key") String apiKey,
     @Query("format") String format,
   );
-  
+
   @GET("/character/4005-{characterId}/")
   Future<OFFServerResponseCharacter?> getCharacterById(
     @Path("characterId") String characterId,
@@ -97,18 +98,18 @@ abstract class OFFAPI {
   );
 
   @GET("/series/4075-{serieId}/")
-  Future<OFFServerResponseSerie?> getSerieById(
-    @Path("serieId") String serieId,
-    @Query("api_key") String apiKey, 
-    @Query("format") String format
-  );
+  Future<OFFServerResponseSerie?> getSerieById(@Path("serieId") String serieId,
+      @Query("api_key") String apiKey, @Query("format") String format);
 
   @GET("/movie/4075-{movieId}/")
-  Future<OFFServerResponseMovie?> getMovieById(
-    @Path("movieId") String movieId,
-    @Query("api_key") String apiKey, 
-    @Query("format") String format
-  );
+  Future<OFFServerResponseMovie?> getMovieById(@Path("movieId") String movieId,
+      @Query("api_key") String apiKey, @Query("format") String format);
+
+  @GET("/person/4040-{personId}/")
+  Future<OFFServerResponsePerson?> getPersonById(
+      @Path("personId") String personId,
+      @Query("api_key") String apiKey,
+      @Query("format") String format);
 }
 
 class OFFAPIManager {
@@ -136,10 +137,13 @@ class OFFAPIManager {
   //Méthode pour rechercher des personnages
   Future<OFFServerResponseCharacters?> searchCharacters(String query) async {
     try {
-      return await api.searchCharacters(_apiKey, "json", query, "100", "character");
+      return await api.searchCharacters(
+          _apiKey, "json", query, "100", "character");
     } catch (e) {
-      print(
-          "Erreur lors de la récupération de la recherche du personnage : $e");
+      if (kDebugMode) {
+        print(
+            "Erreur lors de la récupération de la recherche du personnage : $e");
+      }
       return null;
     }
   }
@@ -149,8 +153,10 @@ class OFFAPIManager {
     try {
       return await api.searchSeries(_apiKey, "json", query, "100", "series");
     } catch (e) {
-      print(
-          "Erreur lors de la récupération de la recherche de la series : $e");
+      if (kDebugMode) {
+        print(
+            "Erreur lors de la récupération de la recherche de la series : $e");
+      }
       return null;
     }
   }
@@ -160,7 +166,9 @@ class OFFAPIManager {
     try {
       return await api.searchMovies(_apiKey, "json", query, "100", "movie");
     } catch (e) {
-      print("Erreur lors de la récupération de la recherche des movies : $e");
+      if (kDebugMode) {
+        print("Erreur lors de la récupération de la recherche des movies : $e");
+      }
       return null;
     }
   }
@@ -170,7 +178,9 @@ class OFFAPIManager {
     try {
       return await api.searchComics(_apiKey, "json", query, "100", "issue");
     } catch (e) {
-      print("Erreur lors de la récupération de la recherche des comics : $e");
+      if (kDebugMode) {
+        print("Erreur lors de la récupération de la recherche des comics : $e");
+      }
       return null;
     }
   }
@@ -180,7 +190,9 @@ class OFFAPIManager {
     try {
       return await api.loadSeriesList(_apiKey, "json", "50");
     } catch (e) {
-      print("Erreur lors de la récupération des series : $e");
+      if (kDebugMode) {
+        print("Erreur lors de la récupération des series : $e");
+      }
       return null;
     }
   }
@@ -190,17 +202,21 @@ class OFFAPIManager {
     try {
       return await api.loadMoviesList(_apiKey, "json", "50");
     } catch (e) {
-      print("Erreur lors de la récupération des movies : $e");
+      if (kDebugMode) {
+        print("Erreur lors de la récupération des movies : $e");
+      }
       return null;
     }
   }
-  
+
   //Méthode pour récupérer une liste d'épisodes
   Future<OFFServerResponseEpisodes?> loadEpisodeList(String id) async {
     try {
       return await api.loadEpisodesList(id, _apiKey, "json");
     } catch (e) {
-      print("Erreur lors de la récupération des episodes : $e");
+      if (kDebugMode) {
+        print("Erreur lors de la récupération des episodes : $e");
+      }
       return null;
     }
   }
@@ -210,7 +226,9 @@ class OFFAPIManager {
     try {
       return await api.loadComicsList(_apiKey, "json", "50");
     } catch (e) {
-      print("Erreur lors de la récupération des comics : $e");
+      if (kDebugMode) {
+        print("Erreur lors de la récupération des comics : $e");
+      }
       return null;
     }
   }
@@ -220,7 +238,9 @@ class OFFAPIManager {
     try {
       return await api.loadCharactersList(_apiKey, "json", "50");
     } catch (e) {
-      print("Erreur lors de la récupération des characters : $e");
+      if (kDebugMode) {
+        print("Erreur lors de la récupération des characters : $e");
+      }
       return null;
     }
   }
@@ -230,18 +250,22 @@ class OFFAPIManager {
     try {
       return await api.getComicById(comicId, _apiKey, "json");
     } catch (e) {
-      print("Erreur lors de la récupération du comic : $e");
+      if (kDebugMode) {
+        print("Erreur lors de la récupération du comic : $e");
+      }
       return null;
     }
   }
- 
 
   //Méthode pour récupérer un personnage par ID
-  Future<OFFServerResponseCharacter?> fetchCharacterById(String characterId) async {
+  Future<OFFServerResponseCharacter?> fetchCharacterById(
+      String characterId) async {
     try {
       return await api.getCharacterById(characterId, _apiKey, "json");
     } catch (e) {
-      print("Erreur lors de la récupération du personnage : $e");
+      if (kDebugMode) {
+        print("Erreur lors de la récupération du personnage : $e");
+      }
       return null;
     }
   }
@@ -251,7 +275,9 @@ class OFFAPIManager {
     try {
       return await api.getSerieById(serieId, _apiKey, "json");
     } catch (e) {
-      print("Erreur lors de la récupération de la serie : $e");
+      if (kDebugMode) {
+        print("Erreur lors de la récupération de la serie : $e");
+      }
       return null;
     }
   }
@@ -261,7 +287,21 @@ class OFFAPIManager {
     try {
       return await api.getMovieById(movieId, _apiKey, "json");
     } catch (e) {
-      print("Erreur lors de la récupération du movie : $e");
+      if (kDebugMode) {
+        print("Erreur lors de la récupération du movie : $e");
+      }
+      return null;
+    }
+  }
+
+  //Méthode pour récupérer une personne par ID
+  Future<OFFServerResponsePerson?> fetchPersonById(String personId) async {
+    try {
+      return await api.getPersonById(personId, _apiKey, "json");
+    } catch (e) {
+      if (kDebugMode) {
+        print("Erreur lors de la récupération de la personne : $e");
+      }
       return null;
     }
   }
