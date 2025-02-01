@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_tp/pages/bloc/personsDetail_bloc.dart';
 import 'package:flutter_tp/res/app_colors.dart';
 import 'package:flutter_tp/res/app_svg.dart';
 import 'package:flutter_tp/utils/date_format.dart';
-import 'package:flutter_tp/pages/bloc/personsDetail_bloc.dart';
 import 'package:flutter_tp/utils/text_formatter_utils.dart';
 
 import '../../model/comic_api.dart';
@@ -33,14 +33,6 @@ class ComicDetailTabs extends StatelessWidget {
             onPressed: () {
               Navigator.pop(context);
             },
-          ),
-          title: Text(
-            getDefaultTextForEmptyValue(comic.name, defaultValue: "Nom indisponible"),
-            style: const TextStyle(
-              fontSize: 17,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
           ),
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -86,7 +78,8 @@ class ComicDetailTabs extends StatelessWidget {
                         SizedBox(
                           width: 191,
                           child: Text(
-                            getDefaultTextForEmptyValue(comic.volume?.name, defaultValue: "Volume indisponible"),
+                            getDefaultTextForEmptyValue(comic.volume?.name,
+                                defaultValue: "Volume indisponible"),
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 17.0,
@@ -100,7 +93,8 @@ class ComicDetailTabs extends StatelessWidget {
                         SizedBox(
                           width: 191,
                           child: Text(
-                            getDefaultTextForEmptyValue(comic.name, defaultValue: "Nom indisponible"),
+                            getDefaultTextForEmptyValue(comic.name,
+                                defaultValue: "Nom indisponible"),
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 17.0,
@@ -140,7 +134,8 @@ class ComicDetailTabs extends StatelessWidget {
                             ),
                             const SizedBox(width: 8.0),
                             Text(
-                              getDefaultTextForEmptyValue(formatDateDayMonthYear(comic.cover_date)),
+                              getDefaultTextForEmptyValue(
+                                  formatDateDayMonthYear(comic.cover_date)),
                               style: const TextStyle(
                                 color: Colors.white60,
                                 fontSize: 12.0,
@@ -234,8 +229,6 @@ class ComicDetailTabs extends StatelessWidget {
     );
   }
 
-
-
   Widget _buildStoryTab() {
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -250,7 +243,6 @@ class ComicDetailTabs extends StatelessWidget {
       itemCount: comic.person_credits?.length,
       itemBuilder: (context, index) {
         final personId = comic.person_credits?[index]?.id;
-
 
         return BlocProvider(
             create: (context) => PersonDetailBloc(personId.toString()),
