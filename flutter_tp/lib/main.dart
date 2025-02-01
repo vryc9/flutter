@@ -9,7 +9,6 @@ import 'package:flutter_tp/pages/bloc/comicsSearchList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/moviesSearchList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/seriesList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/seriesSearchList_bloc.dart';
-import 'package:flutter_tp/pages/character_detail_screen.dart';
 import 'package:flutter_tp/pages/content_detail_page.dart';
 import 'package:flutter_tp/pages/generic_list.dart';
 import 'package:flutter_tp/pages/home_screen.dart';

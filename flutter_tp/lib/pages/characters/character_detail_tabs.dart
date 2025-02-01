@@ -47,9 +47,9 @@ class CharacterDetailTabs extends StatelessWidget {
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.4),
-                    blurRadius: 16,
-                    spreadRadius: 4,
-                    offset: const Offset(0, 8),
+                    blurRadius: 20,
+                    spreadRadius: 6,
+                    offset: const Offset(0, 0),
                   ),
                 ],
               ),
@@ -69,6 +69,9 @@ class CharacterDetailTabs extends StatelessWidget {
                   Tab(text: "Histoire"),
                   Tab(text: "Infos"),
                 ],
+                overlayColor: WidgetStatePropertyAll(Colors.transparent),
+                dividerColor: Colors.transparent,
+                splashFactory: NoSplash.splashFactory,
               ),
             ),
           ),
@@ -103,7 +106,7 @@ class CharacterDetailTabs extends StatelessWidget {
             ),
             Column(
               children: [
-                SizedBox(height: kToolbarHeight + kTextTabBarHeight),
+                const SizedBox(height: kToolbarHeight + kTextTabBarHeight),
                 Expanded(
                   child: ClipRRect(
                     borderRadius: const BorderRadius.only(
