@@ -262,13 +262,13 @@ class GenericListScreen extends StatelessWidget {
                             AppVectorialImages.icPublisherBicolor,
                             height: 12.0,
                             colorFilter: const ColorFilter.mode(
-                                AppColors.bottomBarTextUnselected, BlendMode.srcIn),
+                                AppColors.iconsList, BlendMode.srcIn),
                           ),
                           const SizedBox(width: 8.0),
                           Text(
                             getDefaultTextForEmptyValue(serie.publisher?.name, defaultValue: "Éditeur indisponible"),
                             style: const TextStyle(
-                              color: AppColors.bottomBarTextUnselected,
+                              color: Colors.white60,
                               fontSize: 12.0,
                             ),
                           ),
@@ -277,16 +277,17 @@ class GenericListScreen extends StatelessWidget {
                       const SizedBox(height: 10.0),
                       Row(
                         children: [
-                          const Icon(
-                            Icons.tv,
-                              color: AppColors.bottomBarTextUnselected,
-                            size: 15,
+                          SvgPicture.asset(
+                            AppVectorialImages.icTvBicolor,
+                            height: 15.0,
+                            colorFilter: const ColorFilter.mode(
+                                AppColors.iconsList, BlendMode.srcIn),
                           ),
                           const SizedBox(width: 8.0),
                           Text(
                             '${serie.count_of_episodes ?? 0} épisodes',
                             style: const TextStyle(
-                              color: AppColors.bottomBarTextUnselected,
+                              color: Colors.white60,
                               fontSize: 12.0,
                             ),
                           ),
@@ -295,16 +296,17 @@ class GenericListScreen extends StatelessWidget {
                       const SizedBox(height: 8.0),
                       Row(
                         children: [
-                          const Icon(
-                            Icons.calendar_today,
-                              color: AppColors.bottomBarTextUnselected,
-                            size: 15,
+                          SvgPicture.asset(
+                            AppVectorialImages.icCalendarBicolor,
+                            height: 15.0,
+                            colorFilter: const ColorFilter.mode(
+                                AppColors.iconsList, BlendMode.srcIn),
                           ),
                           const SizedBox(width: 8.0),
                           Text(
                             getDefaultTextForEmptyValue(serie.start_year, defaultValue: "Année indisponible"),
                             style: const TextStyle(
-                              color: AppColors.bottomBarTextUnselected,
+                              color: Colors.white60,
                               fontSize: 12.0,
                             ),
                           ),
@@ -444,13 +446,13 @@ class GenericListScreen extends StatelessWidget {
                             AppVectorialImages.icBooksBicolor,
                             height: 15.0,
                             colorFilter: const ColorFilter.mode(
-                                AppColors.bottomBarTextUnselected, BlendMode.srcIn),
+                                AppColors.iconsList, BlendMode.srcIn),
                           ),
                           const SizedBox(width: 8.0),
                           Text(
                             'N°${getDefaultTextForEmptyValue(comic.issue_number, defaultValue: "Indisponible")}',
                             style: const TextStyle(
-                              color: AppColors.bottomBarTextUnselected,
+                              color: Colors.white60,
                               fontSize: 12.0,
                             ),
                           ),
@@ -463,13 +465,13 @@ class GenericListScreen extends StatelessWidget {
                             AppVectorialImages.icCalendarBicolor,
                             height: 15.0,
                             colorFilter: const ColorFilter.mode(
-                                AppColors.bottomBarTextUnselected, BlendMode.srcIn),
+                                AppColors.iconsList, BlendMode.srcIn),
                           ),
                           const SizedBox(width: 8.0),
                           Text(
                             getDefaultTextForEmptyValue(formatDateMonthYear(comic.cover_date)),
                             style: const TextStyle(
-                              color: AppColors.bottomBarTextUnselected,
+                              color: Colors.white60,
                               fontSize: 12.0,
                             ),
                           ),
@@ -587,16 +589,17 @@ Widget _buildMovieCard(Movie movie, int index, BuildContext context) {
                     const SizedBox(height: 22.0),
                     Row(
                       children: [
-                        const Icon(
-                          Icons.movie,
-                          color: AppColors.bottomBarTextUnselected,
-                          size: 15,
+                        SvgPicture.asset(
+                          AppVectorialImages.navbarMovies,
+                          height: 12.0,
+                          colorFilter: const ColorFilter.mode(
+                              AppColors.iconsList, BlendMode.srcIn),
                         ),
                         const SizedBox(width: 8.0),
                         Text(
                           '${getDefaultTextForEmptyValue(movie.runtime, defaultValue: "Durée indisponible")} minutes',
                           style: const TextStyle(
-                            color: AppColors.bottomBarTextUnselected,
+                            color: Colors.white60,
                             fontSize: 12.0,
                           ),
                         ),
@@ -605,16 +608,17 @@ Widget _buildMovieCard(Movie movie, int index, BuildContext context) {
                     const SizedBox(height: 7.6),
                     Row(
                       children: [
-                        const Icon(
-                          Icons.calendar_today,
-                          color: AppColors.bottomBarTextUnselected,
-                          size: 15,
+                        SvgPicture.asset(
+                          AppVectorialImages.icCalendarBicolor,
+                          height: 15.0,
+                          colorFilter: const ColorFilter.mode(
+                              AppColors.iconsList, BlendMode.srcIn),
                         ),
                         const SizedBox(width: 8.0),
                         Text(
                           getDefaultTextForEmptyValue(formatDateYear(movie.date_added)),
                           style: const TextStyle(
-                            color: AppColors.bottomBarTextUnselected,
+                            color: Colors.white60,
                             fontSize: 12.0,
                           ),
                         ),

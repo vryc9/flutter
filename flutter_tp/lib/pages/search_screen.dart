@@ -65,13 +65,19 @@ class _SearchScreenState extends State<SearchScreen> {
                 padding: const EdgeInsets.all(23.0),
                 child: Column(
                   children: [
-                    const Text(
-                      'Recherche',
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white,
+                    const SizedBox(height: 17),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 4),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Recherche',
+                          style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
                     ),
                     const SizedBox(height: 17),
@@ -81,11 +87,15 @@ class _SearchScreenState extends State<SearchScreen> {
                         labelText: 'Comic, film, série, personnage...',
                         filled: true,
                         labelStyle: const TextStyle(color: Colors.grey),
-                        suffixIcon: const Icon(
-                          Icons.search,
-                          color: Colors.grey,
-                          size: 24,
-                          ), 
+                        suffixIcon: Padding(
+                          padding: const EdgeInsets.only(right: 20),
+                          child: SvgPicture.asset(
+                            AppVectorialImages.navbarSearch,
+                            color: AppColors.iconSearch,
+                            width: 12,
+                            height: 12,
+                          ),
+                        ),
                         fillColor: AppColors.screenBackground,
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -146,11 +156,35 @@ class _SearchScreenState extends State<SearchScreen> {
                                         padding: EdgeInsets.only(top: 16.0, bottom: 16.0),
                                         child: SizedBox(
                                           width: 200,
-                                          child: Text(
-                                            'Saisissez une recherche pour trouver un comic, film, série ou personnage.',
-                                            style: TextStyle(
-                                              fontSize: 15,
-                                              color: AppColors.textSearch,
+                                          child: Text.rich(
+                                            TextSpan(
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                                color: AppColors.textSearch,
+                                              ),
+                                              children: [
+                                                TextSpan(text: 'Saisissez une recherche pour trouver un '),
+                                                TextSpan(
+                                                  text: 'comics',
+                                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                                ),
+                                                TextSpan(text: ', '),
+                                                TextSpan(
+                                                  text: 'film',
+                                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                                ),
+                                                TextSpan(text: ', '),
+                                                TextSpan(
+                                                  text: 'série',
+                                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                                ),
+                                                TextSpan(text: ' ou '),
+                                                TextSpan(
+                                                  text: 'personnage',
+                                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                                ),
+                                                TextSpan(text: '.'),
+                                              ],
                                             ),
                                           ),
                                         ),
