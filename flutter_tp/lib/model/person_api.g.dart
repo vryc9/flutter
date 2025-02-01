@@ -12,10 +12,12 @@ Person _$PersonFromJson(Map<String, dynamic> json) => Person(
           ? null
           : ImageAPI.fromJson(json['image'] as Map<String, dynamic>),
       name: json['name'] as String?,
+      role: json['role'] as String?,
     );
 
 Map<String, dynamic> _$PersonToJson(Person instance) => <String, dynamic>{
       'id': instance.id,
       'image': instance.image?.toJson(),
       'name': instance.name,
+      'role': instance.role,
     };

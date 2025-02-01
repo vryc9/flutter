@@ -97,16 +97,18 @@ class HorizontalListWidget extends StatelessWidget {
                         default:
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                              content: Text('Type inconnu pour le bouton Voir plus'),
+                              content:
+                                  Text('Type inconnu pour le bouton Voir plus'),
                             ),
                           );
                       }
                     },
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 6),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 17, vertical: 6),
                       decoration: BoxDecoration(
                         color: AppColors.seeMoreBackground,
-                        borderRadius: BorderRadius.circular(10), 
+                        borderRadius: BorderRadius.circular(10),
                       ),
                       child: const Text(
                         "Voir plus",
@@ -146,8 +148,12 @@ class HorizontalListWidget extends StatelessWidget {
                     case 'comic':
                       return GestureDetector(
                         onTap: () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Comic sélectionné: ${item.name}')),
+                          Navigator.pushNamed(
+                            context,
+                            '/comicDetail',
+                            arguments: {
+                              'itemId': item.id.toString(),
+                            },
                           );
                         },
                         child: _buildCard(context, item),
@@ -156,7 +162,9 @@ class HorizontalListWidget extends StatelessWidget {
                       return GestureDetector(
                         onTap: () {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Film sélectionné: ${item.name}')),
+                            SnackBar(
+                                content:
+                                    Text('Film sélectionné: ${item.name}')),
                           );
                         },
                         child: _buildCard(context, item),
@@ -165,7 +173,9 @@ class HorizontalListWidget extends StatelessWidget {
                       return GestureDetector(
                         onTap: () {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Série sélectionnée: ${item.name}')),
+                            SnackBar(
+                                content:
+                                    Text('Série sélectionnée: ${item.name}')),
                           );
                         },
                         child: _buildCard(context, item),
@@ -174,7 +184,8 @@ class HorizontalListWidget extends StatelessWidget {
                       return GestureDetector(
                         onTap: () {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Type inconnu: ${item.name}')),
+                            SnackBar(
+                                content: Text('Type inconnu: ${item.name}')),
                           );
                         },
                         child: _buildCard(context, item),

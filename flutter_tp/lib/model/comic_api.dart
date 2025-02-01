@@ -9,14 +9,14 @@ part 'comic_api.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class Comic {
-  final List<Character?>? character_credits; 
+  final List<Character?>? character_credits;
   final String? description;
   final int? id;
   final ImageAPI? image;
   final String? issue_number;
   final String? name;
   final List<Person?>? person_credits;
-  @JsonKey(fromJson: _stringFromJson)
+
   final String? cover_date;
   final Volume? volume;
 

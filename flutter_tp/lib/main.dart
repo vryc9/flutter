@@ -3,15 +3,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tp/pages/bloc/charactersDetail_bloc.dart';
 import 'package:flutter_tp/pages/bloc/charactersList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/charactersSearchList_bloc.dart';
+import 'package:flutter_tp/pages/bloc/comicsDetail_bloc.dart';
 import 'package:flutter_tp/pages/bloc/comicsList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/comicsSearchList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/moviesSearchList_bloc.dart';
-import 'package:flutter_tp/pages/bloc/seriesSearchList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/seriesList_bloc.dart';
+import 'package:flutter_tp/pages/bloc/seriesSearchList_bloc.dart';
 import 'package:flutter_tp/pages/character_detail_screen.dart';
+import 'package:flutter_tp/pages/content_detail_page.dart';
 import 'package:flutter_tp/pages/generic_list.dart';
 import 'package:flutter_tp/pages/home_screen.dart';
-import 'package:flutter_tp/pages/search_screen.dart';
 import 'package:flutter_tp/res/app_colors.dart';
 import 'package:flutter_tp/widgets/navbar.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -48,6 +49,9 @@ void main() {
         ),
         BlocProvider(
           create: (_) => ComicsListBloc(),
+        ),
+        BlocProvider(
+          create: (_) => ComicDetailBloc(""),
         )
       ],
       child: const MyApp(),
@@ -84,7 +88,107 @@ class MyApp extends StatelessWidget {
               child: GenericListScreen(type: "movie"),
             ),
         '/characterDetail': (context) => const CharacterDetailScreen(),
+        '/comicDetail': (context) => const ContentDetailPage(type: "comic"),
+        '/home': (context) => const HomeScreen(),
       },
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Accueil'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/search');
+              },
+              child: const Text('Aller à la page de recherche'),
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/home');
+              },
+              child: const Text('Aller à la page home'),
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  '/characterDetail',
+                  arguments: {
+                    'characterId': "2350",
+                  },
+                );
+              },
+              child: const Text('Voir les détails de Billy'),
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  '/comicDetail',
+                  arguments: {
+                    'itemId': "12",
+                  },
+                );
+              },
+              child: const Text('Voir les détails de comic 12'),
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  '/comicList',
+                  arguments: {
+                    'type': "comic",
+                  },
+                );
+              },
+              child: const Text('Voir la liste des comics'),
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  '/serieList',
+                  arguments: {
+                    'type': "serie",
+                  },
+                );
+              },
+              child: const Text('Voir la liste des series'),
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  '/movieList',
+                  arguments: {
+                    'type': "movie",
+                  },
+                );
+              },
+              child: const Text('Voir la liste des movies'),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

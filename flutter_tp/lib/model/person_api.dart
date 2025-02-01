@@ -8,11 +8,13 @@ class Person {
   final int? id;
   final ImageAPI? image;
   final String? name;
+  final String? role;
 
   Person({
     this.id,
     this.image,
     this.name,
+    this.role,
   });
 
   // Généré automatiquement par json_serializable

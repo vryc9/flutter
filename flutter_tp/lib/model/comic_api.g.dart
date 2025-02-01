@@ -14,7 +14,7 @@ Comic _$ComicFromJson(Map<String, dynamic> json) => Comic(
           : ImageAPI.fromJson(json['image'] as Map<String, dynamic>),
       issue_number: json['issue_number'] as String?,
       name: json['name'] as String?,
-      cover_date: Comic._stringFromJson(json['cover_date']),
+      cover_date: json['cover_date'] as String?,
       volume: json['volume'] == null
           ? null
           : Volume.fromJson(json['volume'] as Map<String, dynamic>),
