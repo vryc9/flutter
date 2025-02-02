@@ -5,13 +5,13 @@ part 'person_api.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class Person {
-  final int? id;
+  final int id;
   final ImageAPI? image;
   final String? name;
   final String? role;
 
   Person({
-    this.id,
+    required this.id,
     this.image,
     this.name,
     this.role,

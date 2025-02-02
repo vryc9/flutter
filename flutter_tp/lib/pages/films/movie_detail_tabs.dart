@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_tp/pages/bloc/personsDetail_bloc.dart';
 import 'package:flutter_tp/res/app_colors.dart';
 import 'package:flutter_tp/res/app_svg.dart';
 import 'package:flutter_tp/utils/date_format.dart';
 import 'package:flutter_tp/utils/text_formatter_utils.dart';
 import 'package:flutter_tp/widgets/tab_character_detail.dart';
 
-import '../../model/comic_api.dart';
+import '../../model/movie_api.dart';
 import '../../widgets/histoire_detail.dart';
-import '../bloc/charactersDetail_bloc.dart';
 
-class ComicDetailTabs extends StatelessWidget {
-  final Comic comic;
+class MovieDetailTabs extends StatelessWidget {
+  final Movie movie;
 
-  const ComicDetailTabs({super.key, required this.comic});
+  const MovieDetailTabs({super.key, required this.movie});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +24,7 @@ class ComicDetailTabs extends StatelessWidget {
           children: [
             Positioned.fill(
               child: Image.network(
-                comic.image!.original_url!,
+                movie.image!.original_url!,
                 fit: BoxFit.cover,
                 loadingBuilder: (context, child, loadingProgress) {
                   if (loadingProgress == null) return child;
@@ -72,7 +69,7 @@ class ComicDetailTabs extends StatelessWidget {
                           },
                         ),
                         title: Text(
-                          getDefaultTextForEmptyValue(comic.name,
+                          getDefaultTextForEmptyValue(movie.name,
                               defaultValue: "Nom indisponible"),
                           style: const TextStyle(
                             fontSize: 17,
@@ -106,7 +103,7 @@ class ComicDetailTabs extends StatelessWidget {
                                               bottomRight: Radius.circular(10),
                                             ),
                                             child: Image.network(
-                                              comic.image!.original_url!,
+                                              movie.image!.original_url!,
                                               height: 127,
                                               width: 94.87,
                                               fit: BoxFit.cover,
@@ -139,35 +136,6 @@ class ComicDetailTabs extends StatelessWidget {
                                                   CrossAxisAlignment.start,
                                               mainAxisSize: MainAxisSize.min,
                                               children: [
-                                                Text(
-                                                  getDefaultTextForEmptyValue(
-                                                      comic.volume?.name,
-                                                      defaultValue:
-                                                          "Volume indisponible"),
-                                                  style: const TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 17.0,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                  maxLines: 2,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                ),
-                                                const SizedBox(height: 10.0),
-                                                Text(
-                                                  getDefaultTextForEmptyValue(
-                                                      comic.name,
-                                                      defaultValue:
-                                                          "Nom indisponible"),
-                                                  style: const TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 17.0,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                  maxLines: 2,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                ),
                                                 const SizedBox(height: 22.0),
                                                 Row(
                                                   children: [
@@ -183,7 +151,7 @@ class ComicDetailTabs extends StatelessWidget {
                                                     ),
                                                     const SizedBox(width: 8.0),
                                                     Text(
-                                                      'N°${getDefaultTextForEmptyValue(comic.issue_number, defaultValue: "Indisponible")}',
+                                                      '${getDefaultTextForEmptyValue(movie.rating, defaultValue: "Indisponible")} minutes',
                                                       style: const TextStyle(
                                                         color: Colors.white60,
                                                         fontSize: 12.0,
@@ -208,8 +176,8 @@ class ComicDetailTabs extends StatelessWidget {
                                                     Text(
                                                       getDefaultTextForEmptyValue(
                                                           formatDateDayMonthYear(
-                                                              comic
-                                                                  .cover_date)),
+                                                              movie
+                                                                  .date_added)),
                                                       style: const TextStyle(
                                                         color: Colors.white60,
                                                         fontSize: 12.0,
@@ -243,9 +211,9 @@ class ComicDetailTabs extends StatelessWidget {
                             fontWeight: FontWeight.w600,
                           ),
                           tabs: [
-                            Tab(text: "Histoire"),
-                            Tab(text: "Auteurs"),
+                            Tab(text: "Synopsis"),
                             Tab(text: "Personnages"),
+                            Tab(text: "Infos"),
                           ],
                           overlayColor:
                               WidgetStatePropertyAll(Colors.transparent),
@@ -263,9 +231,9 @@ class ComicDetailTabs extends StatelessWidget {
                         child: TabBarView(
                           children: [
                             _buildStoryTab(),
-                            _buildAuthorsTab(),
                             TabCharacterDetailWidget(
-                                character_credits: comic.character_credits),
+                                character_credits: movie.characters),
+                            _buildAuthorsTab(),
                           ],
                         ),
                       ),
@@ -284,61 +252,90 @@ class ComicDetailTabs extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: HistoireDetailWidget(
-          content: getDefaultTextForEmptyValue(comic.description,
+          content: getDefaultTextForEmptyValue(movie.description,
               defaultValue: "Description indisponible")),
     );
   }
 
   Widget _buildAuthorsTab() {
-    return ListView.builder(
-      itemCount: comic.person_credits?.length,
-      itemBuilder: (context, index) {
-        final personId = comic.person_credits?[index]?.id;
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: SingleChildScrollView(
+        child: Table(
+          border: TableBorder.all(color: Colors.transparent),
+          children: [
+            _buildTableRow(
+                "Classification",
+                getDefaultTextForEmptyValue(movie.rating,
+                    defaultValue: "Classification indisponible")),
+            _buildTableRow(
+                "Réalisateur",
+                getDefaultTextForEmptyValue(
+                    movie.writers
+                            ?.where((person) => person.role == "realisateur")
+                            .map((person) => person.name)
+                            .firstOrNull ??
+                        "",
+                    defaultValue: "Réalisateur indisponible")),
+            _buildTableRow(
+                "Scénaristes",
+                (movie.writers != null && movie.writers!.isNotEmpty)
+                    ? movie.writers!
+                        .where((person) => person.role == "scenariste")
+                        .map((creator) => creator.name)
+                        .join(", ")
+                    : "Inconnus"),
+            _buildTableRow(
+                "Producteurs",
+                (movie.writers != null && movie.writers!.isNotEmpty)
+                    ? movie.writers!
+                        .where((person) => person.role == "producteur")
+                        .map((creator) => creator.name)
+                        .join(", ")
+                    : "Inconnus"),
+            _buildTableRow(
+                "Studios",
+                (movie.studios != null && movie.studios!.isNotEmpty)
+                    ? movie.studios!.map((studio) => studio.name).join(", ")
+                    : "Inconnus"),
+            _buildTableRow(
+                "Budget",
+                getDefaultTextForEmptyValue(movie.budget,
+                    defaultValue: "Budget indisponible")),
+            _buildTableRow(
+                "Recettes au box-office",
+                getDefaultTextForEmptyValue(movie.box_office_revenue,
+                    defaultValue: "Recette indisponible")),
+            _buildTableRow(
+                "Recettes brutes totales",
+                getDefaultTextForEmptyValue(movie.total_revenue,
+                    defaultValue: "Recette indisponible")),
+          ],
+        ),
+      ),
+    );
+  }
 
-        return BlocProvider(
-            create: (context) => PersonDetailBloc(personId.toString()),
-            child: BlocBuilder<PersonDetailBloc, PersonDetailState>(
-              builder: (context, state) {
-                if (state is PersonDetailNotifierLoadingState) {
-                  return const ListTile(
-                    leading: CircularProgressIndicator(),
-                    title: Text('Chargement...'),
-                  );
-                } else if (state is PersonDetailNotifierSuccessState) {
-                  final person = state.person!;
-                  return ListTile(
-                    leading: CircleAvatar(
-                      backgroundImage: NetworkImage(person.image!.thumb_url!),
-                      onBackgroundImageError: (_, __) =>
-                          const Icon(Icons.broken_image_rounded),
-                    ),
-                    title: Text(
-                        style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white),
-                        getDefaultTextForEmptyValue(person.name,
-                            defaultValue: "Nom indisponible")),
-                    subtitle: Text(
-                        style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white),
-                        getDefaultTextForEmptyValue(
-                            comic.person_credits?[index]?.role,
-                            defaultValue: "Rôle indisponible")),
-                  );
-                } else if (state is CharacterDetailNotifierErrorState) {
-                  return const ListTile(
-                    leading: Icon(Icons.error),
-                    title: Text('Erreur de chargement'),
-                  );
-                } else {
-                  return const SizedBox.shrink();
-                }
-              },
-            ));
-      },
+  TableRow _buildTableRow(String title, String value) {
+    return TableRow(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            title,
+            style: const TextStyle(
+                fontSize: 17, fontWeight: FontWeight.w700, color: Colors.white),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            value,
+            style: const TextStyle(
+                fontSize: 17, fontWeight: FontWeight.w400, color: Colors.white),
+          ),
+        ),
+      ],
     );
   }
 }
