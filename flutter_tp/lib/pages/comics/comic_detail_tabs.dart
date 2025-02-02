@@ -1,4 +1,5 @@
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -11,6 +12,8 @@ import 'package:flutter_tp/utils/date_format.dart';
 import 'package:flutter_tp/utils/text_formatter_utils.dart';
 import 'package:flutter_tp/widgets/histoire_detail.dart';
 import 'package:flutter_tp/widgets/tab_character_detail.dart';
+
+import '../../widgets/error_widget.dart';
 
 // Détail tab de comic
 class ComicDetailTabs extends StatelessWidget {
@@ -29,7 +32,7 @@ class ComicDetailTabs extends StatelessWidget {
             // Image en fond avec broken_image en cas de problème.
             Positioned.fill(
               child: ImageFiltered(
-                imageFilter: ImageFilter.blur(sigmaX: 5, sigmaY: 5), 
+                imageFilter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
                 child: Image.network(
                   comic.image!.original_url!,
                   fit: BoxFit.cover,
@@ -319,27 +322,32 @@ class ComicDetailTabs extends StatelessWidget {
                     ),
                     // Nom.
                     title: Text(
-                      style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white),
-                      getDefaultTextForEmptyValue(person.name,
-                          defaultValue: "Nom indisponible")),
+                        style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white),
+                        getDefaultTextForEmptyValue(person.name,
+                            defaultValue: "Nom indisponible")),
                     // Rôle.
                     subtitle: Text(
-                      style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white),
-                      getDefaultTextForEmptyValue(
-                          comic.person_credits?[index]?.role,
-                          defaultValue: "Rôle indisponible")),
+                        style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white),
+                        getDefaultTextForEmptyValue(
+                            comic.person_credits?[index]?.role,
+                            defaultValue: "Rôle indisponible")),
                   );
                 } else if (state is CharacterDetailNotifierErrorState) {
-                  // Tile d'erreur affichée en cas de problème.
-                  return const ListTile(
-                    leading: Icon(Icons.error),
-                    title: Text('Erreur de chargement'),
+                  return ErrorDisplayWidget(
+                    message:
+                        'La récupération de l\'auteur a échoué. Veuillez réessayer après avoir vérifié votre connexion internet.',
+                    onRetry: () {
+                      context
+                          .read<PersonDetailBloc>()
+                          .add(LoadPersonDetailEvent());
+                    },
+                    title: "Auteur : ",
                   );
                 } else {
                   return const SizedBox.shrink();

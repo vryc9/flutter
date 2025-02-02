@@ -4,6 +4,8 @@ import 'package:flutter_tp/model/character_api.dart';
 import 'package:flutter_tp/pages/bloc/charactersDetail_bloc.dart';
 import 'package:flutter_tp/utils/text_formatter_utils.dart';
 
+import 'error_widget.dart';
+
 // Contenu de l'onglet Personnages
 class TabCharacterDetailWidget extends StatelessWidget {
   final List<Character?>? character_credits;
@@ -64,9 +66,15 @@ class TabCharacterDetailWidget extends StatelessWidget {
                     );
                     // Tile d'erreur affichée en cas de problème.
                   } else if (state is CharacterDetailNotifierErrorState) {
-                    return const ListTile(
-                      leading: Icon(Icons.error),
-                      title: Text('Erreur de chargement'),
+                    return ErrorDisplayWidget(
+                      message:
+                          'La récupération du personnage a échoué. Veuillez réessayer après avoir vérifié votre connexion internet.',
+                      onRetry: () {
+                        context
+                            .read<CharacterDetailBloc>()
+                            .add(LoadCharacterDetailEvent());
+                      },
+                      title: "Personnage : ",
                     );
                   } else {
                     return const SizedBox.shrink();
@@ -78,7 +86,7 @@ class TabCharacterDetailWidget extends StatelessWidget {
     } else {
       return const Center(
         child: Text(
-          'Aucun personnages disponibles.',
+          'Aucun personnage disponible.',
           style: TextStyle(fontSize: 16, color: Colors.white),
         ),
       );
