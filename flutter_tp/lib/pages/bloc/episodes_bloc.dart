@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tp/api/model/response_api.dart';
 import 'package:flutter_tp/api/services/off_api.dart';
@@ -22,9 +25,15 @@ class EpisodesBloc extends Bloc<EpisodesEvent, EpisodesState> {
     try {
       final OFFServerResponseEpisodes? response =
           await OFFAPIManager().loadEpisodeList(event.id);
-      emit(EpisodesNotifierLSuccessState(response!));
+
+      if (response != null && response.status_code == 1) {
+        emit(EpisodesNotifierLSuccessState(response));
+      } else {
+        emit(
+            EpisodesNotifierErrorState(response?.error, response?.status_code));
+      }
     } catch (e) {
-      emit(EpisodesNotifierErrorState(e));
+      emit(EpisodesNotifierErrorState(e.toString(), 0));
     }
   }
 }
@@ -41,6 +50,7 @@ class EpisodesNotifierLSuccessState extends EpisodesState {
 
 class EpisodesNotifierErrorState extends EpisodesState {
   final dynamic error;
+  final int? statusCode;
 
-  EpisodesNotifierErrorState(this.error);
+  EpisodesNotifierErrorState(this.error, this.statusCode);
 }
