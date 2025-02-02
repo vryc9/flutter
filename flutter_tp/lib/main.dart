@@ -6,9 +6,10 @@ import 'package:flutter_tp/pages/bloc/charactersSearchList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/comicsDetail_bloc.dart';
 import 'package:flutter_tp/pages/bloc/comicsList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/comicsSearchList_bloc.dart';
+import 'package:flutter_tp/pages/bloc/moviesDetail_bloc.dart';
+import 'package:flutter_tp/pages/bloc/moviesList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/moviesSearchList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/serieDetail_bloc.dart';
-import 'package:flutter_tp/pages/bloc/serie_bloc.dart';
 import 'package:flutter_tp/pages/bloc/seriesList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/seriesSearchList_bloc.dart';
 import 'package:flutter_tp/pages/content_detail_page.dart';
@@ -17,8 +18,6 @@ import 'package:flutter_tp/pages/home_screen.dart';
 import 'package:flutter_tp/res/app_colors.dart';
 import 'package:flutter_tp/widgets/navbar.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-import 'pages/bloc/moviesList_bloc.dart';
 
 void main() {
   runApp(
@@ -56,6 +55,9 @@ void main() {
         ),
         BlocProvider(
           create: (_) => SerieDetailBloc(""),
+        ),
+        BlocProvider(
+          create: (_) => MovieDetailBloc(""),
         ),
       ],
       child: const MyApp(),

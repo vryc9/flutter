@@ -11,11 +11,9 @@
 
 ## Infos
 
+- Nous avons retiré tous les .g.dart du projet. Il faudra donc build le projet pour les générer avant de le lancer.
+
 - la clé d'api utilisée est située ligne 126 à 133 de flutter/flutter_tp/lib/api/services/off_api.dart. il y a nos 4 api-key.
-  - la clé de Romain est utilisée pour l'appel aux personnages par id.
-  - la clé de Enzo est utilisée pour l'appel aux listes de personnage, films, séries, comics et épisodes.
-  - la clé de Léane est utilisée pour l'appel aux recherches de personnages, films, séries et comics.
-  - la clé de Quentin est utilisée pour l'appel aux films, séries, comics, personne par id.
 
 ---
 

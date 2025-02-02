@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -52,6 +51,7 @@ class ComicDetailTabs extends StatelessWidget {
                 ),
               ),
             ),
+            // Filtre sombre par dessus l'image.
             Positioned.fill(
               child: Container(
                 color: AppColors.screenBackground.withOpacity(0.7),
@@ -68,6 +68,7 @@ class ComicDetailTabs extends StatelessWidget {
                         floating: true,
                         backgroundColor: Colors.transparent,
                         elevation: 0,
+                        // Bouton de retour vers la page précédente.
                         leading: IconButton(
                           icon: SvgPicture.asset(
                             AppVectorialImages.icBack,
@@ -77,9 +78,10 @@ class ComicDetailTabs extends StatelessWidget {
                             Navigator.pop(context);
                           },
                         ),
+                        // Volume.
                         title: Text(
-                          getDefaultTextForEmptyValue(comic.name,
-                              defaultValue: "Nom indisponible"),
+                          getDefaultTextForEmptyValue(comic.volume?.name,
+                              defaultValue: "Volume indisponible"),
                           style: const TextStyle(
                             fontSize: 17,
                             fontWeight: FontWeight.bold,
@@ -103,6 +105,7 @@ class ComicDetailTabs extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
                                         children: [
+                                          // Image avec broken_image si erreur.
                                           ClipRRect(
                                             borderRadius:
                                                 const BorderRadius.only(
@@ -145,21 +148,7 @@ class ComicDetailTabs extends StatelessWidget {
                                                   CrossAxisAlignment.start,
                                               mainAxisSize: MainAxisSize.min,
                                               children: [
-                                                Text(
-                                                  getDefaultTextForEmptyValue(
-                                                      comic.volume?.name,
-                                                      defaultValue:
-                                                          "Volume indisponible"),
-                                                  style: const TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 17.0,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                  maxLines: 2,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                ),
-                                                const SizedBox(height: 10.0),
+                                                // Nom.
                                                 Text(
                                                   getDefaultTextForEmptyValue(
                                                       comic.name,
@@ -175,6 +164,7 @@ class ComicDetailTabs extends StatelessWidget {
                                                       TextOverflow.ellipsis,
                                                 ),
                                                 const SizedBox(height: 22.0),
+                                                //  Numéro du comic.
                                                 Row(
                                                   children: [
                                                     SvgPicture.asset(
@@ -198,6 +188,7 @@ class ComicDetailTabs extends StatelessWidget {
                                                   ],
                                                 ),
                                                 const SizedBox(height: 10.0),
+                                                // Date.
                                                 Row(
                                                   children: [
                                                     SvgPicture.asset(
@@ -235,6 +226,7 @@ class ComicDetailTabs extends StatelessWidget {
                             ),
                           ),
                         ),
+                        // Onglets
                         bottom: const TabBar(
                           dividerColor: Colors.transparent,
                           labelColor: Colors.white,
@@ -259,6 +251,7 @@ class ComicDetailTabs extends StatelessWidget {
                         ),
                       ),
                     ],
+                    // Contenu des onglets.
                     body: ClipRRect(
                       borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(20),
@@ -268,8 +261,11 @@ class ComicDetailTabs extends StatelessWidget {
                         color: AppColors.cardBackground,
                         child: TabBarView(
                           children: [
+                            // Contenu de l'onglet Histoire.
                             _buildStoryTab(),
+                            // Contenu de l'onglet Auteurs.
                             _buildAuthorsTab(),
+                            // Contenu de l'onglet Personnages.
                             TabCharacterDetailWidget(
                                 character_credits: comic.character_credits),
                           ],
@@ -286,6 +282,7 @@ class ComicDetailTabs extends StatelessWidget {
     );
   }
 
+  // Contenu de l'onglet Histoire.
   Widget _buildStoryTab() {
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -295,6 +292,7 @@ class ComicDetailTabs extends StatelessWidget {
     );
   }
 
+  // Contenu de l'onglet Auteur.
   Widget _buildAuthorsTab() {
     return ListView.builder(
       itemCount: comic.person_credits?.length,
@@ -313,28 +311,32 @@ class ComicDetailTabs extends StatelessWidget {
                 } else if (state is PersonDetailNotifierSuccessState) {
                   final person = state.person!;
                   return ListTile(
+                    // Image.
                     leading: CircleAvatar(
                       backgroundImage: NetworkImage(person.image!.thumb_url!),
                       onBackgroundImageError: (_, __) =>
                           const Icon(Icons.broken_image_rounded),
                     ),
+                    // Nom.
                     title: Text(
-                        style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white),
-                        getDefaultTextForEmptyValue(person.name,
-                            defaultValue: "Nom indisponible")),
+                      style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white),
+                      getDefaultTextForEmptyValue(person.name,
+                          defaultValue: "Nom indisponible")),
+                    // Rôle.
                     subtitle: Text(
-                        style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white),
-                        getDefaultTextForEmptyValue(
-                            comic.person_credits?[index]?.role,
-                            defaultValue: "Rôle indisponible")),
+                      style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white),
+                      getDefaultTextForEmptyValue(
+                          comic.person_credits?[index]?.role,
+                          defaultValue: "Rôle indisponible")),
                   );
                 } else if (state is CharacterDetailNotifierErrorState) {
+                  // Tile d'erreur affichée en cas de problème.
                   return const ListTile(
                     leading: Icon(Icons.error),
                     title: Text('Erreur de chargement'),

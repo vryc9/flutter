@@ -2,15 +2,15 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_tp/model/movie_api.dart';
 import 'package:flutter_tp/res/app_colors.dart';
 import 'package:flutter_tp/res/app_svg.dart';
 import 'package:flutter_tp/utils/date_format.dart';
 import 'package:flutter_tp/utils/text_formatter_utils.dart';
+import 'package:flutter_tp/widgets/histoire_detail.dart';
 import 'package:flutter_tp/widgets/tab_character_detail.dart';
 
-import '../../model/movie_api.dart';
-import '../../widgets/histoire_detail.dart';
-
+// Détail tab de movie.
 class MovieDetailTabs extends StatelessWidget {
   final Movie movie;
 
@@ -24,6 +24,7 @@ class MovieDetailTabs extends StatelessWidget {
         extendBodyBehindAppBar: true,
         body: Stack(
           children: [
+            // Image en fond avec broken_image en cas de problème.
             Positioned.fill(
               child: ImageFiltered(
                 imageFilter: ImageFilter.blur(sigmaX: 5, sigmaY: 5), 
@@ -48,6 +49,7 @@ class MovieDetailTabs extends StatelessWidget {
                 ),
               ),
             ),
+            // Filtre sombre par dessus l'image.
             Positioned.fill(
               child: Container(
                 color: AppColors.screenBackground.withOpacity(0.7),
@@ -64,6 +66,7 @@ class MovieDetailTabs extends StatelessWidget {
                         floating: true,
                         backgroundColor: Colors.transparent,
                         elevation: 0,
+                        // Bouton de retour vers la page précédente.
                         leading: IconButton(
                           icon: SvgPicture.asset(
                             AppVectorialImages.icBack,
@@ -73,6 +76,7 @@ class MovieDetailTabs extends StatelessWidget {
                             Navigator.pop(context);
                           },
                         ),
+                        // Nom.
                         title: Text(
                           getDefaultTextForEmptyValue(movie.name,
                               defaultValue: "Nom indisponible"),
@@ -99,6 +103,7 @@ class MovieDetailTabs extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
                                         children: [
+                                          // Image avec broken_image si erreur.
                                           ClipRRect(
                                             borderRadius:
                                                 const BorderRadius.only(
@@ -142,6 +147,7 @@ class MovieDetailTabs extends StatelessWidget {
                                               mainAxisSize: MainAxisSize.min,
                                               children: [
                                                 const SizedBox(height: 22.0),
+                                                // Durée.
                                                 Row(
                                                   children: [
                                                     SvgPicture.asset(
@@ -161,6 +167,7 @@ class MovieDetailTabs extends StatelessWidget {
                                                   ],
                                                 ),
                                                 const SizedBox(height: 7.6),
+                                                // Date.
                                                 Row(
                                                   children: [
                                                     SvgPicture.asset(
@@ -191,6 +198,7 @@ class MovieDetailTabs extends StatelessWidget {
                             ),
                           ),
                         ),
+                        // Onglets.
                         bottom: const TabBar(
                           dividerColor: Colors.transparent,
                           labelColor: Colors.white,
@@ -215,6 +223,7 @@ class MovieDetailTabs extends StatelessWidget {
                         ),
                       ),
                     ],
+                    // Contenu des onglets.
                     body: ClipRRect(
                       borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(20),
@@ -224,9 +233,12 @@ class MovieDetailTabs extends StatelessWidget {
                         color: AppColors.cardBackground,
                         child: TabBarView(
                           children: [
+                            // Contenu de l'onglet Histoire.
                             _buildStoryTab(),
+                            // Contenu de l'onglet Personnages.
                             TabCharacterDetailWidget(
                                 character_credits: movie.characters),
+                            // Contenu de l'onglet Infos.
                             _buildInfoTab(),
                           ],
                         ),
@@ -242,6 +254,7 @@ class MovieDetailTabs extends StatelessWidget {
     );
   }
 
+  // Contenu de l'onglet Histoire.
   Widget _buildStoryTab() {
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -251,10 +264,12 @@ class MovieDetailTabs extends StatelessWidget {
     );
   }
 
+  // Contenu de l'onglet Infos.
   Widget _buildInfoTab() {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: SingleChildScrollView(
+        // Cet onglet est un tableau. Chaque ligne est construite par _buildTableRow à qui on donne le contenu de chaque colonne.
         child: Table(
           border: TableBorder.all(color: Colors.transparent),
           children: [
@@ -266,6 +281,7 @@ class MovieDetailTabs extends StatelessWidget {
                 "Réalisateur",
                 getDefaultTextForEmptyValue(movie.distributor,
                     defaultValue: "Réalisateur indisponible")),
+            // Scénaristes : on récupère le nom de chaque scénaristes pour les afficher dans la 2ème colonne du tableau.
             _buildTableRow(
                 "Scénaristes",
                 (movie.writers != null && movie.writers!.isNotEmpty)
@@ -273,6 +289,7 @@ class MovieDetailTabs extends StatelessWidget {
                         .map((writers) => writers.name)
                         .join(", ")
                     : "Inconnus"),
+            // Producteurs : on récupère le nom de chaque producteurs pour les afficher dans la 2ème colonne du tableau.
             _buildTableRow(
                 "Producteurs",
                 (movie.producers != null && movie.producers!.isNotEmpty)
@@ -280,6 +297,7 @@ class MovieDetailTabs extends StatelessWidget {
                         .map((producers) => producers.name)
                         .join(", ")
                     : "Inconnus"),
+            // Studios : on récupère le nom de chaque studios pour les afficher dans la 2ème colonne du tableau.
             _buildTableRow(
                 "Studios",
                 (movie.studios != null && movie.studios!.isNotEmpty)
@@ -300,6 +318,7 @@ class MovieDetailTabs extends StatelessWidget {
     );
   }
 
+  // construit une ligne de tableau à 2 colonne.
   TableRow _buildTableRow(String title, String value) {
     return TableRow(
       children: [
