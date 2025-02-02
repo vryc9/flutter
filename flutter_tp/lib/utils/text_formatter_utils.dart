@@ -20,3 +20,22 @@ String formatMoney(String? amountStr) {
     return '$amount \$';
   }
 }
+
+String formatErreurMessage(int status_code, String message) {
+  switch (status_code) {
+    case 400: 
+      return "${message} Requête invalide : La requête envoyée est incorrecte.";
+    case 401: 
+      return "${message} Non autorisé : Votre API key est erronée.";
+    case 403: 
+      return "${message} Accès refusé : Votre clé d'API est bloquée.";
+    case 404: 
+      return "${message} Introuvable : La ressource demandée n'existe pas.";
+    case 500: 
+      return "${message} Erreur serveur : Une erreur interne s'est produite. Réessayez plus tard.";
+    case 503: 
+      return "${message} Service indisponible : Le service est temporairement indisponible.";
+    default:
+      return "${message} Problème de connexion internet : Veuillez réessayer après avoir vérifié votre connexion internet.";
+  }
+}
