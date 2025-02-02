@@ -26,9 +26,15 @@ class ComicsSearchListBloc extends Bloc<ComicsSearchListEvent, ComicsSearchListS
     try {
       final OFFServerResponseComics? response =
           await OFFAPIManager().searchComics(query);
+      if (response != null && response.status_code == 1) {
+        emit(ComicsSearchListNotifierSuccessState(response.results));
+      } else {
+        emit(
+            ComicsSearchListNotifierErrorState(response?.error, response?.status_code));
+      }
       emit(ComicsSearchListNotifierSuccessState(response!.results));
     } catch (e) {
-      emit(ComicsSearchListNotifierErrorState(e));
+      emit(ComicsSearchListNotifierErrorState(e, 0));
     }
   }
 }
@@ -46,7 +52,7 @@ class ComicsSearchListNotifierSuccessState extends ComicsSearchListState {
 
 class ComicsSearchListNotifierErrorState extends ComicsSearchListState {
   final dynamic error;
-
-  ComicsSearchListNotifierErrorState(this.error);
+  final int? statusCode;
+  ComicsSearchListNotifierErrorState(this.error, this.statusCode);
 
 }

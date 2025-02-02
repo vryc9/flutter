@@ -26,9 +26,15 @@ class ComicDetailBloc extends Bloc<ComicDetailEvent, ComicDetailState> {
     try {
       final OFFServerResponseComic? response =
           await OFFAPIManager().fetchComicById(comicId);
+      if (response != null && response.status_code == 1) {
+        emit(ComicDetailNotifierSuccessState(response.results));
+      } else {
+        emit(
+            ComicDetailNotifierErrorState(response?.error, response?.status_code));
+      }
       emit(ComicDetailNotifierSuccessState(response!.results));
     } catch (e) {
-      emit(ComicDetailNotifierErrorState(e));
+      emit(ComicDetailNotifierErrorState(e.toString(), 0));
     }
   }
 }
@@ -45,6 +51,6 @@ class ComicDetailNotifierSuccessState extends ComicDetailState {
 
 class ComicDetailNotifierErrorState extends ComicDetailState {
   final dynamic error;
-
-  ComicDetailNotifierErrorState(this.error);
+  final int? status_code;
+  ComicDetailNotifierErrorState(this.error, this.status_code);
 }

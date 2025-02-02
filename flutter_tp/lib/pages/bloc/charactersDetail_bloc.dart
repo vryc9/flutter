@@ -26,9 +26,14 @@ class CharacterDetailBloc extends Bloc<CharacterDetailEvent, CharacterDetailStat
     try {
       final OFFServerResponseCharacter? response =
           await OFFAPIManager().fetchCharacterById(characterId);
-      emit(CharacterDetailNotifierSuccessState(response!.results));
+      if (response != null && response.status_code == 1) {
+        emit(CharacterDetailNotifierSuccessState(response.results));
+      } else {
+        emit(
+            CharacterDetailNotifierErrorState(response?.error, response?.status_code));
+      }
     } catch (e) {
-      emit(CharacterDetailNotifierErrorState(e));
+      emit(CharacterDetailNotifierErrorState(e.toString(), 0));
     }
   }
 }
@@ -46,7 +51,7 @@ class CharacterDetailNotifierSuccessState extends CharacterDetailState {
 
 class CharacterDetailNotifierErrorState extends CharacterDetailState {
   final dynamic error;
-
-  CharacterDetailNotifierErrorState(this.error);
+  final int? status_code;
+  CharacterDetailNotifierErrorState(this.error, this.status_code);
 
 }
