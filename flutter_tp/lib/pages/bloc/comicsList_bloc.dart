@@ -19,9 +19,15 @@ class ComicsListBloc extends Bloc<ComicsListEvent, ComicsListState> {
     try {
       final OFFServerResponseComics? response =
           await OFFAPIManager().loadComicsList();
+      if (response != null && response.status_code == 1) {
+        emit(ComicsListNotifierLSuccessState(response));
+      } else {
+        emit(
+            ComicsListNotifierErrorState(response?.error, response?.status_code));
+      }
       emit(ComicsListNotifierLSuccessState(response!));
     } catch (e) {
-      emit(ComicsListNotifierErrorState(e));
+      emit(ComicsListNotifierErrorState(e.toString(), 0));
     }
   }
 }
@@ -38,6 +44,6 @@ class ComicsListNotifierLSuccessState extends ComicsListState {
 
 class ComicsListNotifierErrorState extends ComicsListState {
   final dynamic message;
-
-  ComicsListNotifierErrorState(this.message);
+  final int? statusCode;
+  ComicsListNotifierErrorState(this.message, this.statusCode);
 }

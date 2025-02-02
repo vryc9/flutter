@@ -19,9 +19,15 @@ class CharactersListBloc extends Bloc<CharactersListEvent, CharactersListState> 
     try {
       final OFFServerResponseCharacters? response =
           await OFFAPIManager().loadCharactersList();
+      if (response != null && response.status_code == 1) {
+        emit(CharactersListNotifierLSuccessState(response));
+      } else {
+        emit(
+            CharactersListNotifierErrorState(response?.error, response?.status_code));
+      }
       emit(CharactersListNotifierLSuccessState(response!));
     } catch (e) {
-      emit(CharactersListNotifierErrorState(e));
+      emit(CharactersListNotifierErrorState(e.toString(), 0));
     }
   }
 }
@@ -38,6 +44,6 @@ class CharactersListNotifierLSuccessState extends CharactersListState {
 
 class CharactersListNotifierErrorState extends CharactersListState {
   final dynamic message;
-
-  CharactersListNotifierErrorState(this.message);
+  final int? statusCode;
+  CharactersListNotifierErrorState(this.message, this.statusCode);
 }

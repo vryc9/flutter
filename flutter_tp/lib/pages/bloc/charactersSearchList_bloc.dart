@@ -26,9 +26,15 @@ class CharactersSearchListBloc extends Bloc<CharactersSearchListEvent, Character
     try {
       final OFFServerResponseCharacters? response =
           await OFFAPIManager().searchCharacters(query);
+      if (response != null && response.status_code == 1) {
+        emit(CharactersSearchListNotifierSuccessState(response.results));
+      } else {
+        emit(
+            CharactersSearchListNotifierErrorState(response?.error, response?.status_code));
+      }
       emit(CharactersSearchListNotifierSuccessState(response!.results));
     } catch (e) {
-      emit(CharactersSearchListNotifierErrorState(e));
+      emit(CharactersSearchListNotifierErrorState(e.toString(), 0));
     }
   }
 }
@@ -46,7 +52,7 @@ class CharactersSearchListNotifierSuccessState extends CharactersSearchListState
 
 class CharactersSearchListNotifierErrorState extends CharactersSearchListState {
   final dynamic error;
-
-  CharactersSearchListNotifierErrorState(this.error);
+  final int? statusCode;
+  CharactersSearchListNotifierErrorState(this.error, this.statusCode);
 
 }
