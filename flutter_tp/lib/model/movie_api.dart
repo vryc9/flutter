@@ -29,7 +29,7 @@ class Movie {
   final List<Person>? writers;
   @JsonKey(fromJson: _stringFromJson)
   final String? budget;
-  final List<Person>? distributor;
+  final String? distributor;
 
   Movie({
     this.name,

@@ -237,8 +237,8 @@ class SerieDetailTabs extends StatelessWidget {
                           ),
                           tabs: [
                             Tab(text: "Histoire"),
-                            Tab(text: "Auteurs"),
                             Tab(text: "Personnages"),
+                            Tab(text: "Episodes"),
                           ],
                           overlayColor:
                               WidgetStatePropertyAll(Colors.transparent),
@@ -256,9 +256,9 @@ class SerieDetailTabs extends StatelessWidget {
                         child: TabBarView(
                           children: [
                             _buildStoryTab(),
-                            _buildAuthorsTab(),
                             TabCharacterDetailWidget(
                                 character_credits: serie.characters),
+                            _buildStoryTab(),
                           ],
                         ),
                       ),

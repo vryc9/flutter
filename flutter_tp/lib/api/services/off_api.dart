@@ -123,7 +123,7 @@ class OFFAPIManager {
 
   final OFFAPI api;
   //léane
-  final String _apiKey = "8d2e74d3727e2c7edc9f8d43e96ba96a0ab6afaa";
+  final String _apiKey = "c6eabeb68c2dd781df0fc65806e8ed5ab839334c";
 
   OFFAPIManager._()
       : api = OFFAPI(

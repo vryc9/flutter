@@ -259,11 +259,8 @@ class MovieDetailTabs extends StatelessWidget {
                     defaultValue: "Classification indisponible")),
             _buildTableRow(
                 "Réalisateur",
-                (movie.distributor != null && movie.distributor!.isNotEmpty)
-                    ? movie.distributor!
-                        .map((distributor) => distributor.name)
-                        .join(", ")
-                    : "Inconnus"),
+                getDefaultTextForEmptyValue(movie.distributor,
+                    defaultValue: "Réalisateur indisponible")),
             _buildTableRow(
                 "Scénaristes",
                 (movie.writers != null && movie.writers!.isNotEmpty)
