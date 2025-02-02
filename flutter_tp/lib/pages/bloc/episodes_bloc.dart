@@ -4,21 +4,24 @@ import 'package:flutter_tp/api/services/off_api.dart';
 
 abstract class EpisodesEvent {}
 
-class LoadEpisodesEvent extends EpisodesEvent {}
+class LoadEpisodesEvent extends EpisodesEvent {
+  final String id;
+
+  LoadEpisodesEvent(this.id);
+}
 
 class EpisodesBloc extends Bloc<EpisodesEvent, EpisodesState> {
   EpisodesBloc() : super(EpisodesNotifierLoadingState()) {
     on<LoadEpisodesEvent>(_loadEpisodes);
-    add(LoadEpisodesEvent());
   }
 
   Future<void> _loadEpisodes(
-    EpisodesEvent event,
+    LoadEpisodesEvent event,
     Emitter<EpisodesState> emit,
   ) async {
     try {
       final OFFServerResponseEpisodes? response =
-          await OFFAPIManager().loadEpisodeList('1');
+          await OFFAPIManager().loadEpisodeList(event.id);
       emit(EpisodesNotifierLSuccessState(response!));
     } catch (e) {
       emit(EpisodesNotifierErrorState(e));

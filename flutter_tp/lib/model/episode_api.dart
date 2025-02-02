@@ -5,7 +5,7 @@ part 'episode_api.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class Episode {
-  final int? episode_number;
+  final String? episode_number;
   final String? name;
   final String? air_date;
   final ImageAPI? image;
