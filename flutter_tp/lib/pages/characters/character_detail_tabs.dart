@@ -8,6 +8,7 @@ import 'package:flutter_tp/utils/text_formatter_utils.dart';
 import '../../model/character_api.dart';
 import '../../widgets/histoire_detail.dart';
 
+// Détail tab de character.
 class CharacterDetailTabs extends StatelessWidget {
   final Character character;
 
@@ -20,6 +21,7 @@ class CharacterDetailTabs extends StatelessWidget {
       child: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
+          // Bouton retour vers la page précédente.
           leading: IconButton(
             icon: SvgPicture.asset(
               AppVectorialImages.icBack,    
@@ -29,6 +31,7 @@ class CharacterDetailTabs extends StatelessWidget {
               Navigator.pop(context);
             },
           ),
+          // Nom.
           title: Text(
             getDefaultTextForEmptyValue(character.name, defaultValue: "Nom indisponible"), 
             style: const TextStyle(
@@ -41,6 +44,7 @@ class CharacterDetailTabs extends StatelessWidget {
           elevation: 0,
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(kTextTabBarHeight),
+            // Opacité derrière les onglets.
             child: Container(
               decoration: BoxDecoration(
                 boxShadow: [
@@ -51,6 +55,7 @@ class CharacterDetailTabs extends StatelessWidget {
                   ),
                 ],
               ),
+              // Onglets.
               child: const TabBar(
                 labelColor: Colors.white,
                 unselectedLabelColor: Colors.grey,
@@ -77,6 +82,7 @@ class CharacterDetailTabs extends StatelessWidget {
         body: Stack(
           children: [
             Positioned.fill(
+              // Image en fond avec broken_image en cas de problème.
               child: Image.network(
                 character.image!.original_url!,
                 fit: BoxFit.cover,
@@ -97,6 +103,7 @@ class CharacterDetailTabs extends StatelessWidget {
                 },
               ),
             ),
+            // Filtre sombre par dessus l'image.
             Positioned.fill(
               child: Container(
                 color: AppColors.screenBackground.withOpacity(0.7),
@@ -106,6 +113,7 @@ class CharacterDetailTabs extends StatelessWidget {
               children: [
                 const SizedBox(height: kToolbarHeight + kTextTabBarHeight),
                 Expanded(
+                  // Contenu de onglets.
                   child: ClipRRect(
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(20),
@@ -115,7 +123,9 @@ class CharacterDetailTabs extends StatelessWidget {
                       color: AppColors.cardBackground,
                       child: TabBarView(
                         children: [
+                          // Contenu de l'onglet Histoire.
                           _buildStoryTab(),
+                          // Contenu de l'onglet Infos.
                           _buildInfoTab(),
                         ],
                       ),
@@ -130,8 +140,7 @@ class CharacterDetailTabs extends StatelessWidget {
     );
   }
 
-
-
+  // Contenu de l'onglet Histoire.
   Widget _buildStoryTab() {
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -141,10 +150,12 @@ class CharacterDetailTabs extends StatelessWidget {
     );
   }
 
+  // Contenu de l'onglet Infos.
   Widget _buildInfoTab() {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: SingleChildScrollView(
+        // Cet onglet est un tableau. Chaque ligne est construite par _buildTableRow à qui on donne le contenu de chaque colonne.
         child: Table(
           border: TableBorder.all(color: Colors.transparent),
           children: [
@@ -164,12 +175,14 @@ class CharacterDetailTabs extends StatelessWidget {
               "Éditeur",
               getDefaultTextForEmptyValue(character.publisher?.name, defaultValue: "Éditeur indisponible")
             ),
+            // Créateurs : on récupère le nom de chaque créateurs pour les afficher dans la 2ème colonne du tableau.
             _buildTableRow(
               "Créateurs",
                 (character.creators != null && character.creators!.isNotEmpty)
                     ? character.creators!.map((creator) => creator.name).join(", ")
                     : "Inconnus",
             ),
+            // Genre : Homme = 1, Femme = 2.
             _buildTableRow(
               "Genre",
               (character.gender != null && character.gender! == 1)
@@ -179,8 +192,9 @@ class CharacterDetailTabs extends StatelessWidget {
             _buildTableRow(
               "Date de naissance", getDefaultTextForEmptyValue(formatDateDayMonthYear(character.birth)),
             ),
+            // Décès : on récupère le nom de chaque comic dans lequel le personnage est mort.
             _buildTableRow(
-              "Mort dans",
+              "Décès",
                 (character.issues_died_in != null && character.issues_died_in!.isNotEmpty)
                     ? character.issues_died_in!.map((issue) => issue.name).join(", ")
                     : "N/A",
@@ -191,6 +205,7 @@ class CharacterDetailTabs extends StatelessWidget {
     );
   }
 
+  // construit une ligne de tableau à 2 colonne.
   TableRow _buildTableRow(String title, String value) {
     return TableRow(
       children: [

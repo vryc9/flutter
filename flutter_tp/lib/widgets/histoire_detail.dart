@@ -14,6 +14,7 @@ class HistoireDetailWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: SingleChildScrollView(
+        // Met en forme le HTML reçu.
         child: Html(
           data: content,
           style: {

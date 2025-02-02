@@ -5,6 +5,7 @@ import 'package:flutter_tp/model/character_api.dart';
 import '../pages/bloc/charactersDetail_bloc.dart';
 import '../utils/text_formatter_utils.dart';
 
+// Contenu de l'onglet Personnages
 class TabCharacterDetailWidget extends StatelessWidget {
   final List<Character?>? character_credits;
 
@@ -34,6 +35,7 @@ class TabCharacterDetailWidget extends StatelessWidget {
                   } else if (state is CharacterDetailNotifierSuccessState) {
                     final character = state.character!;
                     return GestureDetector(
+                      // On relie le clic de la tile au détail de character.
                       onTap: () {
                         Navigator.pushNamed(
                           context,
@@ -44,12 +46,14 @@ class TabCharacterDetailWidget extends StatelessWidget {
                         );
                       },
                       child: ListTile(
+                        // Image.
                         leading: CircleAvatar(
                           backgroundImage:
                               NetworkImage(character.image!.thumb_url!),
                           onBackgroundImageError: (_, __) =>
                               const Icon(Icons.broken_image_rounded),
                         ),
+                        // Nom.
                         title: Text(
                             style: const TextStyle(
                                 fontSize: 16,
@@ -59,6 +63,7 @@ class TabCharacterDetailWidget extends StatelessWidget {
                                 defaultValue: "Nom indisponible")),
                       ),
                     );
+                  // Tile d'erreur affichée en cas de problème.
                   } else if (state is CharacterDetailNotifierErrorState) {
                     return const ListTile(
                       leading: Icon(Icons.error),

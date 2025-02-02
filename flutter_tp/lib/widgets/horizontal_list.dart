@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tp/res/app_colors.dart';
 import 'package:flutter_tp/utils/text_formatter_utils.dart';
 
+// Widget de liste horizontale (accueil et recherche).
 class HorizontalListWidget extends StatelessWidget {
   final String title;
   final List<dynamic> items;
@@ -64,6 +65,7 @@ class HorizontalListWidget extends StatelessWidget {
                     ),
                   ],
                 ),
+                // Si on est sur la page home et que le type passé n'est pas character, on affiche le bouton voir plus et on le relie à la bonne liste en fonction du type.
                 if (page == 'home' && type != "character")
                   TextButton(
                     onPressed: () {
@@ -131,7 +133,7 @@ class HorizontalListWidget extends StatelessWidget {
                 itemCount: page == 'home' ? min(items.length, 5) : items.length,
                 itemBuilder: (context, index) {
                   final item = items[index];
-
+                  // On relie le clic sur la card en fonction du type passé pourqu'il renvoie sur le bon écran de détail.
                   switch (type) {
                     case 'character':
                       return GestureDetector(
@@ -219,6 +221,7 @@ class HorizontalListWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Image avec broken_image si erreur.
             ClipRRect(
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(10),
@@ -247,6 +250,7 @@ class HorizontalListWidget extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 12),
+            // Nom.
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
               child: Text(

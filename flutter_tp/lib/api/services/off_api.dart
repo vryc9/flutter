@@ -9,7 +9,7 @@ part 'off_api.g.dart';
 abstract class OFFAPI {
   factory OFFAPI(Dio dio, {required String baseUrl}) = _OFFAPI;
 
-// search
+//search
   @GET("/search/")
   Future<OFFServerResponseCharacters?> searchCharacters(
     @Query("api_key") String apiKey,
@@ -65,7 +65,7 @@ abstract class OFFAPI {
   Future<OFFServerResponseEpisodes?> loadEpisodesListById(
     @Query('api_key') String apiKey,
     @Query('format') String format,
-    @Query('filter') String filter, // Ajout du paramètre filter
+    @Query('filter') String filter,
   );
 
   @GET("/issues/")
@@ -155,7 +155,7 @@ class OFFAPIManager {
     }
   }
 
-  //Méthode pour rechercher des series
+  //Méthode pour rechercher des séries
   Future<OFFServerResponseSeries?> searchSeries(String query) async {
     try {
       return await api.searchSeries(_apiKeyLeane, "json", query, "100", "series");
@@ -168,7 +168,7 @@ class OFFAPIManager {
     }
   }
 
-  //Méthode pour rechercher des movies
+  //Méthode pour rechercher des films
   Future<OFFServerResponseMovies?> searchMovies(String query) async {
     try {
       return await api.searchMovies(_apiKeyLeane, "json", query, "100", "movie");
@@ -192,7 +192,7 @@ class OFFAPIManager {
     }
   }
 
-  //Méthode pour récupérer une liste de series
+  //Méthode pour récupérer une liste de séries
   Future<OFFServerResponseSeries?> loadSeriesList() async {
     try {
       return await api.loadSeriesList(_apiKeyEnzo, "json", "50");
@@ -204,7 +204,7 @@ class OFFAPIManager {
     }
   }
 
-  //Méthode pour récupérer une liste de movies
+  //Méthode pour récupérer une liste de films
   Future<OFFServerResponseMovies?> loadMoviesList() async {
     try {
       return await api.loadMoviesList(_apiKeyEnzo, "json", "50");
@@ -216,7 +216,7 @@ class OFFAPIManager {
     }
   }
 
-  //Méthode pour récupérer une liste d'épisodes
+  //Méthode pour récupérer une liste d'épisodes par ID de la série associée
   Future<OFFServerResponseEpisodes?> loadEpisodeList(String id) async {
     try {
       return await api.loadEpisodesListById(_apiKeyEnzo, "json", "series:$id");
@@ -240,7 +240,7 @@ class OFFAPIManager {
     }
   }
 
-  //Méthode pour récupérer une liste de characters
+  //Méthode pour récupérer une liste de personnages
   Future<OFFServerResponseCharacters?> loadCharactersList() async {
     try {
       return await api.loadCharactersList(_apiKeyEnzo, "json", "50");
@@ -277,7 +277,7 @@ class OFFAPIManager {
     }
   }
 
-  //Méthode pour récupérer une serie par ID
+  //Méthode pour récupérer une série par ID
   Future<OFFServerResponseSerie?> fetchSerieById(String serieId) async {
     try {
       return await api.getSerieById(serieId, _apiKeyQuentin, "json");
@@ -289,7 +289,7 @@ class OFFAPIManager {
     }
   }
 
-  //Méthode pour récupérer un movie par ID
+  //Méthode pour récupérer un film par ID
   Future<OFFServerResponseMovie?> fetchMovieById(String movieId) async {
     try {
       return await api.getMovieById(movieId, _apiKeyQuentin, "json");

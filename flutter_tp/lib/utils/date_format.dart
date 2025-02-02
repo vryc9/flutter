@@ -1,3 +1,4 @@
+// Formateur de date mois année.
 String formatDateMonthYear(String? date) {
   if (date == null) {
     return "Date inconnue";
@@ -28,6 +29,7 @@ String formatDateMonthYear(String? date) {
   }
 }
 
+// Formateur de date année.
 String formatDateYear(String? date) {
   if (date == null) {
     return "Date inconnue";
@@ -42,6 +44,7 @@ String formatDateYear(String? date) {
   }
 }
 
+// Formateur de date jour mois année.
 String formatDateDayMonthYear(String? date) {
   if (date == null) {
     return "Date inconnue";

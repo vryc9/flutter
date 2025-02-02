@@ -10,6 +10,7 @@ import 'package:flutter_tp/res/app_svg.dart';
 import 'package:flutter_tp/widgets/error_widget.dart';
 import 'package:flutter_tp/widgets/horizontal_list.dart';
 
+// Page de recherche.
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
 
@@ -31,7 +32,9 @@ class _SearchScreenState extends State<SearchScreen> {
     super.initState();
   }
 
+  // Méthode pour dire que les listes sont trouvées.
   Future<void> _makeInvisible() async {
+    // Attends 5 secondes avant de s'activer.
     await Future.delayed(const Duration(seconds: 5));
     setState(() {
       _isFoundedCharacter = true;
@@ -70,6 +73,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       padding: EdgeInsets.only(left: 4),
                       child: Align(
                         alignment: Alignment.centerLeft,
+                        // Titre.
                         child: Text(
                           'Recherche',
                           style: TextStyle(
@@ -81,6 +85,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       ),
                     ),
                     const SizedBox(height: 17),
+                    // Barre de recherche.
                     TextField(
                       controller: _searchController,
                       decoration: InputDecoration(
@@ -107,11 +112,13 @@ class _SearchScreenState extends State<SearchScreen> {
                         ),
                       ),
                       style: const TextStyle(color: Colors.white),
+                      // Quand un élément change dans la barre de rechercher, on dit que la recherche n'est pas lancée.
                       onChanged: (query) {
                         setState(() {
                           _isSearching = false;
                         });
                       },
+                      // Quand la touche entrée est enfoncée, on dit que la recherche est lancée et que les listes ne sont pas trouvées.
                       onSubmitted: (query) {
                         if (query.isNotEmpty) {
                           setState(() {
@@ -122,6 +129,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             _isFoundedMovie = false;
                             _query = query;
                           });
+                          // Appelé pour dire que les listes sont trouvées car nous n'avons pas réussi à le relié aux listes.
                           _makeInvisible();
                         }
                       },
@@ -130,6 +138,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 ),
               ),
 
+              // Quand la recherche n'est pas lancée, affiche le texte d'invitation à faire une recherche et un petit astronaute.
               if (!_isSearching)
                 Container(
                   margin: EdgeInsets.symmetric(vertical: marginHeight, horizontal: 8),
@@ -156,6 +165,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                         padding: EdgeInsets.only(top: 16.0, bottom: 16.0),
                                         child: SizedBox(
                                           width: 200,
+                                          // Texte avec les mots comics, film, série et personnage en gras.
                                           child: Text.rich(
                                             TextSpan(
                                               style: TextStyle(
@@ -197,6 +207,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           ],
                         ),
                       ),
+                      // Astronaute.
                       Positioned(
                         top: -35,
                         right: 15,
@@ -210,7 +221,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 ),
 
 
-
+              // Quand la recherche est lancée, affiche les listes de résultats quand elles sont trouvées.
               if (_isSearching) 
                 MultiBlocProvider(
                   providers: [
@@ -230,7 +241,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   child: Column(
                     children: [
                       const SizedBox(height: 32),
-                      // BlocBuilder pour les series
+                      // BlocBuilder pour les series. Appelle la liste générique horizontal list.
                       BlocBuilder<SeriesSearchListBloc, SeriesSearchListState>(
                         builder: (context, state) {
                           if (state is SeriesSearchListNotifierSuccessState) {
@@ -274,7 +285,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       ),
                       const SizedBox(height: 32),
 
-                      // BlocBuilder pour les comics
+                      // BlocBuilder pour les comics. Appelle la liste générique horizontal list.
                       BlocBuilder<ComicsSearchListBloc, ComicsSearchListState>(
                         builder: (context, state) {
                           if (state is ComicsSearchListNotifierSuccessState) {
@@ -318,7 +329,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       ),
                       const SizedBox(height: 32),
 
-                      // BlocBuilder pour les movies
+                      // BlocBuilder pour les movies. Appelle la liste générique horizontal list.
                       BlocBuilder<MoviesSearchListBloc, MoviesSearchListState>(
                         builder: (context, state) {
                           if (state is MoviesSearchListNotifierSuccessState) {
@@ -362,7 +373,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       ),
                       const SizedBox(height: 32),
 
-                      // BlocBuilder pour les personnages
+                      // BlocBuilder pour les personnages. Appelle la liste générique horizontal list.
                       BlocBuilder<CharactersSearchListBloc, CharactersSearchListState>(
                         builder: (context, state) {
                           if (state is CharactersSearchListNotifierSuccessState) {
@@ -409,6 +420,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                 ),
               
+              // Quand la recherche est lancée, affiche le petit astronaute avec le texte de recherche en cours. N'est affiché que si les listes ne sont pas trouvées.
               if (_isSearching)
                 Visibility(
                   visible: !_isFoundedCharacter & !_isFoundedComic & !_isFoundedSerie & !_isFoundedMovie,
@@ -433,6 +445,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                       padding: EdgeInsets.only(top: 60.0, left: 120.0),
                                       child: SizedBox(
                                         width: 150,
+                                        // Texte.
                                         child: Text(
                                           'Recherche en cours, Merci de patienter...',
                                           style: TextStyle(
@@ -449,6 +462,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             ],
                           ),
                         ),
+                        // Astronaute.
                         Positioned(
                           top: -150,
                           right: 125,
