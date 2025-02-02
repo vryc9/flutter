@@ -4,9 +4,9 @@ String getDefaultTextForEmptyValue(String? value,
 }
 
 String formatMoney(String? amountStr) {
-  if (amountStr == null) return "Montant Indisponible";
+  if (amountStr == null) return "Montant indisponible";
   int? amount = int.tryParse(amountStr);
-  if (amount == null) return 'Montant Indisponible';
+  if (amount == null) return 'Montant indisponible';
 
   if (amount >= 1000000000) {
     return '${(amount / 1000000000).toStringAsFixed(0)} milliards \$';

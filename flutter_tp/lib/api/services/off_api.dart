@@ -122,8 +122,15 @@ class OFFAPIManager {
   }
 
   final OFFAPI api;
-  //léane
-  final String _apiKey = "c6eabeb68c2dd781df0fc65806e8ed5ab839334c";
+
+  //Léane
+  final String _apiKeyLeane = "8d2e74d3727e2c7edc9f8d43e96ba96a0ab6afaa";
+  //Enzo
+  final String _apiKeyEnzo = "c6eabeb68c2dd781df0fc65806e8ed5ab839334c";
+  //Quentin
+  final String _apiKeyQuentin = "c59a60b10940ab69ff1eb977eee60abe38d1f936";
+  //Romain
+  final String _apiKeyRomain = "9c4f2dc1521fcc94e7bf5bfc8d03cf8887eeacae";
 
   OFFAPIManager._()
       : api = OFFAPI(
@@ -138,7 +145,7 @@ class OFFAPIManager {
   Future<OFFServerResponseCharacters?> searchCharacters(String query) async {
     try {
       return await api.searchCharacters(
-          _apiKey, "json", query, "100", "character");
+          _apiKeyLeane, "json", query, "100", "character");
     } catch (e) {
       if (kDebugMode) {
         print(
@@ -151,7 +158,7 @@ class OFFAPIManager {
   //Méthode pour rechercher des series
   Future<OFFServerResponseSeries?> searchSeries(String query) async {
     try {
-      return await api.searchSeries(_apiKey, "json", query, "100", "series");
+      return await api.searchSeries(_apiKeyLeane, "json", query, "100", "series");
     } catch (e) {
       if (kDebugMode) {
         print(
@@ -164,7 +171,7 @@ class OFFAPIManager {
   //Méthode pour rechercher des movies
   Future<OFFServerResponseMovies?> searchMovies(String query) async {
     try {
-      return await api.searchMovies(_apiKey, "json", query, "100", "movie");
+      return await api.searchMovies(_apiKeyLeane, "json", query, "100", "movie");
     } catch (e) {
       if (kDebugMode) {
         print("Erreur lors de la récupération de la recherche des movies : $e");
@@ -176,7 +183,7 @@ class OFFAPIManager {
   //Méthode pour rechercher des comics
   Future<OFFServerResponseComics?> searchComics(String query) async {
     try {
-      return await api.searchComics(_apiKey, "json", query, "100", "issue");
+      return await api.searchComics(_apiKeyLeane, "json", query, "100", "issue");
     } catch (e) {
       if (kDebugMode) {
         print("Erreur lors de la récupération de la recherche des comics : $e");
@@ -188,7 +195,7 @@ class OFFAPIManager {
   //Méthode pour récupérer une liste de series
   Future<OFFServerResponseSeries?> loadSeriesList() async {
     try {
-      return await api.loadSeriesList(_apiKey, "json", "50");
+      return await api.loadSeriesList(_apiKeyEnzo, "json", "50");
     } catch (e) {
       if (kDebugMode) {
         print("Erreur lors de la récupération des series : $e");
@@ -200,7 +207,7 @@ class OFFAPIManager {
   //Méthode pour récupérer une liste de movies
   Future<OFFServerResponseMovies?> loadMoviesList() async {
     try {
-      return await api.loadMoviesList(_apiKey, "json", "50");
+      return await api.loadMoviesList(_apiKeyEnzo, "json", "50");
     } catch (e) {
       if (kDebugMode) {
         print("Erreur lors de la récupération des movies : $e");
@@ -212,7 +219,7 @@ class OFFAPIManager {
   //Méthode pour récupérer une liste d'épisodes
   Future<OFFServerResponseEpisodes?> loadEpisodeList(String id) async {
     try {
-      return await api.loadEpisodesList(id, _apiKey, "json");
+      return await api.loadEpisodesList(id, _apiKeyEnzo, "json");
     } catch (e) {
       if (kDebugMode) {
         print("Erreur lors de la récupération des episodes : $e");
@@ -224,7 +231,7 @@ class OFFAPIManager {
   //Méthode pour récupérer une liste de comics
   Future<OFFServerResponseComics?> loadComicsList() async {
     try {
-      return await api.loadComicsList(_apiKey, "json", "50");
+      return await api.loadComicsList(_apiKeyEnzo, "json", "50");
     } catch (e) {
       if (kDebugMode) {
         print("Erreur lors de la récupération des comics : $e");
@@ -236,7 +243,7 @@ class OFFAPIManager {
   //Méthode pour récupérer une liste de characters
   Future<OFFServerResponseCharacters?> loadCharactersList() async {
     try {
-      return await api.loadCharactersList(_apiKey, "json", "50");
+      return await api.loadCharactersList(_apiKeyEnzo, "json", "50");
     } catch (e) {
       if (kDebugMode) {
         print("Erreur lors de la récupération des characters : $e");
@@ -248,7 +255,7 @@ class OFFAPIManager {
   //Méthode pour récupérer un comic par ID
   Future<OFFServerResponseComic?> fetchComicById(String comicId) async {
     try {
-      return await api.getComicById(comicId, _apiKey, "json");
+      return await api.getComicById(comicId, _apiKeyQuentin, "json");
     } catch (e) {
       if (kDebugMode) {
         print("Erreur lors de la récupération du comic : $e");
@@ -261,7 +268,7 @@ class OFFAPIManager {
   Future<OFFServerResponseCharacter?> fetchCharacterById(
       String characterId) async {
     try {
-      return await api.getCharacterById(characterId, _apiKey, "json");
+      return await api.getCharacterById(characterId, _apiKeyRomain, "json");
     } catch (e) {
       if (kDebugMode) {
         print("Erreur lors de la récupération du personnage : $e");
@@ -273,7 +280,7 @@ class OFFAPIManager {
   //Méthode pour récupérer une serie par ID
   Future<OFFServerResponseSerie?> fetchSerieById(String serieId) async {
     try {
-      return await api.getSerieById(serieId, _apiKey, "json");
+      return await api.getSerieById(serieId, _apiKeyQuentin, "json");
     } catch (e) {
       if (kDebugMode) {
         print("Erreur lors de la récupération de la serie : $e");
@@ -285,7 +292,7 @@ class OFFAPIManager {
   //Méthode pour récupérer un movie par ID
   Future<OFFServerResponseMovie?> fetchMovieById(String movieId) async {
     try {
-      return await api.getMovieById(movieId, _apiKey, "json");
+      return await api.getMovieById(movieId, _apiKeyQuentin, "json");
     } catch (e) {
       if (kDebugMode) {
         print("Erreur lors de la récupération du movie : $e");
@@ -297,7 +304,7 @@ class OFFAPIManager {
   //Méthode pour récupérer une personne par ID
   Future<OFFServerResponsePerson?> fetchPersonById(String personId) async {
     try {
-      return await api.getPersonById(personId, _apiKey, "json");
+      return await api.getPersonById(personId, _apiKeyQuentin, "json");
     } catch (e) {
       if (kDebugMode) {
         print("Erreur lors de la récupération de la personne : $e");

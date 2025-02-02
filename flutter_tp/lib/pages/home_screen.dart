@@ -115,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               return const SizedBox.shrink();
                             },
                           ),
-                          const SizedBox(height: 20),
+                          const SizedBox(height: 5),
 
                           // BlocBuilder pour les comics
                           BlocBuilder<ComicsListBloc, ComicsListState>(
@@ -161,7 +161,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               return const SizedBox.shrink();
                             },
                           ),
-                          const SizedBox(height: 32),
+                          const SizedBox(height: 5),
 
                           // BlocBuilder pour les films
                           BlocBuilder<MoviesListBloc, MoviesListState>(
@@ -207,7 +207,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               return const SizedBox.shrink();
                             },
                           ),
-                          const SizedBox(height: 32),
+                          const SizedBox(height: 5),
 
                           // BlocBuilder pour les Characters
                           BlocBuilder<CharactersListBloc, CharactersListState>(

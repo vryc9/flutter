@@ -143,13 +143,13 @@ class MovieDetailTabs extends StatelessWidget {
                                                       AppVectorialImages.navbarMovies,
                                                       height: 12.0,
                                                       colorFilter: const ColorFilter.mode(
-                                                          AppColors.iconsList, BlendMode.srcIn),
+                                                          Colors.white, BlendMode.srcIn),
                                                     ),
                                                     const SizedBox(width: 8.0),
                                                     Text(
                                                       '${getDefaultTextForEmptyValue(movie.runtime, defaultValue: "Durée indisponible")} minutes',
                                                       style: const TextStyle(
-                                                        color: Colors.white60,
+                                                        color: Colors.white,
                                                         fontSize: 12.0,
                                                       ),
                                                     ),
@@ -162,13 +162,13 @@ class MovieDetailTabs extends StatelessWidget {
                                                       AppVectorialImages.icCalendarBicolor,
                                                       height: 15.0,
                                                       colorFilter: const ColorFilter.mode(
-                                                          AppColors.iconsList, BlendMode.srcIn),
+                                                          Colors.white, BlendMode.srcIn),
                                                     ),
                                                     const SizedBox(width: 8.0),
                                                     Text(
                                                       getDefaultTextForEmptyValue(formatDateYear(movie.date_added)),
                                                       style: const TextStyle(
-                                                        color: Colors.white60,
+                                                        color: Colors.white,
                                                         fontSize: 12.0,
                                                       ),
                                                     ),
