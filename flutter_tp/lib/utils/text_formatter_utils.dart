@@ -31,6 +31,8 @@ String formatErreurMessage(int status_code, String message) {
       return "${message} Accès refusé : Votre clé d'API est bloquée.";
     case 404: 
       return "${message} Introuvable : La ressource demandée n'existe pas.";
+    case 420: 
+      return "${message} Ralentissez : Trop de requête en une seconde.";
     case 500: 
       return "${message} Erreur serveur : Une erreur interne s'est produite. Réessayez plus tard.";
     case 503: 
