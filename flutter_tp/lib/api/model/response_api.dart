@@ -86,7 +86,7 @@ class OFFServerResponseCharacters {
 //comic
 @JsonSerializable(explicitToJson: true)
 class OFFServerResponseComic {
-  final Comic results;
+  final Comic? results;
   final String error;
   final int status_code;
 
@@ -101,7 +101,7 @@ class OFFServerResponseComic {
 //character
 @JsonSerializable(explicitToJson: true)
 class OFFServerResponseCharacter {
-  final Character results;
+  final Character? results;
   final String error;
   final int status_code;
 
@@ -116,15 +116,11 @@ class OFFServerResponseCharacter {
 //serie
 @JsonSerializable(explicitToJson: true)
 class OFFServerResponseSerie {
-  final Serie results;
+  final Serie? results;
   final String error;
   final int status_code;
 
-  OFFServerResponseSerie(
-    this.results,
-    this.error,
-    this.status_code
-  );
+  OFFServerResponseSerie(this.results, this.error, this.status_code);
 
   factory OFFServerResponseSerie.fromJson(Map<String, dynamic> json) =>
       _$OFFServerResponseSerieFromJson(json);
@@ -135,15 +131,11 @@ class OFFServerResponseSerie {
 //movie
 @JsonSerializable(explicitToJson: true)
 class OFFServerResponseMovie {
-  final Movie results;
+  final Movie? results;
   final String error;
   final int status_code;
 
-  OFFServerResponseMovie(
-    this.results,
-    this.error,
-    this.status_code
-  );
+  OFFServerResponseMovie(this.results, this.error, this.status_code);
 
   factory OFFServerResponseMovie.fromJson(Map<String, dynamic> json) =>
       _$OFFServerResponseMovieFromJson(json);
@@ -154,15 +146,11 @@ class OFFServerResponseMovie {
 //person
 @JsonSerializable(explicitToJson: true)
 class OFFServerResponsePerson {
-  final Person results;
+  final Person? results;
   final String error;
   final int status_code;
 
-  OFFServerResponsePerson(
-    this.results,
-    this.error,
-    this.status_code
-  );
+  OFFServerResponsePerson(this.results, this.error, this.status_code);
 
   factory OFFServerResponsePerson.fromJson(Map<String, dynamic> json) =>
       _$OFFServerResponsePersonFromJson(json);

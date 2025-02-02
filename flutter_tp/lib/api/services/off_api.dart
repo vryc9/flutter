@@ -146,52 +146,53 @@ class OFFAPIManager {
     try {
       return await api.searchCharacters(
           _apiKey, "json", query, "100", "character");
-    } catch (e) {
+    } on DioException catch (e) {
       if (kDebugMode) {
         print(
             "Erreur lors de la récupération de la recherche du personnage : $e");
       }
-      return null;
+      return OFFServerResponseCharacters(
+          [], e.message ?? "Erreur inconnue", e.response?.statusCode ?? 0);
     }
   }
 
   //Méthode pour rechercher des séries
   Future<OFFServerResponseSeries?> searchSeries(String query) async {
     try {
-      return await api.searchSeries(
-          _apiKey, "json", query, "100", "series");
-    } catch (e) {
+      return await api.searchSeries(_apiKey, "json", query, "100", "series");
+    } on DioException catch (e) {
       if (kDebugMode) {
         print(
             "Erreur lors de la récupération de la recherche de la series : $e");
       }
-      return null;
+      return OFFServerResponseSeries(
+          [], e.message ?? "Erreur inconnue", e.response?.statusCode ?? 0);
     }
   }
 
   //Méthode pour rechercher des films
   Future<OFFServerResponseMovies?> searchMovies(String query) async {
     try {
-      return await api.searchMovies(
-          _apiKey, "json", query, "100", "movie");
-    } catch (e) {
+      return await api.searchMovies(_apiKey, "json", query, "100", "movie");
+    } on DioException catch (e) {
       if (kDebugMode) {
         print("Erreur lors de la récupération de la recherche des movies : $e");
       }
-      return null;
+      return OFFServerResponseMovies(
+          [], e.message ?? "Erreur inconnue", e.response?.statusCode ?? 0);
     }
   }
 
   //Méthode pour rechercher des comics
   Future<OFFServerResponseComics?> searchComics(String query) async {
     try {
-      return await api.searchComics(
-          _apiKey, "json", query, "100", "issue");
-    } catch (e) {
+      return await api.searchComics(_apiKey, "json", query, "100", "issue");
+    } on DioException catch (e) {
       if (kDebugMode) {
         print("Erreur lors de la récupération de la recherche des comics : $e");
       }
-      return null;
+      return OFFServerResponseComics(
+          [], e.message ?? "Erreur inconnue", e.response?.statusCode ?? 0);
     }
   }
 
@@ -199,11 +200,12 @@ class OFFAPIManager {
   Future<OFFServerResponseSeries?> loadSeriesList() async {
     try {
       return await api.loadSeriesList(_apiKey, "json", "50");
-    } catch (e) {
+    } on DioException catch (e) {
       if (kDebugMode) {
         print("Erreur lors de la récupération des series : $e");
       }
-      return null;
+      return OFFServerResponseSeries(
+          [], e.message ?? "Erreur inconnue", e.response?.statusCode ?? 0);
     }
   }
 
@@ -211,11 +213,12 @@ class OFFAPIManager {
   Future<OFFServerResponseMovies?> loadMoviesList() async {
     try {
       return await api.loadMoviesList(_apiKey, "json", "50");
-    } catch (e) {
+    } on DioException catch (e) {
       if (kDebugMode) {
         print("Erreur lors de la récupération des movies : $e");
       }
-      return null;
+      return OFFServerResponseMovies(
+          [], e.message ?? "Erreur inconnue", e.response?.statusCode ?? 0);
     }
   }
 
@@ -237,11 +240,12 @@ class OFFAPIManager {
   Future<OFFServerResponseComics?> loadComicsList() async {
     try {
       return await api.loadComicsList(_apiKey, "json", "50");
-    } catch (e) {
+    } on DioException catch (e) {
       if (kDebugMode) {
         print("Erreur lors de la récupération des comics : $e");
       }
-      return null;
+      return OFFServerResponseComics(
+          [], e.message ?? "Erreur inconnue", e.response?.statusCode ?? 0);
     }
   }
 
@@ -249,11 +253,12 @@ class OFFAPIManager {
   Future<OFFServerResponseCharacters?> loadCharactersList() async {
     try {
       return await api.loadCharactersList(_apiKey, "json", "50");
-    } catch (e) {
+    } on DioException catch (e) {
       if (kDebugMode) {
         print("Erreur lors de la récupération des characters : $e");
       }
-      return null;
+      return OFFServerResponseCharacters(
+          [], e.message ?? "Erreur inconnue", e.response?.statusCode ?? 0);
     }
   }
 
@@ -261,11 +266,12 @@ class OFFAPIManager {
   Future<OFFServerResponseComic?> fetchComicById(String comicId) async {
     try {
       return await api.getComicById(comicId, _apiKey, "json");
-    } catch (e) {
+    } on DioException catch (e) {
       if (kDebugMode) {
         print("Erreur lors de la récupération du comic : $e");
       }
-      return null;
+      return OFFServerResponseComic(
+          null, e.message ?? "Erreur inconnue", e.response?.statusCode ?? 0);
     }
   }
 
@@ -274,11 +280,12 @@ class OFFAPIManager {
       String characterId) async {
     try {
       return await api.getCharacterById(characterId, _apiKey, "json");
-    } catch (e) {
+    } on DioException catch (e) {
       if (kDebugMode) {
         print("Erreur lors de la récupération du personnage : $e");
       }
-      return null;
+      return OFFServerResponseCharacter(
+          null, e.message ?? "Erreur inconnue", e.response?.statusCode ?? 0);
     }
   }
 
@@ -286,11 +293,12 @@ class OFFAPIManager {
   Future<OFFServerResponseSerie?> fetchSerieById(String serieId) async {
     try {
       return await api.getSerieById(serieId, _apiKey, "json");
-    } catch (e) {
+    } on DioException catch (e) {
       if (kDebugMode) {
         print("Erreur lors de la récupération de la serie : $e");
       }
-      return null;
+      return OFFServerResponseSerie(
+          null, e.message ?? "Erreur inconnue", e.response?.statusCode ?? 0);
     }
   }
 
@@ -298,11 +306,12 @@ class OFFAPIManager {
   Future<OFFServerResponseMovie?> fetchMovieById(String movieId) async {
     try {
       return await api.getMovieById(movieId, _apiKey, "json");
-    } catch (e) {
+    } on DioException catch (e) {
       if (kDebugMode) {
         print("Erreur lors de la récupération du movie : $e");
       }
-      return null;
+      return OFFServerResponseMovie(
+          null, e.message ?? "Erreur inconnue", e.response?.statusCode ?? 0);
     }
   }
 
@@ -310,11 +319,12 @@ class OFFAPIManager {
   Future<OFFServerResponsePerson?> fetchPersonById(String personId) async {
     try {
       return await api.getPersonById(personId, _apiKey, "json");
-    } catch (e) {
+    } on DioException catch (e) {
       if (kDebugMode) {
         print("Erreur lors de la récupération de la personne : $e");
       }
-      return null;
+      return OFFServerResponsePerson(
+          null, e.message ?? "Erreur inconnue", e.response?.statusCode ?? 0);
     }
   }
 }
