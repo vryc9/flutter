@@ -29,6 +29,7 @@ class _MainNavigationBarState extends State<MainNavigationBar> {
     _currentIndex = widget.initialIndex;
   }
 
+  // Liste des pages
   static const List<Widget> _pages = [
     HomeScreen(),
     GenericListScreen(type: "comic"),
@@ -37,6 +38,7 @@ class _MainNavigationBarState extends State<MainNavigationBar> {
     SearchScreen(),
   ];
 
+  // Liste des icone
   static const List<String> _svgIcons = [
     AppVectorialImages.navbarHome,
     AppVectorialImages.navbarComics,
@@ -45,6 +47,7 @@ class _MainNavigationBarState extends State<MainNavigationBar> {
     AppVectorialImages.navbarSearch,
   ];
 
+  // Liste des labels de la navbar
   static const List<String> _labels = [
     "Accueil",
     "Comics",
@@ -53,6 +56,7 @@ class _MainNavigationBarState extends State<MainNavigationBar> {
     "Recherche",
   ];
 
+  // Fonction pour changer de page
   void _onItemTapped(int index) {
     if (widget.child != null) {
       Navigator.pushReplacement(
@@ -82,6 +86,7 @@ class _MainNavigationBarState extends State<MainNavigationBar> {
     );
   }
 
+  // Création de la navbar
   Widget _buildBottomNavigationBar() {
     return SafeArea(
       child: Container(
@@ -111,6 +116,7 @@ class _MainNavigationBarState extends State<MainNavigationBar> {
   }
 }
 
+//Item de la navbar
 class _NavItem extends StatelessWidget {
   final String iconPath;
   final String label;
