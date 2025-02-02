@@ -7,7 +7,7 @@ import 'package:flutter_tp/pages/characters/character_detail_tabs.dart';
 import 'package:flutter_tp/pages/films/movie_detail_tabs.dart';
 import 'package:flutter_tp/pages/bloc/serieDetail_bloc.dart';
 import 'package:flutter_tp/pages/characters/character_detail_tabs.dart';
-import 'package:flutter_tp/pages/serie/serie_detail.dart';
+import 'package:flutter_tp/pages/serie/serie_detail_tabs.dart';
 import 'package:flutter_tp/widgets/error_widget.dart';
 
 import 'comics/comic_detail_tabs.dart';
@@ -107,7 +107,11 @@ class ContentDetailPage extends StatelessWidget {
               final serie = state.serie!;
               return SerieDetailTabs(serie: serie);
             } else if (state is SerieDetailNotifierErrorState) {
-              return const Center(child: CircularProgressIndicator());
+              return ErrorDisplayWidget(
+                message: 'La récupération de la série a échoué. Veuillez réessayer après avoir vérifié votre connexion internet.', 
+                onRetry: () { context.read<SerieDetailBloc>().add(LoadSerieDetailEvent()); },
+                title: "Série : ",
+              );
             } else {
               return const Center(child: Text('Aucune donnée disponible.'));
             }
@@ -115,7 +119,7 @@ class ContentDetailPage extends StatelessWidget {
         ),
       );
     } else {
-      return const Center(child: Text('Données non reconnue.'));
+      return const Center(child: Text('Données non reconnues.'));
     }
   }
 }

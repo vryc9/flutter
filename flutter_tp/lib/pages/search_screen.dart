@@ -246,7 +246,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                 child: const Column(
                                   children: [
                                     Text(
-                                      'Aucune série trouvée.',
+                                      'Aucun résultat trouvé pour les séries.',
                                       style: TextStyle(
                                         fontSize: 16,
                                         color: Colors.white,
@@ -290,7 +290,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                 child: const Column(
                                   children: [
                                     Text(
-                                      'Aucun comic trouvé.',
+                                      'Aucun résultat trouvé pour les comics.',
                                       style: TextStyle(
                                         fontSize: 16,
                                         color: Colors.white,
@@ -334,7 +334,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                 child: const Column(
                                   children: [
                                     Text(
-                                      'Aucun film trouvé.',
+                                      'Aucun résultat trouvé pour les films.',
                                       style: TextStyle(
                                         fontSize: 16,
                                         color: Colors.white,
@@ -378,7 +378,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                 child: const Column(
                                   children: [
                                     Text(
-                                      'Aucun personnage trouvé.',
+                                      'Aucun résultat trouvé pour les personnages.',
                                       style: TextStyle(
                                         fontSize: 16,
                                         color: Colors.white,

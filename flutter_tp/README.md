@@ -184,7 +184,7 @@
     
 - **Gestion des états**:
   - État *loading* : de chaque liste n'affiche rien car il y a le bloc avec l'astronaute qui indique déjà que la recherche est en cours.
-  - État *success* : de chaque liste affiche la liste si elle est remplie sinon affiche "aucun *type* trouvé."
+  - État *success* : de chaque liste affiche la liste si elle est remplie sinon affiche "Aucun résultat trouvé pour les *type*."
   - État *error* : de chaque liste affiche le message d'erreur "La récupération de la liste de *type* a échoué. Veuillez réessayer après avoir vérifié votre connexion internet." et un bouton réessayer pour relancer la requête.
 
 - **Style** : Identique.

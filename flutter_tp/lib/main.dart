@@ -70,7 +70,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter ESIEA',
+      title: 'Flutter ESIEA groupe 8',
       theme: ThemeData(
         textTheme: GoogleFonts.nunitoTextTheme(),
         primarySwatch: Colors.orange,

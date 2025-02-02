@@ -33,20 +33,31 @@ class TabCharacterDetailWidget extends StatelessWidget {
                     );
                   } else if (state is CharacterDetailNotifierSuccessState) {
                     final character = state.character!;
-                    return ListTile(
-                      leading: CircleAvatar(
-                        backgroundImage:
-                            NetworkImage(character.image!.thumb_url!),
-                        onBackgroundImageError: (_, __) =>
-                            const Icon(Icons.broken_image_rounded),
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          '/characterDetail',
+                          arguments: {
+                            'itemId': character.id.toString(),
+                          },
+                        );
+                      },
+                      child: ListTile(
+                        leading: CircleAvatar(
+                          backgroundImage:
+                              NetworkImage(character.image!.thumb_url!),
+                          onBackgroundImageError: (_, __) =>
+                              const Icon(Icons.broken_image_rounded),
+                        ),
+                        title: Text(
+                            style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white),
+                            getDefaultTextForEmptyValue(character.name,
+                                defaultValue: "Nom indisponible")),
                       ),
-                      title: Text(
-                          style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white),
-                          getDefaultTextForEmptyValue(character.name,
-                              defaultValue: "Nom indisponible")),
                     );
                   } else if (state is CharacterDetailNotifierErrorState) {
                     return const ListTile(

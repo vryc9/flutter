@@ -302,59 +302,6 @@ class SerieDetailTabs extends StatelessWidget {
     );
   }
 
-  Widget _buildAuthorsTab() {
-    return ListView.builder(
-      itemCount: serie.characters?.length,
-      itemBuilder: (context, index) {
-        final personId = serie.characters?[index]?.id;
-
-        return BlocProvider(
-            create: (context) => PersonDetailBloc(personId.toString()),
-            child: BlocBuilder<PersonDetailBloc, PersonDetailState>(
-              builder: (context, state) {
-                if (state is PersonDetailNotifierLoadingState) {
-                  return const ListTile(
-                    leading: CircularProgressIndicator(),
-                    title: Text('Chargement...'),
-                  );
-                } else if (state is PersonDetailNotifierSuccessState) {
-                  final person = state.person!;
-                  return ListTile(
-                    leading: CircleAvatar(
-                      backgroundImage: NetworkImage(person.image!.thumb_url!),
-                      onBackgroundImageError: (_, __) =>
-                          const Icon(Icons.broken_image_rounded),
-                    ),
-                    title: Text(
-                        style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white),
-                        getDefaultTextForEmptyValue(person.name,
-                            defaultValue: "Nom indisponible")),
-                    subtitle: Text(
-                        style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white),
-                        getDefaultTextForEmptyValue(
-                            serie.characters?[index]?.aliases,
-                            defaultValue: "Rôle indisponible")),
-                  );
-                } else if (state is CharacterDetailNotifierErrorState) {
-                  return const ListTile(
-                    leading: Icon(Icons.error),
-                    title: Text('Erreur de chargement'),
-                  );
-                } else {
-                  return const SizedBox.shrink();
-                }
-              },
-            ));
-      },
-    );
-  }
-
   Widget _buildEpisodesTab(String serieId) {
     return BlocProvider(
       create: (context) => EpisodesBloc()..add(LoadEpisodesEvent(serieId)),
@@ -405,16 +352,14 @@ class SerieDetailTabs extends StatelessWidget {
                                       width: 126,
                                       height: 105,
                                       color: Colors.grey[800],
-                                      child: Icon(Icons.tv,
-                                          color: Colors.white, size: 50),
+                                      child: const Icon(Icons.tv, color: Colors.white, size: 50),
                                     ),
                                   )
                                 : Container(
                                     width: 126,
                                     height: 105,
                                     color: Colors.grey[800],
-                                    child: Icon(Icons.tv,
-                                        color: Colors.white, size: 50),
+                                    child: const Icon(Icons.tv, color: Colors.white, size: 50),
                                   ),
                           ),
                           const SizedBox(width: 12),
@@ -425,7 +370,7 @@ class SerieDetailTabs extends StatelessWidget {
                                 Text(
                                   getDefaultTextForEmptyValue(
                                       "Episode #${episode.episode_number}"),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
@@ -434,7 +379,7 @@ class SerieDetailTabs extends StatelessWidget {
                                 const SizedBox(height: 5),
                                 Text(
                                   getDefaultTextForEmptyValue(episode.name),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 16,
                                     fontStyle: FontStyle.italic,
                                     color: Colors.white,
@@ -454,7 +399,7 @@ class SerieDetailTabs extends StatelessWidget {
                                     const SizedBox(width: 7),
                                     Text(
                                       formatDateDayMonthYear(episode.air_date),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontSize: 14, color: Colors.white70),
                                     ),
                                   ],
@@ -471,11 +416,8 @@ class SerieDetailTabs extends StatelessWidget {
             );
           } else if (state is EpisodesNotifierErrorState) {
             return ErrorDisplayWidget(
-              message:
-                  'La récupération de la liste des séries a échoué. Veuillez réessayer après avoir vérifié votre connexion internet.',
-              onRetry: () {
-                context.read<EpisodesBloc>().add(LoadEpisodesEvent(serieId));
-              },
+              message: 'La récupération de la liste des épisodes a échoué. Veuillez réessayer après avoir vérifié votre connexion internet.',
+              onRetry: () { context.read<EpisodesBloc>().add(LoadEpisodesEvent(serieId));},
               title: "Episodes : ",
             );
           } else {
