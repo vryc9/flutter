@@ -159,7 +159,7 @@ class OFFAPIManager {
   Future<OFFServerResponseSeries?> searchSeries(String query) async {
     try {
       return await api.searchSeries(
-          _apiKeyLeane, "json", query, "100", "series");
+          _apiKey, "json", query, "100", "series");
     } catch (e) {
       if (kDebugMode) {
         print(
@@ -173,7 +173,7 @@ class OFFAPIManager {
   Future<OFFServerResponseMovies?> searchMovies(String query) async {
     try {
       return await api.searchMovies(
-          _apiKeyLeane, "json", query, "100", "movie");
+          _apiKey, "json", query, "100", "movie");
     } catch (e) {
       if (kDebugMode) {
         print("Erreur lors de la récupération de la recherche des movies : $e");
@@ -186,7 +186,7 @@ class OFFAPIManager {
   Future<OFFServerResponseComics?> searchComics(String query) async {
     try {
       return await api.searchComics(
-          _apiKeyLeane, "json", query, "100", "issue");
+          _apiKey, "json", query, "100", "issue");
     } catch (e) {
       if (kDebugMode) {
         print("Erreur lors de la récupération de la recherche des comics : $e");
@@ -222,7 +222,7 @@ class OFFAPIManager {
   //Méthode pour récupérer une liste d'épisodes par ID de la série associée
   Future<OFFServerResponseEpisodes?> loadEpisodeList(String id) async {
     try {
-      return await api.loadEpisodesListById(_apiKeyLeane, "json", "series:$id");
+      return await api.loadEpisodesListById(_apiKey, "json", "series:$id");
     } on DioException catch (e) {
       if (kDebugMode) {
         print(
