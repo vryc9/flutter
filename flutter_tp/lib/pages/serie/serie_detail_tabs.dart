@@ -29,9 +29,8 @@ class SerieDetailTabs extends StatelessWidget {
           children: [
             // Image en fond avec broken_image en cas de problème.
             Positioned.fill(
-              child: 
-              ImageFiltered(
-                imageFilter: ImageFilter.blur(sigmaX: 5, sigmaY: 5), 
+              child: ImageFiltered(
+                imageFilter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
                 child: Image.network(
                   serie.image!.original_url!,
                   fit: BoxFit.cover,
@@ -51,7 +50,7 @@ class SerieDetailTabs extends StatelessWidget {
                     );
                   },
                 ),
-              ),   
+              ),
             ),
             // Filtre sombre par dessus l'image.
             Positioned.fill(
@@ -116,8 +115,7 @@ class SerieDetailTabs extends StatelessWidget {
                                               bottomLeft: Radius.circular(10),
                                               bottomRight: Radius.circular(10),
                                             ),
-                                            child: 
-                                            Image.network(
+                                            child: Image.network(
                                               serie.image!.original_url!,
                                               height: 127,
                                               width: 94.87,
@@ -358,14 +356,16 @@ class SerieDetailTabs extends StatelessWidget {
                                       width: 126,
                                       height: 105,
                                       color: Colors.grey[800],
-                                      child: const Icon(Icons.tv, color: Colors.white, size: 50),
+                                      child: const Icon(Icons.tv,
+                                          color: Colors.white, size: 50),
                                     ),
                                   )
                                 : Container(
                                     width: 126,
                                     height: 105,
                                     color: Colors.grey[800],
-                                    child: const Icon(Icons.tv, color: Colors.white, size: 50),
+                                    child: const Icon(Icons.tv,
+                                        color: Colors.white, size: 50),
                                   ),
                           ),
                           const SizedBox(width: 12),
@@ -424,8 +424,12 @@ class SerieDetailTabs extends StatelessWidget {
             );
           } else if (state is EpisodesNotifierErrorState) {
             return ErrorDisplayWidget(
-              message: 'La récupération de la liste des épisodes a échoué. Veuillez réessayer après avoir vérifié votre connexion internet.',
-              onRetry: () { context.read<EpisodesBloc>().add(LoadEpisodesEvent(serieId));},
+              message: state.statusCode == 401
+                  ? 'Probleme avec la clé '
+                  : 'La récupération de la liste des épisodes a échoué. Veuillez réessayer après avoir vérifié votre connexion internet.',
+              onRetry: () {
+                context.read<EpisodesBloc>().add(LoadEpisodesEvent(serieId));
+              },
               title: "Episodes : ",
             );
           } else {

@@ -41,8 +41,9 @@ class OFFServerResponseSeries {
 class OFFServerResponseEpisodes {
   final List<Episode> results;
   final String error;
+  final int status_code;
 
-  OFFServerResponseEpisodes(this.results, this.error);
+  OFFServerResponseEpisodes(this.results, this.error, this.status_code);
 
   factory OFFServerResponseEpisodes.fromJson(Map<String, dynamic> json) =>
       _$OFFServerResponseEpisodesFromJson(json);
