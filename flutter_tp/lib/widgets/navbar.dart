@@ -159,7 +159,8 @@ class _NavItem extends StatelessWidget {
                 color: isActive
                     ? AppColors.bottomBarTextSelected
                     : AppColors.bottomBarTextUnselected,
-                fontSize: 11,
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
               ),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,

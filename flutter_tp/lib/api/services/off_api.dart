@@ -62,10 +62,10 @@ abstract class OFFAPI {
   );
 
   @GET("/episodes/")
-  Future<OFFServerResponseEpisodes?> loadEpisodesList(
-    @Path('seriesId') String seriesId,
+  Future<OFFServerResponseEpisodes?> loadEpisodesListById(
     @Query('api_key') String apiKey,
     @Query('format') String format,
+    @Query('filter') String filter, // Ajout du paramètre filter
   );
 
   @GET("/issues/")
@@ -219,7 +219,7 @@ class OFFAPIManager {
   //Méthode pour récupérer une liste d'épisodes
   Future<OFFServerResponseEpisodes?> loadEpisodeList(String id) async {
     try {
-      return await api.loadEpisodesList(id, _apiKeyEnzo, "json");
+      return await api.loadEpisodesListById(_apiKeyEnzo, "json", "series:$id");
     } catch (e) {
       if (kDebugMode) {
         print("Erreur lors de la récupération des episodes : $e");
