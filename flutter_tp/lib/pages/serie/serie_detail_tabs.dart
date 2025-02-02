@@ -3,19 +3,17 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_tp/model/serie_api.dart';
 import 'package:flutter_tp/pages/bloc/episodes_bloc.dart';
-import 'package:flutter_tp/pages/bloc/personsDetail_bloc.dart';
 import 'package:flutter_tp/res/app_colors.dart';
 import 'package:flutter_tp/res/app_svg.dart';
 import 'package:flutter_tp/utils/date_format.dart';
 import 'package:flutter_tp/utils/text_formatter_utils.dart';
 import 'package:flutter_tp/widgets/error_widget.dart';
+import 'package:flutter_tp/widgets/histoire_detail.dart';
 import 'package:flutter_tp/widgets/tab_character_detail.dart';
 
-import '../../model/serie_api.dart';
-import '../../widgets/histoire_detail.dart';
-import '../bloc/charactersDetail_bloc.dart';
-
+// Détail tab de série.
 class SerieDetailTabs extends StatelessWidget {
   final Serie serie;
 
@@ -29,6 +27,7 @@ class SerieDetailTabs extends StatelessWidget {
         extendBodyBehindAppBar: true,
         body: Stack(
           children: [
+            // Image en fond avec broken_image en cas de problème.
             Positioned.fill(
               child: 
               ImageFiltered(
@@ -54,6 +53,7 @@ class SerieDetailTabs extends StatelessWidget {
                 ),
               ),   
             ),
+            // Filtre sombre par dessus l'image.
             Positioned.fill(
               child: Container(
                 color: AppColors.screenBackground.withOpacity(0.7),
@@ -70,6 +70,7 @@ class SerieDetailTabs extends StatelessWidget {
                         floating: true,
                         backgroundColor: Colors.transparent,
                         elevation: 0,
+                        // Bouton de retour vers la page précédente.
                         leading: IconButton(
                           icon: SvgPicture.asset(
                             AppVectorialImages.icBack,
@@ -79,6 +80,7 @@ class SerieDetailTabs extends StatelessWidget {
                             Navigator.pop(context);
                           },
                         ),
+                        // Nom.
                         title: Text(
                           getDefaultTextForEmptyValue(serie.name,
                               defaultValue: "Nom indisponible"),
@@ -105,6 +107,7 @@ class SerieDetailTabs extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
                                         children: [
+                                          // Image avec broken_image si erreur.
                                           ClipRRect(
                                             borderRadius:
                                                 const BorderRadius.only(
@@ -148,21 +151,7 @@ class SerieDetailTabs extends StatelessWidget {
                                                   CrossAxisAlignment.start,
                                               mainAxisSize: MainAxisSize.min,
                                               children: [
-                                                Text(
-                                                  getDefaultTextForEmptyValue(
-                                                      serie.name,
-                                                      defaultValue:
-                                                          "Nom indisponible"),
-                                                  style: const TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 17.0,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                  maxLines: 2,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                ),
-                                                const SizedBox(height: 22.0),
+                                                // Editeur.
                                                 Row(
                                                   children: [
                                                     SvgPicture.asset(
@@ -189,6 +178,7 @@ class SerieDetailTabs extends StatelessWidget {
                                                   ],
                                                 ),
                                                 const SizedBox(height: 10.0),
+                                                // Nombre d'épisodes.
                                                 Row(
                                                   children: [
                                                     SvgPicture.asset(
@@ -212,6 +202,7 @@ class SerieDetailTabs extends StatelessWidget {
                                                   ],
                                                 ),
                                                 const SizedBox(height: 8.0),
+                                                // Date.
                                                 Row(
                                                   children: [
                                                     SvgPicture.asset(
@@ -249,6 +240,7 @@ class SerieDetailTabs extends StatelessWidget {
                             ),
                           ),
                         ),
+                        // Onglets.
                         bottom: const TabBar(
                           dividerColor: Colors.transparent,
                           labelColor: Colors.white,
@@ -265,7 +257,7 @@ class SerieDetailTabs extends StatelessWidget {
                           tabs: [
                             Tab(text: "Histoire"),
                             Tab(text: "Personnages"),
-                            Tab(text: "Episodes"),
+                            Tab(text: "Épisodes"),
                           ],
                           overlayColor:
                               WidgetStatePropertyAll(Colors.transparent),
@@ -273,6 +265,7 @@ class SerieDetailTabs extends StatelessWidget {
                         ),
                       ),
                     ],
+                    // Contenu des onglets.
                     body: ClipRRect(
                       borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(20),
@@ -282,9 +275,12 @@ class SerieDetailTabs extends StatelessWidget {
                         color: AppColors.cardBackground,
                         child: TabBarView(
                           children: [
+                            // Contenu de l'onglet Histoire.
                             _buildStoryTab(),
+                            // Contenu de l'onglet Personnages.
                             TabCharacterDetailWidget(
                                 character_credits: serie.characters),
+                            // Contenu de l'onglet Épisodes.
                             _buildEpisodesTab(serie.id.toString()),
                           ],
                         ),
@@ -300,6 +296,7 @@ class SerieDetailTabs extends StatelessWidget {
     );
   }
 
+  // Contenu de l'onglet Histoire.
   Widget _buildStoryTab() {
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -309,6 +306,7 @@ class SerieDetailTabs extends StatelessWidget {
     );
   }
 
+  // Contenu de l'onglet Épisodes.
   Widget _buildEpisodesTab(String serieId) {
     return BlocProvider(
       create: (context) => EpisodesBloc()..add(LoadEpisodesEvent(serieId)),
@@ -345,6 +343,7 @@ class SerieDetailTabs extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
                         children: [
+                          // Image.
                           ClipRRect(
                             borderRadius: BorderRadius.circular(8),
                             child: episode.image?.original_url != null
@@ -374,9 +373,9 @@ class SerieDetailTabs extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                // Numéro de l'épisode.
                                 Text(
-                                  getDefaultTextForEmptyValue(
-                                      "Episode #${episode.episode_number}"),
+                                  "Episode #${getDefaultTextForEmptyValue(episode.episode_number)}",
                                   style: const TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
@@ -384,6 +383,7 @@ class SerieDetailTabs extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(height: 5),
+                                // Nom.
                                 Text(
                                   getDefaultTextForEmptyValue(episode.name),
                                   style: const TextStyle(
@@ -393,6 +393,7 @@ class SerieDetailTabs extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(height: 17),
+                                // Date.
                                 Row(
                                   children: [
                                     SvgPicture.asset(

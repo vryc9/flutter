@@ -13,8 +13,9 @@ import 'package:flutter_tp/utils/date_format.dart';
 import 'package:flutter_tp/utils/text_formatter_utils.dart';
 import 'package:flutter_tp/widgets/error_widget.dart';
 
+// Page générique de liste verticale. En fonction du type passé, appelle le bon bloc puis appelle le contenu générique. 
 class GenericListScreen extends StatelessWidget {
-  // Peut être 'serie', 'movie' ou 'comic'
+  // Peut être 'serie', 'movie' ou 'comic'.
   final String type;
 
   const GenericListScreen({super.key, required this.type});
@@ -30,6 +31,7 @@ class GenericListScreen extends StatelessWidget {
           margin: const EdgeInsets.only(left:24, top: 34, bottom: 21),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            // Titre en fonction du type.
             child: Text(
               type == 'comic'
                   ? 'Comics les plus populaires'
@@ -55,6 +57,7 @@ class GenericListScreen extends StatelessWidget {
   }
 
   Widget _buildBody() {
+    // Cas type = serie.
     if (type == 'serie') {
       return BlocProvider(
         create: (context) => SeriesListBloc(),
@@ -77,6 +80,7 @@ class GenericListScreen extends StatelessWidget {
           },
         ),
       );
+    // Cas type = comic.
     } else if (type == 'comic') {
       return BlocProvider(
         create: (context) => ComicsListBloc(),
@@ -99,6 +103,7 @@ class GenericListScreen extends StatelessWidget {
           },
         ),
       );
+    // Cas type = movie.
     } else if (type == 'movie') {
       return BlocProvider(
         create: (context) => MoviesListBloc(),
@@ -121,6 +126,7 @@ class GenericListScreen extends StatelessWidget {
           },
         ),
       );
+    // Cas type = autre que comic, movie ou serie.
     } else {
       return const Center(
         child: Text('Type non pris en charge',
@@ -129,6 +135,7 @@ class GenericListScreen extends StatelessWidget {
     }
   }
 
+  // Contenu générique. Appelle le contenu associé en fonction du type de chaque élément de la liste d'items reçue. 
   Widget _buildList(List<dynamic> items) {
     if (items.isEmpty) {
       return const Center(
@@ -141,7 +148,7 @@ class GenericListScreen extends StatelessWidget {
       itemCount: items.length,
       itemBuilder: (context, index) {
         final item = items[index];
-
+        // Détermine le type et appelle le contenu associé.
         if (item is Serie) {
           return _buildSerieCard(item, index, context);
         } else if (item is Comic) {
@@ -155,8 +162,10 @@ class GenericListScreen extends StatelessWidget {
     );
   }
 
+  // Contenu associé pour la serie.
   Widget _buildSerieCard(Serie serie, int index, BuildContext context) {
     return GestureDetector(
+      // Redirection vers le détail de la serie au clic sur la card.
       onTap: () {
         Navigator.pushNamed(
           context,
@@ -181,6 +190,7 @@ class GenericListScreen extends StatelessWidget {
           child: Stack(
             clipBehavior: Clip.none,
             children: [
+              // Image avec broken_image si erreur.
               ClipRRect(
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(10),
@@ -210,6 +220,7 @@ class GenericListScreen extends StatelessWidget {
                   },
                 ),
               ),
+              // Numéro de popularité de la serie.
               Positioned(
                 top: -15,
                 left: -5,
@@ -244,6 +255,7 @@ class GenericListScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
+                      // Nom.
                       SizedBox(
                         width: 191,
                         child: Text(
@@ -258,6 +270,7 @@ class GenericListScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 22.0),
+                      // Editeur.
                       Row(
                         children: [
                           SvgPicture.asset(
@@ -277,6 +290,7 @@ class GenericListScreen extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 10.0),
+                      // Nombre d'épisodes.
                       Row(
                         children: [
                           SvgPicture.asset(
@@ -296,6 +310,7 @@ class GenericListScreen extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 8.0),
+                      // Année de sortie.
                       Row(
                         children: [
                           SvgPicture.asset(
@@ -325,8 +340,10 @@ class GenericListScreen extends StatelessWidget {
     );
   }
 
+  // Contenu associé pour le comic.
   Widget _buildComicCard(Comic comic, int index, BuildContext context) {
     return GestureDetector(
+      // Redirection vers le détail du comic au clic sur la card.
       onTap: () {
         Navigator.pushNamed(
           context,
@@ -351,6 +368,7 @@ class GenericListScreen extends StatelessWidget {
           child: Stack(
             clipBehavior: Clip.none,
             children: [
+              // Image avec broken_image si erreur.
               ClipRRect(
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(10),
@@ -380,6 +398,7 @@ class GenericListScreen extends StatelessWidget {
                   },
                 ),
               ),
+              // Numéro de popularité du comic.
               Positioned(
                 top: -15,
                 left: -5,
@@ -414,6 +433,7 @@ class GenericListScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
+                      // Volume.
                       SizedBox(
                         width: 191,
                         child: Text(
@@ -428,6 +448,7 @@ class GenericListScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 10.0),
+                      // Nom.
                       SizedBox(
                         width: 191,
                         child: Text(
@@ -442,6 +463,7 @@ class GenericListScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 22.0),
+                      // Numéro du comic.
                       Row(
                         children: [
                           SvgPicture.asset(
@@ -461,6 +483,7 @@ class GenericListScreen extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 10.0),
+                      // Date.
                       Row(
                         children: [
                           SvgPicture.asset(
@@ -491,8 +514,10 @@ class GenericListScreen extends StatelessWidget {
   }
 }
 
+// Contenu associé pour le movie.
 Widget _buildMovieCard(Movie movie, int index, BuildContext context) {
   return GestureDetector(
+    // Redirection vers le détail du movie au clic sur la card.
     onTap: () {
       Navigator.pushNamed(
         context,
@@ -514,35 +539,37 @@ Widget _buildMovieCard(Movie movie, int index, BuildContext context) {
         child: Stack(
           clipBehavior: Clip.none,
           children: [
+            // Image avec broken_image si erreur.
             ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
-                  bottomLeft: Radius.circular(10),
-                  bottomRight: Radius.circular(10),
-                ),
-                child: Image.network(
-                  movie.image!.original_url!,
-                  height: 118,
-                  width: 128.86,
-                  fit: BoxFit.cover,
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  },
-                  errorBuilder: (context, error, stackTrace) {
-                    return const Center(
-                      child: Icon(
-                        Icons.broken_image,
-                        color: AppColors.cardElementBackground,
-                        size: 40,
-                      ),
-                    );
-                  },
-                ),
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+                bottomLeft: Radius.circular(10),
+                bottomRight: Radius.circular(10),
               ),
+              child: Image.network(
+                movie.image!.original_url!,
+                height: 118,
+                width: 128.86,
+                fit: BoxFit.cover,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+                errorBuilder: (context, error, stackTrace) {
+                  return const Center(
+                    child: Icon(
+                      Icons.broken_image,
+                      color: AppColors.cardElementBackground,
+                      size: 40,
+                    ),
+                  );
+                },
+              ),
+            ),
+            // Numéro de popularité du movie.
             Positioned(
               top: -15,
               left: -5,
@@ -577,6 +604,7 @@ Widget _buildMovieCard(Movie movie, int index, BuildContext context) {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    // Nom.
                     SizedBox(
                       width: 191,
                       child: Text(
@@ -591,6 +619,7 @@ Widget _buildMovieCard(Movie movie, int index, BuildContext context) {
                       ),
                     ),
                     const SizedBox(height: 22.0),
+                    // Durée du movie.
                     Row(
                       children: [
                         SvgPicture.asset(
@@ -610,6 +639,7 @@ Widget _buildMovieCard(Movie movie, int index, BuildContext context) {
                       ],
                     ),
                     const SizedBox(height: 7.6),
+                    // Date. 
                     Row(
                       children: [
                         SvgPicture.asset(

@@ -10,6 +10,7 @@ import 'package:flutter_tp/res/app_svg.dart';
 import 'package:flutter_tp/widgets/error_widget.dart';
 import 'package:flutter_tp/widgets/horizontal_list.dart';
 
+// Page home. 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -32,6 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: AppColors.screenBackground,
       body: Stack(
         children: [
+          // Titre.
           const Positioned(
             top: 50,
             left: 32,
@@ -45,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
+          // Astronaute.
           Positioned(
             top: 20,
             left: width * 0.65,
@@ -64,12 +67,21 @@ class _HomeScreenState extends State<HomeScreen> {
                       BlocProvider(
                         create: (context) => SeriesListBloc(),
                       ),
+                      BlocProvider(
+                        create: (context) => MoviesListBloc(),
+                      ),
+                      BlocProvider(
+                        create: (context) => CharactersListBloc(),
+                      ),
+                      BlocProvider(
+                        create: (context) => ComicsListBloc(),
+                      ),
                     ],
                     child: Container(
                       color: AppColors.screenBackground,
                       child: Column(
                         children: [
-                          // BlocBuilder pour les séries
+                          // BlocBuilder pour les series. Appelle la liste générique horizontal list.
                           BlocBuilder<SeriesListBloc, SeriesListState>(
                             builder: (context, state) {
                               if (state is SeriesListNotifierLoadingState) {
@@ -117,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           const SizedBox(height: 5),
 
-                          // BlocBuilder pour les comics
+                          // BlocBuilder pour les comics. Appelle la liste générique horizontal list.
                           BlocBuilder<ComicsListBloc, ComicsListState>(
                             builder: (context, state) {
                               if (state is ComicsListNotifierLoadingState) {
@@ -163,7 +175,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           const SizedBox(height: 5),
 
-                          // BlocBuilder pour les films
+                          // BlocBuilder pour les films. Appelle la liste générique horizontal list.
                           BlocBuilder<MoviesListBloc, MoviesListState>(
                             builder: (context, state) {
                               if (state is MoviesListNotifierLoadingState) {
@@ -209,7 +221,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           const SizedBox(height: 5),
 
-                          // BlocBuilder pour les Characters
+                          // BlocBuilder pour les characters. Appelle la liste générique horizontal list.
                           BlocBuilder<CharactersListBloc, CharactersListState>(
                             builder: (context, state) {
                               if (state is CharactersListNotifierLoadingState) {

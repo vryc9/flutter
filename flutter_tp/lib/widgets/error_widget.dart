@@ -34,6 +34,7 @@ class ErrorDisplayWidget extends StatelessWidget {
           children: [
             Row(
               children: [
+                // Titre de l'encadré.
                 Text(
                   title,
                   style: const TextStyle(
@@ -47,6 +48,7 @@ class ErrorDisplayWidget extends StatelessWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                // Contenu de l'encadré.
                 Text(
                   message,
                   style: const TextStyle(
@@ -57,6 +59,7 @@ class ErrorDisplayWidget extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 16),
+                // Bouton pour réessayer, appelle le ,onRetry donné.
                 ElevatedButton.icon(
                   onPressed: onRetry,
                   icon: const Icon(Icons.refresh),

@@ -3,17 +3,17 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_tp/model/comic_api.dart';
+import 'package:flutter_tp/pages/bloc/charactersDetail_bloc.dart';
 import 'package:flutter_tp/pages/bloc/personsDetail_bloc.dart';
 import 'package:flutter_tp/res/app_colors.dart';
 import 'package:flutter_tp/res/app_svg.dart';
 import 'package:flutter_tp/utils/date_format.dart';
 import 'package:flutter_tp/utils/text_formatter_utils.dart';
+import 'package:flutter_tp/widgets/histoire_detail.dart';
 import 'package:flutter_tp/widgets/tab_character_detail.dart';
 
-import '../../model/comic_api.dart';
-import '../../widgets/histoire_detail.dart';
-import '../bloc/charactersDetail_bloc.dart';
-
+// Détail tab de comic
 class ComicDetailTabs extends StatelessWidget {
   final Comic comic;
 
@@ -27,6 +27,7 @@ class ComicDetailTabs extends StatelessWidget {
         extendBodyBehindAppBar: true,
         body: Stack(
           children: [
+            // Image en fond avec broken_image en cas de problème.
             Positioned.fill(
               child: ImageFiltered(
                 imageFilter: ImageFilter.blur(sigmaX: 5, sigmaY: 5), 
