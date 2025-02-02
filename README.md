@@ -13,7 +13,9 @@
 
 - Nous avons retiré tous les .g.dart du projet. Il faudra donc build le projet pour les générer avant de le lancer.
 
-- la clé d'api utilisée est située ligne 126 à 133 de flutter/flutter_tp/lib/api/services/off_api.dart. il y a nos 4 api-key.
+- La clé d'api utilisée est située ligne 126 à 133 de flutter/flutter_tp/lib/api/services/off_api.dart . il y a nos 4 api-key.
+
+- Pour en savoir plus sur les erreurs prises en comptes voir dans le fichier flutter/flutter_tp/lib/utils/text_formatter_utils.dart .
 
 ---
 
@@ -43,7 +45,7 @@
 - **Gestion des états**:
   - État *loading* : de chaque liste affiche un `CircularLoader`.
   - État *success* : de chaque liste affiche la liste si elle est remplie, sinon "aucun *type* trouvé."
-  - État *error* : de chaque liste affiche le message d'erreur "La récupération de la liste de *type* a échoué. Veuillez réessayer après avoir vérifié votre connexion internet." et un bouton réessayer pour relancer la requête.
+  - État *error* : de chaque liste affiche le message d'erreur "La récupération de la liste de *type* a échoué *explication en lien avec l'erreur*" et un bouton réessayer pour relancer la requête.
   
 - **Style** : Identique.
 
@@ -60,7 +62,7 @@
 - **Gestion des états**:
   - État *loading* : affiche un `CircularLoader`.
   - État *success* : affiche la liste si elle est remplie, sinon "aucune *type* trouvée."
-  - État *error* : affiche le message d'erreur "La récupération de la liste de *type* a échoué. Veuillez réessayer après avoir vérifié votre connexion internet." et un bouton réessayer pour relancer la requête.
+  - État *error* : affiche le message d'erreur "La récupération de la liste de *type* a échoué *explication en lien avec l'erreur*" et un bouton réessayer pour relancer la requête.
 
 - **Style** : Identique.
 
@@ -78,7 +80,7 @@
 - **Gestion des états**:
   - État *loading* : affiche un `CircularLoader`.
   - État *success* : affiche la série et son contenu.
-  - État *error* : affiche le message d'erreur "La récupération de la liste de *type* a échoué. Veuillez réessayer après avoir vérifié votre connexion internet." et un bouton réessayer pour relancer la requête.
+  - État *error* : affiche le message d'erreur "La récupération de la liste de *type* a échoué *explication en lien avec l'erreur*" et un bouton réessayer pour relancer la requête.
 
 - **Style** : Identique, sauf le flou de l'image en arrière plan.
 
@@ -95,7 +97,7 @@
 - **Gestion des états**:
   - État *loading* : affiche un `CircularLoader`.
   - État *success* : affiche la liste si elle est remplie, sinon "aucun *type* trouvé."
-  - État *error* : affiche le message d'erreur "La récupération de la liste de *type* a échoué. Veuillez réessayer après avoir vérifié votre connexion internet." et un bouton réessayer pour relancer la requête.
+  - État *error* : affiche le message d'erreur "La récupération de la liste de *type* a échoué *explication en lien avec l'erreur*" et un bouton réessayer pour relancer la requête.
 
 - **Style** : Identique.
 
@@ -113,7 +115,7 @@
 - **Gestion des états**:
   - État *loading* : affiche un `CircularLoader`.
   - État *success* : affiche le comic et son contenu.
-  - État *error* : affiche le message d'erreur "La récupération de la liste de *type* a échoué. Veuillez réessayer après avoir vérifié votre connexion internet." et un bouton réessayer pour relancer la requête.
+  - État *error* : affiche le message d'erreur "La récupération de la liste de *type* a échoué *explication en lien avec l'erreur*" et un bouton réessayer pour relancer la requête.
 
 - **Style** : Identique, sauf le flou de l'image en arrière plan.
 
@@ -130,7 +132,7 @@
 - **Gestion des états**:
   - État *loading* : affiche un `CircularLoader`.
   - État *success* : affiche la liste si elle est remplie, sinon "aucun *type* trouvé."
-  - État *error* : affiche le message d'erreur "La récupération de la liste de *type* a échoué. Veuillez réessayer après avoir vérifié votre connexion internet." et un bouton réessayer pour relancer la requête.
+  - État *error* : affiche le message d'erreur "La récupération de la liste de *type* a échoué *explication en lien avec l'erreur*" et un bouton réessayer pour relancer la requête.
 - **Style** : Identique.
 
 ---
@@ -147,7 +149,7 @@
 - **Gestion des états**:
   - État *loading* : affiche un `CircularLoader`.
   - État *success* : affiche le movie et son contenu.
-  - État *error* : affiche le message d'erreur "La récupération de la liste de *type* a échoué. Veuillez réessayer après avoir vérifié votre connexion internet." et un bouton réessayer pour relancer la requête.
+  - État *error* : affiche le message d'erreur "La récupération de la liste de *type* a échoué *explication en lien avec l'erreur*" et un bouton réessayer pour relancer la requête.
 
 - **Style** : Identique, sauf le flou de l'image en arrière plan.
 
@@ -163,7 +165,7 @@
 - **Gestion des états**:
   - État *loading* : affiche un `CircularLoader`.
   - État *success* : affiche le character et son contenu.
-  - État *error* : affiche le message d'erreur "La récupération de la liste de *type* a échoué. Veuillez réessayer après avoir vérifié votre connexion internet." et un bouton réessayer pour relancer la requête.
+  - État *error* : affiche le message d'erreur "La récupération de la liste de *type* a échoué *explication en lien avec l'erreur*" et un bouton réessayer pour relancer la requête.
 
 - **Style** : Identique, sauf l'ombre qui n'est pas tout à fait pareil et le flou de l'image en arrière plan.
 
@@ -183,7 +185,7 @@
 - **Gestion des états**:
   - État *loading* : de chaque liste n'affiche rien car il y a le bloc avec l'astronaute qui indique déjà que la recherche est en cours.
   - État *success* : de chaque liste affiche la liste si elle est remplie sinon affiche "Aucun résultat trouvé pour les *type*."
-  - État *error* : de chaque liste affiche le message d'erreur "La récupération de la liste de *type* a échoué. Veuillez réessayer après avoir vérifié votre connexion internet." et un bouton réessayer pour relancer la requête.
+  - État *error* : de chaque liste affiche le message d'erreur "La récupération de la liste de *type* a échoué *explication en lien avec l'erreur*" et un bouton réessayer pour relancer la requête.
 
 - **Style** : Identique.
 
