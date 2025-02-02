@@ -66,9 +66,10 @@ class TabCharacterDetailWidget extends StatelessWidget {
                     );
                     // Tile d'erreur affichée en cas de problème.
                   } else if (state is CharacterDetailNotifierErrorState) {
+                    print(state.status_code);
                     return ErrorDisplayWidget(
-                      message:
-                          'La récupération du personnage a échoué. Veuillez réessayer après avoir vérifié votre connexion internet.',
+                      message: formatErreurMessage(state.status_code!,
+                          "La récupération du personnage a échoué"),
                       onRetry: () {
                         context
                             .read<CharacterDetailBloc>()
