@@ -27,9 +27,10 @@ class MovieDetailBloc extends Bloc<MovieDetailEvent, MovieDetailState> {
       final OFFServerResponseMovie? response =
           await OFFAPIManager().fetchMovieById(movieId);
       if (response != null && response.status_code == 1) {
-        emit(MovieDetailNotifierSuccessState(response!.results));
+        emit(MovieDetailNotifierSuccessState(response.results));
       } else {
-        emit(MovieDetailNotifierErrorState(response?.error, response?.status_code));
+        emit(MovieDetailNotifierErrorState(
+            response?.error, response?.status_code));
       }
     } catch (e) {
       emit(MovieDetailNotifierErrorState(e.toString(), 0));

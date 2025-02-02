@@ -26,9 +26,15 @@ class SerieDetailBloc extends Bloc<SerieDetailEvent, SerieDetailState> {
     try {
       final OFFServerResponseSerie? response =
           await OFFAPIManager().fetchSerieById(serieId);
-      emit(SerieDetailNotifierSuccessState(response!.results));
+
+      if (response != null && response.status_code == 1) {
+        emit(SerieDetailNotifierSuccessState(response.results));
+      } else {
+        emit(SerieDetailNotifierErrorState(
+            response?.error, response?.status_code));
+      }
     } catch (e) {
-      emit(SerieDetailNotifierErrorState(e));
+      emit(SerieDetailNotifierErrorState(e.toString(), 0));
     }
   }
 }
@@ -41,12 +47,11 @@ class SerieDetailNotifierSuccessState extends SerieDetailState {
   final Serie? serie;
 
   SerieDetailNotifierSuccessState(this.serie);
-
 }
 
 class SerieDetailNotifierErrorState extends SerieDetailState {
   final dynamic error;
+  final int? statusCode;
 
-  SerieDetailNotifierErrorState(this.error);
-
+  SerieDetailNotifierErrorState(this.error, this.statusCode);
 }
