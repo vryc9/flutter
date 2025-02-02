@@ -175,10 +175,12 @@ class HorizontalListWidget extends StatelessWidget {
                     case 'serie':
                       return GestureDetector(
                         onTap: () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                                content:
-                                    Text('Série sélectionnée: ${item.name}')),
+                          Navigator.pushNamed(
+                            context,
+                            '/serieDetail',
+                            arguments: {
+                              'itemId': item.id.toString(),
+                            },
                           );
                         },
                         child: _buildCard(context, item),

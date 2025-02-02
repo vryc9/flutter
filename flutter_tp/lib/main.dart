@@ -7,6 +7,8 @@ import 'package:flutter_tp/pages/bloc/comicsDetail_bloc.dart';
 import 'package:flutter_tp/pages/bloc/comicsList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/comicsSearchList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/moviesSearchList_bloc.dart';
+import 'package:flutter_tp/pages/bloc/serieDetail_bloc.dart';
+import 'package:flutter_tp/pages/bloc/serie_bloc.dart';
 import 'package:flutter_tp/pages/bloc/seriesList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/seriesSearchList_bloc.dart';
 import 'package:flutter_tp/pages/content_detail_page.dart';
@@ -51,7 +53,10 @@ void main() {
         ),
         BlocProvider(
           create: (_) => ComicDetailBloc(""),
-        )
+        ),
+        BlocProvider(
+          create: (_) => SerieDetailBloc(""),
+        ),
       ],
       child: const MyApp(),
     ),
@@ -89,6 +94,7 @@ class MyApp extends StatelessWidget {
         '/characterDetail': (context) => const ContentDetailPage(type: "character"),
         '/comicDetail': (context) => const ContentDetailPage(type: "comic"),
         '/movieDetail': (context) => const ContentDetailPage(type: "movie"),
+        '/serieDetail': (context) => const ContentDetailPage(type: "serie"),
         '/home': (context) => const HomeScreen(),
       },
     );

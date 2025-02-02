@@ -14,6 +14,7 @@ class Serie {
   final Person? publisher;
   final List<Character>? characters;
   final String? description;
+  final int? id;
   
   Serie({
     this.name,
@@ -22,7 +23,8 @@ class Serie {
     this.start_year,
     this.publisher,
     this.characters,
-    this.description
+    this.description,
+    this.id,
   });
 
   // Généré automatiquement par json_serializable

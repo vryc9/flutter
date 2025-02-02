@@ -158,10 +158,12 @@ class GenericListScreen extends StatelessWidget {
   Widget _buildSerieCard(Serie serie, int index, BuildContext context) {
     return GestureDetector(
       onTap: () {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-              content:
-                  Text('Serie sélectionnée: ${serie.name}')),
+        Navigator.pushNamed(
+          context,
+          '/serieDetail',
+          arguments: {
+            'itemId': serie.id.toString(),
+          },
         );
       },
       child: Padding(

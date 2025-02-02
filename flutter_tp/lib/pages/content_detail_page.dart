@@ -5,6 +5,9 @@ import 'package:flutter_tp/pages/bloc/comicsDetail_bloc.dart';
 import 'package:flutter_tp/pages/bloc/moviesDetail_bloc.dart';
 import 'package:flutter_tp/pages/characters/character_detail_tabs.dart';
 import 'package:flutter_tp/pages/films/movie_detail_tabs.dart';
+import 'package:flutter_tp/pages/bloc/serieDetail_bloc.dart';
+import 'package:flutter_tp/pages/characters/character_detail_tabs.dart';
+import 'package:flutter_tp/pages/serie/serie_detail.dart';
 import 'package:flutter_tp/widgets/error_widget.dart';
 
 import 'comics/comic_detail_tabs.dart';
@@ -87,6 +90,24 @@ class ContentDetailPage extends StatelessWidget {
                 onRetry: () { context.read<MovieDetailBloc>().add(LoadMovieDetailEvent()); },
                 title: "Film : ",
               );
+            } else {
+              return const Center(child: Text('Aucune donnée disponible.'));
+            }
+          },
+        )
+      );
+    } else if (type == 'serie') {
+      return BlocProvider(
+        create: (context) => SerieDetailBloc(itemId),
+        child: BlocBuilder<SerieDetailBloc, SerieDetailState>(
+          builder: (context, state) {
+            if (state is SerieDetailNotifierLoadingState) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (state is SerieDetailNotifierSuccessState) {
+              final serie = state.serie!;
+              return SerieDetailTabs(serie: serie);
+            } else if (state is SerieDetailNotifierErrorState) {
+              return const Center(child: CircularProgressIndicator());
             } else {
               return const Center(child: Text('Aucune donnée disponible.'));
             }
