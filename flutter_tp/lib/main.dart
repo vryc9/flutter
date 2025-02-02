@@ -88,6 +88,7 @@ class MyApp extends StatelessWidget {
             ),
         '/characterDetail': (context) => const ContentDetailPage(type: "character"),
         '/comicDetail': (context) => const ContentDetailPage(type: "comic"),
+        '/movieDetail': (context) => const ContentDetailPage(type: "movie"),
         '/home': (context) => const HomeScreen(),
       },
     );

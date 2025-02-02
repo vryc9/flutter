@@ -492,10 +492,12 @@ class GenericListScreen extends StatelessWidget {
 Widget _buildMovieCard(Movie movie, int index, BuildContext context) {
   return GestureDetector(
     onTap: () {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content:
-                Text('Film sélectionné: ${movie.name}')),
+      Navigator.pushNamed(
+        context,
+        '/movieDetail',
+        arguments: {
+          'itemId': movie.id.toString(),
+        },
       );
     },
     child: Padding(

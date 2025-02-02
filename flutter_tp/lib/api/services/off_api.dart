@@ -101,7 +101,7 @@ abstract class OFFAPI {
   Future<OFFServerResponseSerie?> getSerieById(@Path("serieId") String serieId,
       @Query("api_key") String apiKey, @Query("format") String format);
 
-  @GET("/movie/4075-{movieId}/")
+  @GET("/movie/4025-{movieId}/")
   Future<OFFServerResponseMovie?> getMovieById(@Path("movieId") String movieId,
       @Query("api_key") String apiKey, @Query("format") String format);
 

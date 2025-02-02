@@ -130,7 +130,7 @@ class MovieDetailTabs extends StatelessWidget {
                                             ),
                                           ),
                                           const SizedBox(width: 12.0),
-                                          Expanded(
+                                           Expanded(
                                             child: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
@@ -140,18 +140,14 @@ class MovieDetailTabs extends StatelessWidget {
                                                 Row(
                                                   children: [
                                                     SvgPicture.asset(
-                                                      AppVectorialImages
-                                                          .icBooksBicolor,
-                                                      height: 15.0,
-                                                      colorFilter:
-                                                          const ColorFilter
-                                                              .mode(
-                                                              Colors.white,
-                                                              BlendMode.srcIn),
+                                                      AppVectorialImages.navbarMovies,
+                                                      height: 12.0,
+                                                      colorFilter: const ColorFilter.mode(
+                                                          AppColors.iconsList, BlendMode.srcIn),
                                                     ),
                                                     const SizedBox(width: 8.0),
                                                     Text(
-                                                      '${getDefaultTextForEmptyValue(movie.rating, defaultValue: "Indisponible")} minutes',
+                                                      '${getDefaultTextForEmptyValue(movie.runtime, defaultValue: "Durée indisponible")} minutes',
                                                       style: const TextStyle(
                                                         color: Colors.white60,
                                                         fontSize: 12.0,
@@ -159,25 +155,18 @@ class MovieDetailTabs extends StatelessWidget {
                                                     ),
                                                   ],
                                                 ),
-                                                const SizedBox(height: 10.0),
+                                                const SizedBox(height: 7.6),
                                                 Row(
                                                   children: [
                                                     SvgPicture.asset(
-                                                      AppVectorialImages
-                                                          .icCalendarBicolor,
+                                                      AppVectorialImages.icCalendarBicolor,
                                                       height: 15.0,
-                                                      colorFilter:
-                                                          const ColorFilter
-                                                              .mode(
-                                                              Colors.white,
-                                                              BlendMode.srcIn),
+                                                      colorFilter: const ColorFilter.mode(
+                                                          AppColors.iconsList, BlendMode.srcIn),
                                                     ),
                                                     const SizedBox(width: 8.0),
                                                     Text(
-                                                      getDefaultTextForEmptyValue(
-                                                          formatDateDayMonthYear(
-                                                              movie
-                                                                  .date_added)),
+                                                      getDefaultTextForEmptyValue(formatDateYear(movie.date_added)),
                                                       style: const TextStyle(
                                                         color: Colors.white60,
                                                         fontSize: 12.0,
@@ -233,7 +222,7 @@ class MovieDetailTabs extends StatelessWidget {
                             _buildStoryTab(),
                             TabCharacterDetailWidget(
                                 character_credits: movie.characters),
-                            _buildAuthorsTab(),
+                            _buildInfoTab(),
                           ],
                         ),
                       ),
@@ -257,7 +246,7 @@ class MovieDetailTabs extends StatelessWidget {
     );
   }
 
-  Widget _buildAuthorsTab() {
+  Widget _buildInfoTab() {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: SingleChildScrollView(
@@ -270,27 +259,23 @@ class MovieDetailTabs extends StatelessWidget {
                     defaultValue: "Classification indisponible")),
             _buildTableRow(
                 "Réalisateur",
-                getDefaultTextForEmptyValue(
-                    movie.writers
-                            ?.where((person) => person.role == "realisateur")
-                            .map((person) => person.name)
-                            .firstOrNull ??
-                        "",
-                    defaultValue: "Réalisateur indisponible")),
+                (movie.distributor != null && movie.distributor!.isNotEmpty)
+                    ? movie.distributor!
+                        .map((distributor) => distributor.name)
+                        .join(", ")
+                    : "Inconnus"),
             _buildTableRow(
                 "Scénaristes",
                 (movie.writers != null && movie.writers!.isNotEmpty)
                     ? movie.writers!
-                        .where((person) => person.role == "scenariste")
-                        .map((creator) => creator.name)
+                        .map((writers) => writers.name)
                         .join(", ")
                     : "Inconnus"),
             _buildTableRow(
                 "Producteurs",
-                (movie.writers != null && movie.writers!.isNotEmpty)
-                    ? movie.writers!
-                        .where((person) => person.role == "producteur")
-                        .map((creator) => creator.name)
+                (movie.producers != null && movie.producers!.isNotEmpty)
+                    ? movie.producers!
+                        .map((producers) => producers.name)
                         .join(", ")
                     : "Inconnus"),
             _buildTableRow(
@@ -300,16 +285,13 @@ class MovieDetailTabs extends StatelessWidget {
                     : "Inconnus"),
             _buildTableRow(
                 "Budget",
-                getDefaultTextForEmptyValue(movie.budget,
-                    defaultValue: "Budget indisponible")),
+                formatMoney(movie.budget)),
             _buildTableRow(
                 "Recettes au box-office",
-                getDefaultTextForEmptyValue(movie.box_office_revenue,
-                    defaultValue: "Recette indisponible")),
+                formatMoney(movie.box_office_revenue)),
             _buildTableRow(
                 "Recettes brutes totales",
-                getDefaultTextForEmptyValue(movie.total_revenue,
-                    defaultValue: "Recette indisponible")),
+                formatMoney(movie.total_revenue)),
           ],
         ),
       ),

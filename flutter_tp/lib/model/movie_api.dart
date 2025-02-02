@@ -18,8 +18,7 @@ class Movie {
   final String? runtime;
   @JsonKey(fromJson: _stringFromJson)
   final String? box_office_revenue;
-  @JsonKey(fromJson: _stringFromJson)
-  final String? producers;
+  final List<Person>? producers;
   @JsonKey(fromJson: _stringFromJson)
   final String? rating;
   @JsonKey(fromJson: _stringFromJson)
@@ -30,8 +29,7 @@ class Movie {
   final List<Person>? writers;
   @JsonKey(fromJson: _stringFromJson)
   final String? budget;
-  @JsonKey(fromJson: _stringFromJson)
-  final String? distributor;
+  final List<Person>? distributor;
 
   Movie({
     this.name,
