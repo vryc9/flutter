@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -27,25 +29,29 @@ class SerieDetailTabs extends StatelessWidget {
           children: [
             // Image en fond avec broken_image en cas de problème.
             Positioned.fill(
-              child: Image.network(
-                serie.image!.original_url!,
-                fit: BoxFit.cover,
-                loadingBuilder: (context, child, loadingProgress) {
-                  if (loadingProgress == null) return child;
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                },
-                errorBuilder: (context, error, stackTrace) {
-                  return const Center(
-                    child: Icon(
-                      Icons.broken_image,
-                      color: AppColors.cardElementBackground,
-                      size: 40,
-                    ),
-                  );
-                },
-              ),
+              child: 
+              ImageFiltered(
+                imageFilter: ImageFilter.blur(sigmaX: 5, sigmaY: 5), 
+                child: Image.network(
+                  serie.image!.original_url!,
+                  fit: BoxFit.cover,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  },
+                  errorBuilder: (context, error, stackTrace) {
+                    return const Center(
+                      child: Icon(
+                        Icons.broken_image,
+                        color: AppColors.cardElementBackground,
+                        size: 40,
+                      ),
+                    );
+                  },
+                ),
+              ),   
             ),
             // Filtre sombre par dessus l'image.
             Positioned.fill(
@@ -110,7 +116,8 @@ class SerieDetailTabs extends StatelessWidget {
                                               bottomLeft: Radius.circular(10),
                                               bottomRight: Radius.circular(10),
                                             ),
-                                            child: Image.network(
+                                            child: 
+                                            Image.network(
                                               serie.image!.original_url!,
                                               height: 127,
                                               width: 94.87,
