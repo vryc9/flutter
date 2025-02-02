@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_tp/res/app_colors.dart';
@@ -77,24 +79,27 @@ class CharacterDetailTabs extends StatelessWidget {
         body: Stack(
           children: [
             Positioned.fill(
-              child: Image.network(
-                character.image!.original_url!,
-                fit: BoxFit.cover,
-                loadingBuilder: (context, child, loadingProgress) {
-                  if (loadingProgress == null) return child;
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                },
-                errorBuilder: (context, error, stackTrace) {
-                  return const Center(
-                    child: Icon(
-                      Icons.broken_image,
-                      color: AppColors.cardElementBackground,
-                      size: 40,
-                    ),
-                  );
-                },
+              child: ImageFiltered(
+                imageFilter: ImageFilter.blur(sigmaX: 5, sigmaY: 5), 
+                child: Image.network(
+                  character.image!.original_url!,
+                  fit: BoxFit.cover,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  },
+                  errorBuilder: (context, error, stackTrace) {
+                    return const Center(
+                      child: Icon(
+                        Icons.broken_image,
+                        color: AppColors.cardElementBackground,
+                        size: 40,
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
             Positioned.fill(
