@@ -4,7 +4,6 @@ import 'package:flutter_tp/model/character_api.dart';
 import 'package:flutter_tp/pages/bloc/charactersDetail_bloc.dart';
 import 'package:flutter_tp/utils/text_formatter_utils.dart';
 
-
 // Contenu de l'onglet Personnages
 class TabCharacterDetailWidget extends StatelessWidget {
   final List<Character?>? character_credits;
@@ -16,7 +15,7 @@ class TabCharacterDetailWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (character_credits != null) {
+    if (character_credits != null && character_credits!.isNotEmpty) {
       return ListView.builder(
         itemCount: character_credits?.length,
         itemBuilder: (context, index) {
@@ -63,7 +62,7 @@ class TabCharacterDetailWidget extends StatelessWidget {
                                 defaultValue: "Nom indisponible")),
                       ),
                     );
-                  // Tile d'erreur affichée en cas de problème.
+                    // Tile d'erreur affichée en cas de problème.
                   } else if (state is CharacterDetailNotifierErrorState) {
                     return const ListTile(
                       leading: Icon(Icons.error),
@@ -79,7 +78,7 @@ class TabCharacterDetailWidget extends StatelessWidget {
     } else {
       return const Center(
         child: Text(
-          'Aucun personnage disponible',
+          'Aucun personnages disponibles.',
           style: TextStyle(fontSize: 16, color: Colors.white),
         ),
       );
