@@ -26,9 +26,14 @@ class SeriesSearchListBloc extends Bloc<SeriesSearchListEvent, SeriesSearchListS
     try {
       final OFFServerResponseSeries? response =
           await OFFAPIManager().searchSeries(query);
-      emit(SeriesSearchListNotifierSuccessState(response!.results));
+          if (response != null && response.status_code == 1) {
+        emit(SeriesSearchListNotifierSuccessState(response.results));
+      } else {
+        emit(
+            SeriesSearchListNotifierErrorState(response?.error, response?.status_code));
+      }
     } catch (e) {
-      emit(SeriesSearchListNotifierErrorState(e));
+      emit(SeriesSearchListNotifierErrorState(e.toString(), 0));
     }
   }
 }
@@ -46,7 +51,8 @@ class SeriesSearchListNotifierSuccessState extends SeriesSearchListState {
 
 class SeriesSearchListNotifierErrorState extends SeriesSearchListState {
   final dynamic error;
+  final int? statusCode;
 
-  SeriesSearchListNotifierErrorState(this.error);
+  SeriesSearchListNotifierErrorState(this.error, this.statusCode);
 
 }

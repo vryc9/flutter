@@ -26,9 +26,14 @@ class PersonDetailBloc extends Bloc<PersonDetailEvent, PersonDetailState> {
     try {
       final OFFServerResponsePerson? response =
           await OFFAPIManager().fetchPersonById(personId);
-      emit(PersonDetailNotifierSuccessState(response!.results));
+      if (response != null && response.status_code == 1) {
+        emit(PersonDetailNotifierSuccessState(response.results));
+      } else {
+        emit(
+            PersonDetailNotifierErrorState(response?.error, response?.status_code));
+      }
     } catch (e) {
-      emit(PersonDetailNotifierErrorState(e));
+      emit(PersonDetailNotifierErrorState(e.toString(), 0));
     }
   }
 }
@@ -45,6 +50,7 @@ class PersonDetailNotifierSuccessState extends PersonDetailState {
 
 class PersonDetailNotifierErrorState extends PersonDetailState {
   final dynamic error;
+  final int? statusCode;
 
-  PersonDetailNotifierErrorState(this.error);
+  PersonDetailNotifierErrorState(this.error, this.statusCode);
 }

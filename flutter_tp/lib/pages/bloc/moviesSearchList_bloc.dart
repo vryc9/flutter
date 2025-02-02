@@ -25,9 +25,14 @@ class MoviesSearchListBloc extends Bloc<MoviesSearchListEvent, MoviesSearchListS
   ) async {
     try {
       final OFFServerResponseMovies? response = await OFFAPIManager().searchMovies(query);
-      emit(MoviesSearchListNotifierSuccessState(response!.results));
+      if (response != null && response.status_code == 1) {
+        emit(MoviesSearchListNotifierSuccessState(response.results));
+      } else {
+        emit(
+            MoviesSearchListNotifierErrorState(response?.error, response?.status_code));
+      }
     } catch (e) {
-      emit(MoviesSearchListNotifierErrorState(e));
+      emit(MoviesSearchListNotifierErrorState(e.toString(), 0));
     }
   }
 }
@@ -45,7 +50,8 @@ class MoviesSearchListNotifierSuccessState extends MoviesSearchListState {
 
 class MoviesSearchListNotifierErrorState extends MoviesSearchListState {
   final dynamic error;
+  final int? statusCode;
 
-  MoviesSearchListNotifierErrorState(this.error);
+  MoviesSearchListNotifierErrorState(this.error, this.statusCode);
 
 }
