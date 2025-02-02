@@ -270,7 +270,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             return HorizontalListWidget(
                               title: "Series",
                               items: series!,
-                              type: "series",
+                              type: "serie",
                               page: "search",
                             );
                           } else if (state is SeriesSearchListNotifierErrorState) {
