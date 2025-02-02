@@ -7,6 +7,7 @@ import 'package:flutter_tp/pages/bloc/moviesSearchList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/seriesSearchList_bloc.dart';
 import 'package:flutter_tp/res/app_colors.dart';
 import 'package:flutter_tp/res/app_svg.dart';
+import 'package:flutter_tp/utils/text_formatter_utils.dart';
 import 'package:flutter_tp/widgets/error_widget.dart';
 import 'package:flutter_tp/widgets/horizontal_list.dart';
 
@@ -43,12 +44,12 @@ class _SearchScreenState extends State<SearchScreen> {
       _isFoundedMovie = true;
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.sizeOf(context).height;
     final double marginHeight = height / 4;
-    
+
     return Scaffold(
       backgroundColor: AppColors.screenBackground,
       body: SingleChildScrollView(
@@ -104,7 +105,8 @@ class _SearchScreenState extends State<SearchScreen> {
                         fillColor: AppColors.screenBackground,
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: const BorderSide(color: AppColors.screenBackground),
+                          borderSide: const BorderSide(
+                              color: AppColors.screenBackground),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -141,7 +143,8 @@ class _SearchScreenState extends State<SearchScreen> {
               // Quand la recherche n'est pas lancée, affiche le texte d'invitation à faire une recherche et un petit astronaute.
               if (!_isSearching)
                 Container(
-                  margin: EdgeInsets.symmetric(vertical: marginHeight, horizontal: 8),
+                  margin: EdgeInsets.symmetric(
+                      vertical: marginHeight, horizontal: 8),
                   child: Stack(
                     clipBehavior: Clip.none,
                     children: [
@@ -162,7 +165,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                   Wrap(
                                     children: [
                                       Padding(
-                                        padding: EdgeInsets.only(top: 16.0, bottom: 16.0),
+                                        padding: EdgeInsets.only(
+                                            top: 16.0, bottom: 16.0),
                                         child: SizedBox(
                                           width: 200,
                                           // Texte avec les mots comics, film, série et personnage en gras.
@@ -173,25 +177,35 @@ class _SearchScreenState extends State<SearchScreen> {
                                                 color: AppColors.textSearch,
                                               ),
                                               children: [
-                                                TextSpan(text: 'Saisissez une recherche pour trouver un '),
+                                                TextSpan(
+                                                    text:
+                                                        'Saisissez une recherche pour trouver un '),
                                                 TextSpan(
                                                   text: 'comics',
-                                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
                                                 ),
                                                 TextSpan(text: ', '),
                                                 TextSpan(
                                                   text: 'film',
-                                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
                                                 ),
                                                 TextSpan(text: ', '),
                                                 TextSpan(
                                                   text: 'série',
-                                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
                                                 ),
                                                 TextSpan(text: ' ou '),
                                                 TextSpan(
                                                   text: 'personnage',
-                                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
                                                 ),
                                                 TextSpan(text: '.'),
                                               ],
@@ -220,9 +234,8 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                 ),
 
-
               // Quand la recherche est lancée, affiche les listes de résultats quand elles sont trouvées.
-              if (_isSearching) 
+              if (_isSearching)
                 MultiBlocProvider(
                   providers: [
                     BlocProvider(
@@ -253,7 +266,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                   borderRadius: BorderRadius.circular(16),
                                 ),
                                 padding: const EdgeInsets.all(16.0),
-                                margin: const EdgeInsets.symmetric(horizontal: 40),
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 40),
                                 child: const Column(
                                   children: [
                                     Text(
@@ -262,7 +276,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                         fontSize: 16,
                                         color: Colors.white,
                                       ),
-                                    ),  
+                                    ),
                                   ],
                                 ),
                               );
@@ -273,10 +287,16 @@ class _SearchScreenState extends State<SearchScreen> {
                               type: "serie",
                               page: "search",
                             );
-                          } else if (state is SeriesSearchListNotifierErrorState) {
+                          } else if (state
+                              is SeriesSearchListNotifierErrorState) {
                             return ErrorDisplayWidget(
-                              message: 'La récupération de la liste des séries a échoué. Veuillez réessayer après avoir vérifié votre connexion internet.', 
-                              onRetry: () { context.read<SeriesSearchListBloc>().add(LoadSeriesSearchListEvent()); },
+                              message: formatErreurMessage(state.statusCode!,
+                                  "La récupération de la liste des séries a échoué"),
+                              onRetry: () {
+                                context
+                                    .read<SeriesSearchListBloc>()
+                                    .add(LoadSeriesSearchListEvent());
+                              },
                               title: "Séries : ",
                             );
                           }
@@ -297,7 +317,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                   borderRadius: BorderRadius.circular(16),
                                 ),
                                 padding: const EdgeInsets.all(16.0),
-                                margin: const EdgeInsets.symmetric(horizontal: 40),
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 40),
                                 child: const Column(
                                   children: [
                                     Text(
@@ -306,7 +327,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                         fontSize: 16,
                                         color: Colors.white,
                                       ),
-                                    ),  
+                                    ),
                                   ],
                                 ),
                               );
@@ -317,10 +338,16 @@ class _SearchScreenState extends State<SearchScreen> {
                               type: "comic",
                               page: "search",
                             );
-                          } else if (state is ComicsSearchListNotifierErrorState) {
+                          } else if (state
+                              is ComicsSearchListNotifierErrorState) {
                             return ErrorDisplayWidget(
-                              message: 'La récupération de la liste des comics a échoué. Veuillez réessayer après avoir vérifié votre connexion internet.', 
-                              onRetry: () { context.read<ComicsSearchListBloc>().add(LoadComicsSearchListEvent()); },
+                              message: formatErreurMessage(state.statusCode!,
+                                  "La récupération de la liste des comics a échoué"),
+                              onRetry: () {
+                                context
+                                    .read<ComicsSearchListBloc>()
+                                    .add(LoadComicsSearchListEvent());
+                              },
                               title: "Comics : ",
                             );
                           }
@@ -341,7 +368,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                   borderRadius: BorderRadius.circular(16),
                                 ),
                                 padding: const EdgeInsets.all(16.0),
-                                margin: const EdgeInsets.symmetric(horizontal: 40),
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 40),
                                 child: const Column(
                                   children: [
                                     Text(
@@ -350,7 +378,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                         fontSize: 16,
                                         color: Colors.white,
                                       ),
-                                    ),  
+                                    ),
                                   ],
                                 ),
                               );
@@ -361,10 +389,16 @@ class _SearchScreenState extends State<SearchScreen> {
                               type: "movie",
                               page: "search",
                             );
-                          } else if (state is MoviesSearchListNotifierErrorState) {
+                          } else if (state
+                              is MoviesSearchListNotifierErrorState) {
                             return ErrorDisplayWidget(
-                              message: 'La récupération de la liste des films a échoué. Veuillez réessayer après avoir vérifié votre connexion internet.', 
-                              onRetry: () { context.read<MoviesSearchListBloc>().add(LoadMoviesSearchListEvent()); },
+                              message: formatErreurMessage(state.statusCode!,
+                                  "La récupération de la liste des films a échoué"),
+                              onRetry: () {
+                                context
+                                    .read<MoviesSearchListBloc>()
+                                    .add(LoadMoviesSearchListEvent());
+                              },
                               title: "Films : ",
                             );
                           }
@@ -374,9 +408,11 @@ class _SearchScreenState extends State<SearchScreen> {
                       const SizedBox(height: 32),
 
                       // BlocBuilder pour les personnages. Appelle la liste générique horizontal list.
-                      BlocBuilder<CharactersSearchListBloc, CharactersSearchListState>(
+                      BlocBuilder<CharactersSearchListBloc,
+                          CharactersSearchListState>(
                         builder: (context, state) {
-                          if (state is CharactersSearchListNotifierSuccessState) {
+                          if (state
+                              is CharactersSearchListNotifierSuccessState) {
                             final characters = state.characters;
                             if (characters.isEmpty) {
                               return Container(
@@ -385,7 +421,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                   borderRadius: BorderRadius.circular(16),
                                 ),
                                 padding: const EdgeInsets.all(16.0),
-                                margin: const EdgeInsets.symmetric(horizontal: 40),
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 40),
                                 child: const Column(
                                   children: [
                                     Text(
@@ -394,7 +431,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                         fontSize: 16,
                                         color: Colors.white,
                                       ),
-                                    ),  
+                                    ),
                                   ],
                                 ),
                               );
@@ -405,10 +442,16 @@ class _SearchScreenState extends State<SearchScreen> {
                               type: "character",
                               page: "search",
                             );
-                          } else if (state is CharactersSearchListNotifierErrorState) {
+                          } else if (state
+                              is CharactersSearchListNotifierErrorState) {
                             return ErrorDisplayWidget(
-                              message: 'La récupération de la liste des personnages a échoué. Veuillez réessayer après avoir vérifié votre connexion internet.', 
-                              onRetry: () { context.read<CharactersSearchListBloc>().add(LoadCharactersSearchListEvent()); },
+                              message: formatErreurMessage(state.statusCode!,
+                                  "La récupération de la liste des personnages a échoué"),
+                              onRetry: () {
+                                context
+                                    .read<CharactersSearchListBloc>()
+                                    .add(LoadCharactersSearchListEvent());
+                              },
                               title: "Personnages : ",
                             );
                           }
@@ -419,13 +462,17 @@ class _SearchScreenState extends State<SearchScreen> {
                     ],
                   ),
                 ),
-              
+
               // Quand la recherche est lancée, affiche le petit astronaute avec le texte de recherche en cours. N'est affiché que si les listes ne sont pas trouvées.
               if (_isSearching)
                 Visibility(
-                  visible: !_isFoundedCharacter & !_isFoundedComic & !_isFoundedSerie & !_isFoundedMovie,
+                  visible: !_isFoundedCharacter &
+                      !_isFoundedComic &
+                      !_isFoundedSerie &
+                      !_isFoundedMovie,
                   child: Container(
-                    margin: EdgeInsets.symmetric(vertical: marginHeight, horizontal: 8),
+                    margin: EdgeInsets.symmetric(
+                        vertical: marginHeight, horizontal: 8),
                     child: Stack(
                       clipBehavior: Clip.none,
                       children: [
@@ -442,7 +489,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                 child: Wrap(
                                   children: [
                                     Padding(
-                                      padding: EdgeInsets.only(top: 60.0, left: 120.0),
+                                      padding: EdgeInsets.only(
+                                          top: 60.0, left: 120.0),
                                       child: SizedBox(
                                         width: 150,
                                         // Texte.

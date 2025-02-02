@@ -13,7 +13,7 @@ import 'package:flutter_tp/utils/date_format.dart';
 import 'package:flutter_tp/utils/text_formatter_utils.dart';
 import 'package:flutter_tp/widgets/error_widget.dart';
 
-// Page générique de liste verticale. En fonction du type passé, appelle le bon bloc puis appelle le contenu générique. 
+// Page générique de liste verticale. En fonction du type passé, appelle le bon bloc puis appelle le contenu générique.
 class GenericListScreen extends StatelessWidget {
   // Peut être 'serie', 'movie' ou 'comic'.
   final String type;
@@ -28,7 +28,7 @@ class GenericListScreen extends StatelessWidget {
         child: Container(
           color: AppColors.screenBackground,
           alignment: Alignment.center,
-          margin: const EdgeInsets.only(left:24, top: 34, bottom: 21),
+          margin: const EdgeInsets.only(left: 24, top: 34, bottom: 21),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24.0),
             // Titre en fonction du type.
@@ -70,8 +70,11 @@ class GenericListScreen extends StatelessWidget {
               return _buildList(items);
             } else if (state is SeriesListNotifierErrorState) {
               return ErrorDisplayWidget(
-                message: 'La récupération de la liste des séries a échoué. Veuillez réessayer après avoir vérifié votre connexion internet.', 
-                onRetry: () { context.read<SeriesListBloc>().add(LoadSeriesListEvent()); },
+                message: formatErreurMessage(state.statusCode!,
+                    "La récupération de la liste des séries a échoué"),
+                onRetry: () {
+                  context.read<SeriesListBloc>().add(LoadSeriesListEvent());
+                },
                 title: "Séries : ",
               );
             } else {
@@ -80,7 +83,7 @@ class GenericListScreen extends StatelessWidget {
           },
         ),
       );
-    // Cas type = comic.
+      // Cas type = comic.
     } else if (type == 'comic') {
       return BlocProvider(
         create: (context) => ComicsListBloc(),
@@ -93,8 +96,11 @@ class GenericListScreen extends StatelessWidget {
               return _buildList(items);
             } else if (state is ComicsListNotifierErrorState) {
               return ErrorDisplayWidget(
-                message: 'La récupération de la liste des comics a échoué. Veuillez réessayer après avoir vérifié votre connexion internet.', 
-                onRetry: () { context.read<ComicsListBloc>().add(LoadComicsListEvent()); },
+                message: formatErreurMessage(state.statusCode!,
+                    "La récupération de la liste des comics a échoué"),
+                onRetry: () {
+                  context.read<ComicsListBloc>().add(LoadComicsListEvent());
+                },
                 title: "Comics : ",
               );
             } else {
@@ -103,7 +109,7 @@ class GenericListScreen extends StatelessWidget {
           },
         ),
       );
-    // Cas type = movie.
+      // Cas type = movie.
     } else if (type == 'movie') {
       return BlocProvider(
         create: (context) => MoviesListBloc(),
@@ -116,8 +122,11 @@ class GenericListScreen extends StatelessWidget {
               return _buildList(items);
             } else if (state is MoviesListNotifierErrorState) {
               return ErrorDisplayWidget(
-                message: 'La récupération de la liste des films a échoué. Veuillez réessayer après avioir vérifié votre connexion internet.', 
-                onRetry: () { context.read<MoviesListBloc>().add(LoadMoviesListEvent()); },
+                message: formatErreurMessage(state.statusCode!,
+                    "La récupération de la liste des films a échoué"),
+                onRetry: () {
+                  context.read<MoviesListBloc>().add(LoadMoviesListEvent());
+                },
                 title: "Films : ",
               );
             } else {
@@ -126,7 +135,7 @@ class GenericListScreen extends StatelessWidget {
           },
         ),
       );
-    // Cas type = autre que comic, movie ou serie.
+      // Cas type = autre que comic, movie ou serie.
     } else {
       return const Center(
         child: Text('Type non pris en charge',
@@ -135,7 +144,7 @@ class GenericListScreen extends StatelessWidget {
     }
   }
 
-  // Contenu générique. Appelle le contenu associé en fonction du type de chaque élément de la liste d'items reçue. 
+  // Contenu générique. Appelle le contenu associé en fonction du type de chaque élément de la liste d'items reçue.
   Widget _buildList(List<dynamic> items) {
     if (items.isEmpty) {
       return const Center(
@@ -259,7 +268,8 @@ class GenericListScreen extends StatelessWidget {
                       SizedBox(
                         width: 191,
                         child: Text(
-                          getDefaultTextForEmptyValue(serie.name, defaultValue: "Nom indisponible"),
+                          getDefaultTextForEmptyValue(serie.name,
+                              defaultValue: "Nom indisponible"),
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 17.0,
@@ -281,7 +291,8 @@ class GenericListScreen extends StatelessWidget {
                           ),
                           const SizedBox(width: 8.0),
                           Text(
-                            getDefaultTextForEmptyValue(serie.publisher?.name, defaultValue: "Éditeur indisponible"),
+                            getDefaultTextForEmptyValue(serie.publisher?.name,
+                                defaultValue: "Éditeur indisponible"),
                             style: const TextStyle(
                               color: Colors.white60,
                               fontSize: 12.0,
@@ -321,7 +332,8 @@ class GenericListScreen extends StatelessWidget {
                           ),
                           const SizedBox(width: 8.0),
                           Text(
-                            getDefaultTextForEmptyValue(serie.start_year, defaultValue: "Année indisponible"),
+                            getDefaultTextForEmptyValue(serie.start_year,
+                                defaultValue: "Année indisponible"),
                             style: const TextStyle(
                               color: Colors.white60,
                               fontSize: 12.0,
@@ -353,7 +365,7 @@ class GenericListScreen extends StatelessWidget {
           },
         );
       },
-      child:Padding(
+      child: Padding(
         padding: const EdgeInsets.symmetric(
           vertical: 12.0,
           horizontal: 16.0,
@@ -437,7 +449,8 @@ class GenericListScreen extends StatelessWidget {
                       SizedBox(
                         width: 191,
                         child: Text(
-                          getDefaultTextForEmptyValue(comic.volume?.name, defaultValue: "Volume indisponible"),
+                          getDefaultTextForEmptyValue(comic.volume?.name,
+                              defaultValue: "Volume indisponible"),
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 17.0,
@@ -452,7 +465,8 @@ class GenericListScreen extends StatelessWidget {
                       SizedBox(
                         width: 191,
                         child: Text(
-                          getDefaultTextForEmptyValue(comic.name, defaultValue: "Nom indisponible"),
+                          getDefaultTextForEmptyValue(comic.name,
+                              defaultValue: "Nom indisponible"),
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 17.0,
@@ -494,7 +508,8 @@ class GenericListScreen extends StatelessWidget {
                           ),
                           const SizedBox(width: 8.0),
                           Text(
-                            getDefaultTextForEmptyValue(formatDateMonthYear(comic.cover_date)),
+                            getDefaultTextForEmptyValue(
+                                formatDateMonthYear(comic.cover_date)),
                             style: const TextStyle(
                               color: Colors.white60,
                               fontSize: 12.0,
@@ -608,7 +623,8 @@ Widget _buildMovieCard(Movie movie, int index, BuildContext context) {
                     SizedBox(
                       width: 191,
                       child: Text(
-                        getDefaultTextForEmptyValue(movie.name, defaultValue: "Nom indisponible"),
+                        getDefaultTextForEmptyValue(movie.name,
+                            defaultValue: "Nom indisponible"),
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 17.0,
@@ -639,7 +655,7 @@ Widget _buildMovieCard(Movie movie, int index, BuildContext context) {
                       ],
                     ),
                     const SizedBox(height: 7.6),
-                    // Date. 
+                    // Date.
                     Row(
                       children: [
                         SvgPicture.asset(
@@ -650,7 +666,8 @@ Widget _buildMovieCard(Movie movie, int index, BuildContext context) {
                         ),
                         const SizedBox(width: 8.0),
                         Text(
-                          getDefaultTextForEmptyValue(formatDateYear(movie.date_added)),
+                          getDefaultTextForEmptyValue(
+                              formatDateYear(movie.date_added)),
                           style: const TextStyle(
                             color: Colors.white60,
                             fontSize: 12.0,

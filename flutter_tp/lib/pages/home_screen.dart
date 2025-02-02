@@ -7,10 +7,11 @@ import 'package:flutter_tp/pages/bloc/seriesList_bloc.dart';
 import 'package:flutter_tp/pages/bloc/charactersList_bloc.dart';
 import 'package:flutter_tp/res/app_colors.dart';
 import 'package:flutter_tp/res/app_svg.dart';
+import 'package:flutter_tp/utils/text_formatter_utils.dart';
 import 'package:flutter_tp/widgets/error_widget.dart';
 import 'package:flutter_tp/widgets/horizontal_list.dart';
 
-// Page home. 
+// Page home.
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -87,7 +88,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               if (state is SeriesListNotifierLoadingState) {
                                 return const Center(
                                     child: CircularProgressIndicator());
-                              } else if (state is SeriesListNotifierLSuccessState) {
+                              } else if (state
+                                  is SeriesListNotifierLSuccessState) {
                                 final series = state.response.results;
                                 if (series.isEmpty) {
                                   return Container(
@@ -96,8 +98,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       borderRadius: BorderRadius.circular(16),
                                     ),
                                     padding: const EdgeInsets.all(16.0),
-                                    margin:
-                                        const EdgeInsets.symmetric(horizontal: 40),
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 40),
                                     child: const Column(
                                       children: [
                                         Text(
@@ -117,10 +119,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                   type: "serie",
                                   page: "home",
                                 );
-                              }  else if (state is SeriesListNotifierErrorState) {
+                              } else if (state
+                                  is SeriesListNotifierErrorState) {
                                 return ErrorDisplayWidget(
-                                  message: 'La récupération de la liste des séries a échoué. Veuillez réessayer après avoir vérifié votre connexion internet.', 
-                                  onRetry: () { context.read<SeriesListBloc>().add(LoadSeriesListEvent()); },
+                                  message: formatErreurMessage(
+                                      state.statusCode!,
+                                      "La récupération de la liste des séries a échoué"),
+                                  onRetry: () {
+                                    context
+                                        .read<SeriesListBloc>()
+                                        .add(LoadSeriesListEvent());
+                                  },
                                   title: "Séries : ",
                                 );
                               }
@@ -133,8 +142,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           BlocBuilder<ComicsListBloc, ComicsListState>(
                             builder: (context, state) {
                               if (state is ComicsListNotifierLoadingState) {
-                                return const Center(child: CircularProgressIndicator());
-                              } else if (state is ComicsListNotifierLSuccessState) {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              } else if (state
+                                  is ComicsListNotifierLSuccessState) {
                                 final comics = state.response.results;
                                 if (comics.isEmpty) {
                                   return Container(
@@ -143,7 +154,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       borderRadius: BorderRadius.circular(16),
                                     ),
                                     padding: const EdgeInsets.all(16.0),
-                                    margin: const EdgeInsets.symmetric(horizontal: 40),
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 40),
                                     child: const Column(
                                       children: [
                                         Text(
@@ -152,7 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             fontSize: 16,
                                             color: Colors.white,
                                           ),
-                                        ),  
+                                        ),
                                       ],
                                     ),
                                   );
@@ -163,10 +175,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                   type: "comic",
                                   page: "home",
                                 );
-                              } else if (state is ComicsListNotifierErrorState) {
+                              } else if (state
+                                  is ComicsListNotifierErrorState) {
                                 return ErrorDisplayWidget(
-                                  message: 'La récupération de la liste des comics a échoué. Veuillez réessayer après avoir vérifié votre connexion internet.', 
-                                  onRetry: () { context.read<ComicsListBloc>().add(LoadComicsListEvent()); },
+                                  message: formatErreurMessage(
+                                      state.statusCode!,
+                                      "La récupération de la liste des comics a échoué"),
+                                  onRetry: () {
+                                    context
+                                        .read<ComicsListBloc>()
+                                        .add(LoadComicsListEvent());
+                                  },
                                   title: "Comics : ",
                                 );
                               }
@@ -179,8 +198,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           BlocBuilder<MoviesListBloc, MoviesListState>(
                             builder: (context, state) {
                               if (state is MoviesListNotifierLoadingState) {
-                                return const Center(child: CircularProgressIndicator());
-                              } else if (state is MoviesListNotifierLSuccessState) {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              } else if (state
+                                  is MoviesListNotifierLSuccessState) {
                                 final movies = state.response.results;
                                 if (movies.isEmpty) {
                                   return Container(
@@ -189,7 +210,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       borderRadius: BorderRadius.circular(16),
                                     ),
                                     padding: const EdgeInsets.all(16.0),
-                                    margin: const EdgeInsets.symmetric(horizontal: 40),
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 40),
                                     child: const Column(
                                       children: [
                                         Text(
@@ -198,7 +220,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             fontSize: 16,
                                             color: Colors.white,
                                           ),
-                                        ),  
+                                        ),
                                       ],
                                     ),
                                   );
@@ -209,10 +231,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                   type: "movie",
                                   page: "home",
                                 );
-                              } else if (state is MoviesListNotifierErrorState) {
+                              } else if (state
+                                  is MoviesListNotifierErrorState) {
                                 return ErrorDisplayWidget(
-                                  message: 'La récupération de la liste des films a échoué. Veuillez réessayer après avoir vérifié votre connexion internet.', 
-                                  onRetry: () { context.read<MoviesListBloc>().add(LoadMoviesListEvent()); },
+                                  message: formatErreurMessage(
+                                      state.statusCode!,
+                                      "La récupération de la liste des films a échoué"),
+                                  onRetry: () {
+                                    context
+                                        .read<MoviesListBloc>()
+                                        .add(LoadMoviesListEvent());
+                                  },
                                   title: "Films : ",
                                 );
                               }
@@ -225,8 +254,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           BlocBuilder<CharactersListBloc, CharactersListState>(
                             builder: (context, state) {
                               if (state is CharactersListNotifierLoadingState) {
-                                return const Center(child: CircularProgressIndicator());
-                              } else if (state is CharactersListNotifierLSuccessState) {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              } else if (state
+                                  is CharactersListNotifierLSuccessState) {
                                 final characters = state.response.results;
                                 if (characters.isEmpty) {
                                   return Container(
@@ -235,7 +266,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       borderRadius: BorderRadius.circular(16),
                                     ),
                                     padding: const EdgeInsets.all(16.0),
-                                    margin: const EdgeInsets.symmetric(horizontal: 40),
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 40),
                                     child: const Column(
                                       children: [
                                         Text(
@@ -244,7 +276,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             fontSize: 16,
                                             color: Colors.white,
                                           ),
-                                        ),  
+                                        ),
                                       ],
                                     ),
                                   );
@@ -255,17 +287,24 @@ class _HomeScreenState extends State<HomeScreen> {
                                   type: "character",
                                   page: "home",
                                 );
-                              } else if (state is CharactersListNotifierErrorState) {
+                              } else if (state
+                                  is CharactersListNotifierErrorState) {
                                 return ErrorDisplayWidget(
-                                  message: 'La récupération de la liste des personnages a échoué. Veuillez réessayer après avoir vérifié votre connexion internet.', 
-                                  onRetry: () { context.read<CharactersListBloc>().add(LoadCharactersListEvent()); },
+                                  message: formatErreurMessage(
+                                      state.statusCode!,
+                                      "La récupération de la liste des personnages a échoué"),
+                                  onRetry: () {
+                                    context
+                                        .read<CharactersListBloc>()
+                                        .add(LoadCharactersListEvent());
+                                  },
                                   title: "Personnages : ",
                                 );
                               }
                               return const SizedBox.shrink();
                             },
                           ),
-                        
+
                           SizedBox(height: height * 0.08),
                         ],
                       ),

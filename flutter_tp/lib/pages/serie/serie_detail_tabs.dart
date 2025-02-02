@@ -423,9 +423,8 @@ class SerieDetailTabs extends StatelessWidget {
             );
           } else if (state is EpisodesNotifierErrorState) {
             return ErrorDisplayWidget(
-              message: state.statusCode == 401
-                  ? 'Probleme avec la clé '
-                  : 'La récupération de la liste des épisodes a échoué. Veuillez réessayer après avoir vérifié votre connexion internet.',
+              message: formatErreurMessage(state.statusCode!,
+                  "La récupération de la liste des épisodes a échoué."),
               onRetry: () {
                 context.read<EpisodesBloc>().add(LoadEpisodesEvent(serieId));
               },

@@ -8,6 +8,7 @@ import 'package:flutter_tp/pages/characters/character_detail_tabs.dart';
 import 'package:flutter_tp/pages/comics/comic_detail_tabs.dart';
 import 'package:flutter_tp/pages/films/movie_detail_tabs.dart';
 import 'package:flutter_tp/pages/serie/serie_detail_tabs.dart';
+import 'package:flutter_tp/utils/text_formatter_utils.dart';
 import 'package:flutter_tp/widgets/error_widget.dart';
 
 //Page générique de détail. En fonction du type passé, appelle le bon bloc et affiche le résultat dans le detail_tab associé.
@@ -43,8 +44,11 @@ class ContentDetailPage extends StatelessWidget {
               return ComicDetailTabs(comic: comic);
             } else if (state is ComicDetailNotifierErrorState) {
               return ErrorDisplayWidget(
-                message: 'La récupération du comic a échoué. Veuillez réessayer après avoir vérifié votre connexion internet.', 
-                onRetry: () { context.read<ComicDetailBloc>().add(LoadComicDetailEvent()); },
+                message: formatErreurMessage(
+                    state.status_code!, "La récupération du comic a échoué"),
+                onRetry: () {
+                  context.read<ComicDetailBloc>().add(LoadComicDetailEvent());
+                },
                 title: "Comic : ",
               );
             } else {
@@ -53,7 +57,7 @@ class ContentDetailPage extends StatelessWidget {
           },
         ),
       );
-    // Cas type = character
+      // Cas type = character
     } else if (type == 'character') {
       return BlocProvider(
         create: (context) => CharacterDetailBloc(itemId),
@@ -66,8 +70,13 @@ class ContentDetailPage extends StatelessWidget {
               return CharacterDetailTabs(character: character);
             } else if (state is CharacterDetailNotifierErrorState) {
               return ErrorDisplayWidget(
-                message: 'La récupération du personnage a échoué. Veuillez réessayer après avoir vérifié votre connexion internet.', 
-                onRetry: () { context.read<CharacterDetailBloc>().add(LoadCharacterDetailEvent()); },
+                message: formatErreurMessage(state.status_code!,
+                    "La récupération du personnage a échoué"),
+                onRetry: () {
+                  context
+                      .read<CharacterDetailBloc>()
+                      .add(LoadCharacterDetailEvent());
+                },
                 title: "Personnage : ",
               );
             } else {
@@ -76,30 +85,32 @@ class ContentDetailPage extends StatelessWidget {
           },
         ),
       );
-    // Cas type = movie
+      // Cas type = movie
     } else if (type == 'movie') {
       return BlocProvider(
-        create: (context) => MovieDetailBloc(itemId),
-        child: BlocBuilder<MovieDetailBloc, MovieDetailState>(
-          builder: (context, state) {
-            if (state is MovieDetailNotifierLoadingState) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (state is MovieDetailNotifierSuccessState) {
-              final movie = state.movie!;
-              return MovieDetailTabs(movie: movie);
-            } else if (state is MovieDetailNotifierErrorState) {
-              return ErrorDisplayWidget(
-                message: 'La récupération du film a échoué. Veuillez réessayer après avoir vérifié votre connexion internet.', 
-                onRetry: () { context.read<MovieDetailBloc>().add(LoadMovieDetailEvent()); },
-                title: "Film : ",
-              );
-            } else {
-              return const Center(child: Text('Aucune donnée disponible.'));
-            }
-          },
-        )
-      );
-    // Cas type = serie
+          create: (context) => MovieDetailBloc(itemId),
+          child: BlocBuilder<MovieDetailBloc, MovieDetailState>(
+            builder: (context, state) {
+              if (state is MovieDetailNotifierLoadingState) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (state is MovieDetailNotifierSuccessState) {
+                final movie = state.movie!;
+                return MovieDetailTabs(movie: movie);
+              } else if (state is MovieDetailNotifierErrorState) {
+                return ErrorDisplayWidget(
+                  message: formatErreurMessage(
+                      state.statusCode!, "La récupération du film a échoué"),
+                  onRetry: () {
+                    context.read<MovieDetailBloc>().add(LoadMovieDetailEvent());
+                  },
+                  title: "Film : ",
+                );
+              } else {
+                return const Center(child: Text('Aucune donnée disponible.'));
+              }
+            },
+          ));
+      // Cas type = serie
     } else if (type == 'serie') {
       return BlocProvider(
         create: (context) => SerieDetailBloc(itemId),
@@ -112,8 +123,11 @@ class ContentDetailPage extends StatelessWidget {
               return SerieDetailTabs(serie: serie);
             } else if (state is SerieDetailNotifierErrorState) {
               return ErrorDisplayWidget(
-                message: 'La récupération de la série a échoué. Veuillez réessayer après avoir vérifié votre connexion internet.', 
-                onRetry: () { context.read<SerieDetailBloc>().add(LoadSerieDetailEvent()); },
+                message: formatErreurMessage(
+                    state.statusCode!, "La récupération de la série a échoué"),
+                onRetry: () {
+                  context.read<SerieDetailBloc>().add(LoadSerieDetailEvent());
+                },
                 title: "Série : ",
               );
             } else {
@@ -122,7 +136,7 @@ class ContentDetailPage extends StatelessWidget {
           },
         ),
       );
-    // Cas type = autre que comic, serie, character ou movie
+      // Cas type = autre que comic, serie, character ou movie
     } else {
       return const Center(child: Text('Données non reconnues.'));
     }
