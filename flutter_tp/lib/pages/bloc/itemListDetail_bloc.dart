@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../api/services/off_api.dart';
-import '../../model/character_api.dart';
+import 'package:flutter_tp/api/services/off_api.dart';
+import 'package:flutter_tp/model/character_api.dart';
 
 abstract class CharacterDetailEvent {}
 

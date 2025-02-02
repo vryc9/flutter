@@ -1,14 +1,12 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_tp/model/character_api.dart';
 import 'package:flutter_tp/res/app_colors.dart';
 import 'package:flutter_tp/res/app_svg.dart';
 import 'package:flutter_tp/utils/date_format.dart';
 import 'package:flutter_tp/utils/text_formatter_utils.dart';
-
-import '../../model/character_api.dart';
-import '../../widgets/histoire_detail.dart';
+import 'package:flutter_tp/widgets/histoire_detail.dart';
 
 // Détail tab de character.
 class CharacterDetailTabs extends StatelessWidget {

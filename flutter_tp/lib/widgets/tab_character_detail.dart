@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tp/model/character_api.dart';
+import 'package:flutter_tp/pages/bloc/charactersDetail_bloc.dart';
+import 'package:flutter_tp/utils/text_formatter_utils.dart';
 
-import '../pages/bloc/charactersDetail_bloc.dart';
-import '../utils/text_formatter_utils.dart';
 
 // Contenu de l'onglet Personnages
 class TabCharacterDetailWidget extends StatelessWidget {

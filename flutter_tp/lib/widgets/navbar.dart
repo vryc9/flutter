@@ -38,7 +38,7 @@ class _MainNavigationBarState extends State<MainNavigationBar> {
     SearchScreen(),
   ];
 
-  // Liste des icone
+  // Liste des icônes
   static const List<String> _svgIcons = [
     AppVectorialImages.navbarHome,
     AppVectorialImages.navbarComics,
